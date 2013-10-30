@@ -3,12 +3,18 @@ package com.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.math.Vector3;
 import com.main.ChipTotality;
+import com.world.Asteroid;
 
 public class GameScreen implements Screen{
 	
 	final ChipTotality game;
 	CameraController cameraController;
+	
+	Asteroid asteroid;
+	
+	
 	
 	
 	GameScreen(ChipTotality gam){
@@ -16,6 +22,8 @@ public class GameScreen implements Screen{
 		game=gam;
 		
 		cameraController = new CameraController(game.settings);
+		
+		asteroid = new Asteroid();
 	}
 	
 	
@@ -23,6 +31,8 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		cameraController.handleInput();
+		
+		handleInput();
 	
 		game.batch.setProjectionMatrix(cameraController.camera.combined);
 		game.batch.begin();
@@ -32,6 +42,20 @@ public class GameScreen implements Screen{
 		
 		
 	}
+	
+	private void handleInput(){
+		if (Gdx.input.isTouched()) {
+			Vector3 touchPos = new Vector3();
+			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			cameraController.camera.unproject(touchPos);
+			if(asteroid.asteroidBounds.contains(touchPos.x, touchPos.y))
+				Gdx.app.log("input", touchPos.x+ "," +touchPos.y);
+		}
+
+	}
+	
+	
+	
 
 	@Override
 	public void resize(int width, int height) {

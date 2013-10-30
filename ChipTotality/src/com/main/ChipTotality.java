@@ -25,5 +25,4 @@ public class ChipTotality extends Game {
 		super.render();
 	}
 	
-	
 }
