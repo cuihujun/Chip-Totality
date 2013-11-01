@@ -13,9 +13,9 @@ public class Asteroid {
 		
 		buildings = new Vector<Building>();
 		asteroidBounds = new Polygon(new float []{	100, 100, 0,
+													1000,  100, 0,
 													1000,  1000, 0,
-													100,  1000, 0,
-													1000, 100, 0										
+													100, 1000, 0										
 		});
 	}
 
