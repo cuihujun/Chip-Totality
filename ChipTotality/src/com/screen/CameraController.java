@@ -11,9 +11,9 @@ public class CameraController{
 	public OrthographicCamera camera;
 
 	
-	public CameraController(Settings settings) {
-		camera = new OrthographicCamera(settings.CAMERA_WIDTH, settings.CAMERA_HEIGHT);
-		camera.setToOrtho(false, settings.CAMERA_WIDTH, settings.CAMERA_HEIGHT);
+	public CameraController() {
+		camera = new OrthographicCamera(Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);
+		camera.setToOrtho(false, Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);
 		camera.update();
 	}
 	

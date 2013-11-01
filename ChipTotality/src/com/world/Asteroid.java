@@ -3,18 +3,20 @@ package com.world;
 import java.util.Vector;
 
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
+import com.world.building.Building;
 
 public class Asteroid {
 	public Polygon asteroidBounds;
-	Vector<Rectangle> buildings;
+	public Vector<Building> buildings;
 	
 	public Asteroid(){
-		asteroidBounds = new Polygon(new float []{	50, 50, 0,
-													150,  50, 0,
-													50,  150, 0,
-													150, 150, 0										
+		
+		buildings = new Vector<Building>();
+		asteroidBounds = new Polygon(new float []{	100, 100, 0,
+													1000,  1000, 0,
+													100,  1000, 0,
+													1000, 100, 0										
 		});
 	}
-	
+
 }

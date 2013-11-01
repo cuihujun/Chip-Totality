@@ -9,6 +9,7 @@ public class MainMenuScreen implements Screen{
 	
 	final ChipTotality game;
 	
+	
 	public MainMenuScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "MainMenuScreen set");
 		game=gam;
