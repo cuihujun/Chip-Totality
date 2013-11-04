@@ -3,22 +3,37 @@ package com.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL10;
 import com.main.ChipTotality;
 
 public class MainMenuScreen implements Screen{
 	
 	final ChipTotality game;
+	Ticker ticker;
 	
 	
 	public MainMenuScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "MainMenuScreen set");
 		game=gam;
-		
+		ticker = new Ticker(50, 50, 2.5f, 10, 120);
+		ticker.addMessage("petycja: nie bedziemy cipowani");
+		ticker.addMessage("kochajcie sie i lubcie sie");
+		ticker.addMessage("nie nie dajcie sie zacipowac");
+		ticker.addMessage("usuwanie zel w sobie");
+		ticker.addMessage("kochajcie ziemie ona Panstwa tez kocha");
+		ticker.addMessage("jaszczur piekielny = smierc");
+		ticker.addMessage("witam i pozdrawiam, astar seran");
+		ticker.addMessage("stara ziem niewolnictwo cipowe wiezienie");
 	}
 	
 
 	@Override
 	public void render(float delta) {
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		game.batch.begin();
+		ticker.draw(game);
+		game.batch.end();
 		
 		if(Gdx.input.isTouched()){
 			game.setScreen(new GameScreen(game));
