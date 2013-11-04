@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.ChosenBuilding;
+import com.gameInfo.DiplomacySelection;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.res.TexturesHolder;
@@ -20,6 +21,8 @@ public class GameScreen implements Screen, InputProcessor {
 	CameraController cameraController;
 
 	Asteroid asteroid;
+	
+	DiplomacyScreen diplomacyScreen;
 
 	GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
@@ -28,11 +31,18 @@ public class GameScreen implements Screen, InputProcessor {
 		cameraController = new CameraController();
 
 		asteroid = new Asteroid();
+		
+		diplomacyScreen = new DiplomacyScreen(game, this);
 
 	}
 
 	@Override
-	public void render(float delta) {
+	public void render(float delta) 
+	{
+		if(GameStateHolder.mode == GameStateHolder.Mode.DIPLOMACY){
+			game.setScreen(diplomacyScreen);
+		}
+		
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		cameraController.handleInput();
 
@@ -50,16 +60,23 @@ public class GameScreen implements Screen, InputProcessor {
 
 	}
 
-	private void handleMouseInput() {
+	private void handleMouseInput()
+	{
 		if (Gdx.input.isTouched()) {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			cameraController.camera.unproject(touchPos);
 
-			if (GameStateHolder.chosenBuilding != ChosenBuilding.none) {
-				build(touchPos.x, touchPos.y);
+			switch(GameStateHolder.mode){ 
+			case BUILDING:
+				if (GameStateHolder.chosenBuilding != ChosenBuilding.none) {
+					build(touchPos.x, touchPos.y);
+				}
+				break;
+			
+			case DIPLOMACY:
+				break;
 			}
-
 		}
 
 	}
@@ -68,27 +85,55 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		// switches buildingMode state
-		if (keycode == Keys.B) {
-			GameStateHolder.buildingMode = !GameStateHolder.buildingMode;
-			Gdx.app.log("buildingMode:", ""+GameStateHolder.buildingMode);
+		GameStateHolder.Mode modeVar = GameStateHolder.mode;
+		
+		switch(keycode) {
+		case Keys.F1:
+			modeVar = GameStateHolder.Mode.BUILDING;
+			break;
+			
+		case Keys.F2:
+			modeVar = GameStateHolder.Mode.DIPLOMACY;
+			break;
 		}
+		
+		if(GameStateHolder.mode == GameStateHolder.Mode.NONE) {
+			GameStateHolder.mode = modeVar;
+		} else if(GameStateHolder.mode == modeVar) {
+			GameStateHolder.mode = GameStateHolder.Mode.NONE;
+			game.setScreen(this);
+		}
+		
+		Gdx.app.log("Current mode:", GameStateHolder.mode.toString());
+		
 		//if buildingMode is activated, chose the building to be built
-		if (GameStateHolder.buildingMode == true) {
+		
+		switch (GameStateHolder.mode) {
+		case BUILDING:
 			switch (keycode) {
+			
 			case Keys.F1:
 				GameStateHolder.chosenBuilding = ChosenBuilding.testBuilding1;
 				break;
+				
 			case Keys.ESCAPE:
 				GameStateHolder.chosenBuilding = ChosenBuilding.none;
 				GameStateHolder.buildingMode = false;
 				Gdx.app.log("buildingMode", "building mode:"
 						+ GameStateHolder.buildingMode);
 				break;
+				
 			default:
 				break;
 			}
+			
 			Gdx.app.log("building", "building chosen:"
 					+ GameStateHolder.chosenBuilding.toString());
+		
+		case DIPLOMACY:
+			break;
+			
+		default:
 		}
 
 		return false;
@@ -96,20 +141,26 @@ public class GameScreen implements Screen, InputProcessor {
 
 	// Builds the building in the pointed location. Checks whether the location
 	// is contained by the asteroid and collisions between other buildings
-	private void build(float x, float y) {
+	
+	private void build(float x, float y) 
+	{
 		// returns if the given coordinates are not contained by the asteroid
-		if (!asteroid.asteroidBounds.contains(x, y)){
+		
+		if (!asteroid.asteroidBounds.contains(x, y)) {
 			Gdx.app.log("building", "asteroid does not contains these coords");
 			return;
 		}
 		//checks which building was chosen by the player
 		Building newBuilding;
 		switch (GameStateHolder.chosenBuilding) {
+		
 		case none:
 			return;
+			
 		case testBuilding1:
 			newBuilding = new TestBuilding1(x, y);
 			break;
+			
 		default:
 			return;
 		}
