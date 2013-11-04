@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.ChosenBuilding;
 import com.gameInfo.DiplomacySelection;
 import com.gameInfo.GameStateHolder;
+import com.gameInfo.Technology;
 import com.main.ChipTotality;
 import com.res.TexturesHolder;
 import com.world.Asteroid;
@@ -21,7 +22,7 @@ public class GameScreen implements Screen, InputProcessor {
 	CameraController cameraController;
 
 	Asteroid asteroid;
-	
+
 	DiplomacyScreen diplomacyScreen;
 
 	GameScreen(ChipTotality gam) {
@@ -47,17 +48,19 @@ public class GameScreen implements Screen, InputProcessor {
 		cameraController.handleInput();
 
 		handleMouseInput();
+		
+		if(GameStateHolder.researching) 
+			manageResearch();
 
 		game.batch.setProjectionMatrix(cameraController.camera.combined);
 
 		game.batch.begin();
 		game.batch.draw(TexturesHolder.worldBackground, 0, 0);
 		for (Building buildings : asteroid.buildings)
-			game.batch.draw(buildings.buildingTexture, buildings.coords.x,
-					buildings.coords.y);
+			game.batch.draw(buildings.buildingTexture, buildings.coords.x, buildings.coords.y);
 
 		game.batch.end();
-
+		
 	}
 
 	private void handleMouseInput()
@@ -119,8 +122,7 @@ public class GameScreen implements Screen, InputProcessor {
 			case Keys.ESCAPE:
 				GameStateHolder.chosenBuilding = ChosenBuilding.none;
 				GameStateHolder.buildingMode = false;
-				Gdx.app.log("buildingMode", "building mode:"
-						+ GameStateHolder.buildingMode);
+				Gdx.app.log("buildingMode", "building mode:"+ GameStateHolder.buildingMode);
 				break;
 				
 			default:
@@ -134,8 +136,9 @@ public class GameScreen implements Screen, InputProcessor {
 			break;
 			
 		default:
+			Gdx.app.log("building", "building chosen:"+ GameStateHolder.chosenBuilding.toString());
 		}
-
+		
 		return false;
 	}
 
@@ -178,7 +181,25 @@ public class GameScreen implements Screen, InputProcessor {
 				+ GameStateHolder.chosenBuilding.toString());
 		GameStateHolder.chosenBuilding = ChosenBuilding.none;
 	}
+	
+	public void manageResearch(){
+		GameStateHolder.researchTimeElapsed+=Gdx.graphics.getDeltaTime();
 
+		if(GameStateHolder.researchTimeElapsed>=GameStateHolder.toResearch.timeToResearch){
+			GameStateHolder.technologiesDiscovered[GameStateHolder.toResearch.id]=true;
+			GameStateHolder.researching=false;
+			GameStateHolder.researchTimeElapsed=0;
+			Gdx.app.log("technology", "technology researched:"+Technology.techName0);
+		}
+	}
+	
+	public void research(Technology tech){
+		GameStateHolder.researching=true;
+		GameStateHolder.toResearch=tech;
+		Gdx.app.log("technology", "technology to res:" +tech);
+	}
+	
+	
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
