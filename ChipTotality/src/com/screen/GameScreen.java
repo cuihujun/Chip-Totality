@@ -121,8 +121,8 @@ public class GameScreen implements Screen, InputProcessor {
 				
 			case Keys.ESCAPE:
 				GameStateHolder.chosenBuilding = ChosenBuilding.none;
-				GameStateHolder.buildingMode = false;
-				Gdx.app.log("buildingMode", "building mode:"+ GameStateHolder.buildingMode);
+				GameStateHolder.mode = GameStateHolder.Mode.NONE;
+				Gdx.app.log("buildingMode", "building mode:"+ GameStateHolder.mode.toString());
 				break;
 				
 			default:

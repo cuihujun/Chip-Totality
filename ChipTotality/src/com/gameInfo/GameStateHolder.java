@@ -12,6 +12,9 @@ public final class GameStateHolder
 {	
 	public enum Mode {NONE, BUILDING, DIPLOMACY};
 	
+	public static Mode mode = Mode.NONE;
+	public static ChosenBuilding chosenBuilding = ChosenBuilding.none;
+	
 	public static boolean[] technologiesDiscovered = new boolean[Technology.values().length];
 	public static boolean researching=false;
 	public static float researchTimeElapsed=0;

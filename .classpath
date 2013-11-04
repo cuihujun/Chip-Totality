@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="ChipTotality-android/src"/>
+	<classpathentry kind="src" path="ChipTotality-desktop/src"/>
+	<classpathentry kind="src" path="ChipTotality/src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="ChipTotality/libs/gdx-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="ChipTotality/libs/gdx.jar"/>
+	<classpathentry kind="lib" path="ChipTotality-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="ChipTotality-desktop/libs/gdx-backend-lwjgl-sources.jar"/>
+	<classpathentry kind="lib" path="ChipTotality-desktop/libs/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="ChipTotality-desktop/libs/gdx-natives.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
