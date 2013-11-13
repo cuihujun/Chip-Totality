@@ -1,10 +1,34 @@
-dyplomacja - dolan
-budowanie budynkow (kolizje, tryb budowania) - arap
-GUI (w tym przejscia do nowych screenow, dodanie ikonek na ekranie)
-mechanika walki wiezyczek(do omowienia i zrobienia)
-dodanie kilku konkretnych budynkow, np. kopalni i zwiazanych z nimi funkcjonalnosci
-drzewko rozwoju - arap
-dostosowanie/rozwoj pod androidem
-"prawdziwa" grafika
-dzwieki?
-sensowniejsze przewijanie niz klawiatura 
+TILESY:
+	-budowanie z przycaiganiem do tilesa
+grafikow tilesow, budynkow, asteroidy
+2 waluty
+wieze
+samoloty reptilan
+samoloty atakuja budynki
+pola akodinu - wykrywanie przy budowaniu
+
+DYPLOMACJA:
+	nawiazanie kontaktu z wybranym przyjacielem za akodin
+	
+
+BUDYNKI(razem z kompletem funkcji do nich):
+	dopisac funkcje ktora niszczy budynek(w GameScreen)
+	centralny-baza(centralny budynek, utrata go konczy gre, generuje œwietliste istoty) 
+	kopalnia akodinu(wydobdywa x akodinu na sekunde na konretknym polu - przycaiganie do pola surowca)
+	rafineria akodinu robi z brudnego akodinu z kopalni czysty
+	swietlista swiatynia(wydobywa dodatkowe swietliste istoty, moze stac gdziekolwiek)
+BUDYNKI DO ULEPSZANIA TECHNOLOGII(i moze jakis interfejs do tego typu bydnkow):
+	ambasada - daje profity do dyplomacji(najpierw trzeba zrobic dyplomacje)
+	swiete wzgorza - ulepszaja generowanie swietlistych istot
+GUI:
+	
+	nowa klasa GUI(scene2d) z jakas sturktura ktora trzyma przyciski i cala reszte
+	niech ktos namaluje projekt jak mialoby byc to rozmieszczone
+	przycisk dyplomacji
+	przycisk budowy/wyjscia z trybu budowy
+	przycisk usuwania budynku
+	cale menu dyplomacji
+	jakis pasek informacyjny moze dodac
+
+
+
