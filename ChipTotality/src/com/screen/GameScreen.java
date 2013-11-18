@@ -5,16 +5,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.ChosenBuilding;
-import com.gameInfo.DiplomacySelection;
 import com.gameInfo.GameStateHolder;
-import com.gameInfo.Technology;
 import com.main.ChipTotality;
-import com.res.TexturesHolder;
+import com.res.Textures;
 import com.world.Asteroid;
+import com.world.building.Base;
 import com.world.building.Building;
-import com.world.building.TestBuilding1;
 
 public class GameScreen implements Screen, InputProcessor {
 
@@ -24,7 +21,8 @@ public class GameScreen implements Screen, InputProcessor {
 	Asteroid asteroid;
 
 	DiplomacyScreen diplomacyScreen;
-
+		
+	Base base;
 	GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;
@@ -34,28 +32,24 @@ public class GameScreen implements Screen, InputProcessor {
 		asteroid = new Asteroid();
 		
 		diplomacyScreen = new DiplomacyScreen(game, this);
-
+		//base = new Base(1, 1, 1, 1);
+		
+		
 	}
 
 	@Override
-	public void render(float delta) 
-	{
-		if(GameStateHolder.mode == GameStateHolder.Mode.DIPLOMACY){
-			game.setScreen(diplomacyScreen);
-		}
+	public void render(float delta) {
+		//System.out.println(GameStateHolder.beings);
+		//System.out.println(Upgrade.directConnection.isResearched);
+		
 		
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		cameraController.handleInput();
-
-		handleMouseInput();
 		
-		if(GameStateHolder.researching) 
-			manageResearch();
-
 		game.batch.setProjectionMatrix(cameraController.camera.combined);
 
 		game.batch.begin();
-		game.batch.draw(TexturesHolder.worldBackground, 0, 0);
+		game.batch.draw(Textures.worldBackground, 0, 0);
 		for (Building buildings : asteroid.buildings)
 			game.batch.draw(buildings.buildingTexture, buildings.coords.x, buildings.coords.y);
 
@@ -63,54 +57,11 @@ public class GameScreen implements Screen, InputProcessor {
 		
 	}
 
-	private void handleMouseInput()
-	{
-		if (Gdx.input.isTouched()) {
-			Vector3 touchPos = new Vector3();
-			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			cameraController.camera.unproject(touchPos);
 
-			switch(GameStateHolder.mode){ 
-			case BUILDING:
-				if (GameStateHolder.chosenBuilding != ChosenBuilding.none) {
-					build(touchPos.x, touchPos.y);
-				}
-				break;
-			
-			case DIPLOMACY:
-				break;
-			}
-		}
 
-	}
-
-	// handles pressed down keys
+	
 	@Override
-	public boolean keyDown(int keycode) {
-		// switches buildingMode state
-		GameStateHolder.Mode modeVar = GameStateHolder.mode;
-		
-		switch(keycode) {
-		case Keys.F1:
-			modeVar = GameStateHolder.Mode.BUILDING;
-			break;
-			
-		case Keys.F2:
-			modeVar = GameStateHolder.Mode.DIPLOMACY;
-			break;
-		}
-		
-		if(GameStateHolder.mode == GameStateHolder.Mode.NONE) {
-			GameStateHolder.mode = modeVar;
-		} else if(GameStateHolder.mode == modeVar) {
-			GameStateHolder.mode = GameStateHolder.Mode.NONE;
-			game.setScreen(this);
-		}
-		
-		Gdx.app.log("Current mode:", GameStateHolder.mode.toString());
-		
-		//if buildingMode is activated, chose the building to be built
-		
+	public boolean keyDown(int keycode) {		
 		switch (GameStateHolder.mode) {
 		case BUILDING:
 			switch (keycode) {
@@ -142,62 +93,6 @@ public class GameScreen implements Screen, InputProcessor {
 		return false;
 	}
 
-	// Builds the building in the pointed location. Checks whether the location
-	// is contained by the asteroid and collisions between other buildings
-	
-	private void build(float x, float y) 
-	{
-		// returns if the given coordinates are not contained by the asteroid
-		
-		if (!asteroid.asteroidBounds.contains(x, y)) {
-			Gdx.app.log("building", "asteroid does not contains these coords");
-			return;
-		}
-		//checks which building was chosen by the player
-		Building newBuilding;
-		switch (GameStateHolder.chosenBuilding) {
-		
-		case none:
-			return;
-			
-		case testBuilding1:
-			newBuilding = new TestBuilding1(x, y);
-			break;
-			
-		default:
-			return;
-		}
-		//checks collisions between buildings
-		for (Building building : asteroid.buildings) {
-			if (newBuilding.overlaps(building)) {
-				Gdx.app.log("building", "building overlaps another one");
-				return;
-			}
-
-		}
-		//actually adds the building to the game
-		asteroid.buildings.add(newBuilding);
-		Gdx.app.log("building", "building built:"
-				+ GameStateHolder.chosenBuilding.toString());
-		GameStateHolder.chosenBuilding = ChosenBuilding.none;
-	}
-	
-	public void manageResearch(){
-		GameStateHolder.researchTimeElapsed+=Gdx.graphics.getDeltaTime();
-
-		if(GameStateHolder.researchTimeElapsed>=GameStateHolder.toResearch.timeToResearch){
-			GameStateHolder.technologiesDiscovered[GameStateHolder.toResearch.id]=true;
-			GameStateHolder.researching=false;
-			GameStateHolder.researchTimeElapsed=0;
-			Gdx.app.log("technology", "technology researched:"+Technology.techName0);
-		}
-	}
-	
-	public void research(Technology tech){
-		GameStateHolder.researching=true;
-		GameStateHolder.toResearch=tech;
-		Gdx.app.log("technology", "technology to res:" +tech);
-	}
 	
 	
 	@Override

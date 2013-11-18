@@ -1,14 +1,13 @@
 package com.screen;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Rectangle;
 import com.gameInfo.DiplomacySelection;
 import com.main.ChipTotality;
-import com.res.TexturesHolder;
-
-import java.util.ArrayList;
+import com.res.Textures;
 
 public class DiplomacyScreen implements Screen
 {
@@ -34,8 +33,8 @@ public class DiplomacyScreen implements Screen
 		}
 		
 		game.batch.begin();
-		game.batch.draw(TexturesHolder.diplomacyMenuBackground, 0, 0);
-		game.batch.draw(TexturesHolder.ashtarButton, 25, 25);
+		game.batch.draw(Textures.diplomacyMenuBackground, 0, 0);
+		game.batch.draw(Textures.ashtarButton, 25, 25);
 		game.batch.end();
 	}
 	
