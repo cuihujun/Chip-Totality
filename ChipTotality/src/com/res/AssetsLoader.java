@@ -86,7 +86,7 @@ public class AssetsLoader {
 		loadMusics();
 		loadParticleEffects();
 						
-		manager.load("fonts/foncik.fnt", BitmapFont.class);			
+		manager.load("fonts/foncik.fnt", BitmapFont.class);
 	}
 	
 	private void loadSounds(){

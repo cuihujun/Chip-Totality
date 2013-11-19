@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.gameInfo.ChosenBuilding;
 import com.gameInfo.GameStateHolder;
@@ -53,9 +53,8 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		//System.out.println(GameStateHolder.beings);
-		//System.out.println(Upgrade.directConnection.isResearched);
-				
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);		
+		//System.out.println(Upgrade.directConnection.isResearched);				
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 
