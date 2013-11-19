@@ -80,7 +80,7 @@ public class AssetsLoader {
 		manager.load("background.png", Texture.class, textureParameter);
 		manager.load("TestBuilding1.png", Texture.class, textureParameter);
 		manager.load("dipl_menu.png", Texture.class, textureParameter);
-		manager.load("ashtar_button_128.png", Texture.class, textureParameter);
+		manager.load("ashtar_Button_128.png", Texture.class, textureParameter);
 							
 		loadSounds();
 		loadMusics();

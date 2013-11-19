@@ -11,7 +11,6 @@ import com.gameInfo.ChosenBuilding;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
-import com.res.AssetsLoader;
 import com.res.Textures;
 import com.world.Asteroid;
 import com.world.building.Base;
@@ -33,11 +32,7 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;		
 		camera = new OrthographicCamera(Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);
-		camera.setToOrtho(false, Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);
-		
-		AssetsLoader.getInstance().loadAssets();
-		AssetsLoader.getInstance().finishLoading();//normlanie robi sie update i get progress na loading screenie TODO loadingScreen
-		AssetsLoader.getInstance().createResourcesAfterLoad();
+		camera.setToOrtho(false, Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);		
 		
 		inputMultiplexer = new InputMultiplexer();
 		cameraController = new CameraController(camera);

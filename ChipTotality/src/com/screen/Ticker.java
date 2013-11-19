@@ -1,11 +1,11 @@
 package com.screen;
 
 import java.util.LinkedList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.res.AssetsLoader;
 
 public class Ticker {
 	public int maxMessages;
@@ -13,20 +13,16 @@ public class Ticker {
 	private int x;
 	private int y;	
 	
-	private BitmapFont font;
 	
 	private LinkedList<String> messages;
-	private String info;
-	
+	private String info;	
 	
 	
 	public Ticker(int y, int x, float scale, int maxMessages, int speed){
 		this.maxMessages=maxMessages;
 		this.speed=speed;
 		this.y=y;
-		this.x = x;
-		font = new BitmapFont();
-		font.setScale(scale);
+		this.x = x;		
 		messages = new LinkedList<String>();
 		info="";
 	}
@@ -45,6 +41,7 @@ public class Ticker {
 	}
 	
 	public void draw(ChipTotality game){
+		BitmapFont font = AssetsLoader.getInstance().getFont();		
 		font.draw(game.batch, info, x, y);
 		x-=Gdx.graphics.getDeltaTime()*speed;
 			
