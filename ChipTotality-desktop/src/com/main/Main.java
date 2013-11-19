@@ -9,7 +9,7 @@ public class Main {
 		
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "ChipTotality";
-		cfg.useGL20 = false;
+		cfg.useGL20 = true;
 		cfg.width = Settings.WIDTH;
 		cfg.height = Settings.HEIGHT;
 		

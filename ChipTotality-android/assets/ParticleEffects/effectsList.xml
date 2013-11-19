@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Effects>
+    <effect name="fire"></effect>
+	<effect name="ppp"></effect>
+	<effect name="gas"></effect>
+	<effect name="pulsing"></effect>	
+</Effects>

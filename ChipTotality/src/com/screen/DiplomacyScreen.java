@@ -33,8 +33,8 @@ public class DiplomacyScreen implements Screen
 		}
 		
 		game.batch.begin();
-		game.batch.draw(Textures.diplomacyMenuBackground, 0, 0);
-		game.batch.draw(Textures.ashtarButton, 25, 25);
+		game.batch.draw(Textures.get("dipl_menu"), 0, 0);
+		game.batch.draw(Textures.get("ashtar_button_128"), 25, 25);
 		game.batch.end();
 	}
 	

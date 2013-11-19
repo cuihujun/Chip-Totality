@@ -1,0 +1,33 @@
+
+particleTexture.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+particle-fire
+  rotate: false
+  xy: 1, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+particle-cloud
+  rotate: false
+  xy: 131, 5
+  size: 120, 124
+  orig: 128, 128
+  offset: 6, 1
+  index: -1
+particle-star
+  rotate: false
+  xy: 253, 65
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+particle
+  rotate: false
+  xy: 253, 32
+  size: 32, 31
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

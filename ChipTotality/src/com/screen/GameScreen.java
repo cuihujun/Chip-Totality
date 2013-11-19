@@ -2,12 +2,16 @@ package com.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.gameInfo.ChosenBuilding;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
+import com.main.Settings;
+import com.res.AssetsLoader;
 import com.res.Textures;
 import com.world.Asteroid;
 import com.world.building.Base;
@@ -16,7 +20,9 @@ import com.world.building.Building;
 public class GameScreen implements Screen, InputProcessor {
 
 	final ChipTotality game;
+	public OrthographicCamera camera;
 	CameraController cameraController;
+	private InputMultiplexer inputMultiplexer;
 
 	Asteroid asteroid;
 
@@ -25,31 +31,36 @@ public class GameScreen implements Screen, InputProcessor {
 	Base base;
 	GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
-		game = gam;
-		Gdx.input.setInputProcessor(this);
-		cameraController = new CameraController();
+		game = gam;		
+		camera = new OrthographicCamera(Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);
+		camera.setToOrtho(false, Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);
+		
+		AssetsLoader.getInstance().loadAssets();
+		AssetsLoader.getInstance().finishLoading();//normlanie robi sie update i get progress na loading screenie TODO loadingScreen
+		AssetsLoader.getInstance().createResourcesAfterLoad();
+		
+		inputMultiplexer = new InputMultiplexer();
+		cameraController = new CameraController(camera);
+		inputMultiplexer.addProcessor(this);
+		inputMultiplexer.addProcessor(cameraController);		
+		Gdx.input.setInputProcessor(inputMultiplexer);
+		
 
-		asteroid = new Asteroid();
-		
+		asteroid = new Asteroid();		
 		diplomacyScreen = new DiplomacyScreen(game, this);
-		//base = new Base(1, 1, 1, 1);
-		
-		
 	}
 
 	@Override
 	public void render(float delta) {
 		//System.out.println(GameStateHolder.beings);
 		//System.out.println(Upgrade.directConnection.isResearched);
-		
-		
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		cameraController.handleInput();
-		
-		game.batch.setProjectionMatrix(cameraController.camera.combined);
+				
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);		
+		camera.update();
+		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();
-		game.batch.draw(Textures.worldBackground, 0, 0);
+		game.batch.draw(Textures.get("background"), 0, 0);
 		for (Building buildings : asteroid.buildings)
 			game.batch.draw(buildings.buildingTexture, buildings.coords.x, buildings.coords.y);
 
