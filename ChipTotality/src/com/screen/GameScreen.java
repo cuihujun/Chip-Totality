@@ -65,7 +65,7 @@ public class GameScreen implements Screen, InputProcessor {
 		switch (GameStateHolder.mode) {
 		case BUILDING:
 			switch (keycode) {
-			
+										
 			case Keys.F1:
 				GameStateHolder.chosenBuilding = ChosenBuilding.testBuilding1;
 				break;
@@ -85,9 +85,20 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		case DIPLOMACY:
 			break;
+
+		case NONE:
+			switch (keycode) {
+
+			case Keys.B:
+				GameStateHolder.mode = GameStateHolder.Mode.BUILDING;
+				break;
+			}
+
+			break;
+			
 			
 		default:
-			Gdx.app.log("building", "building chosen:"+ GameStateHolder.chosenBuilding.toString());
+			Gdx.app.log("Default", "action");
 		}
 		
 		return false;
