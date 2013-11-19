@@ -7,10 +7,16 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.gameInfo.ChosenBuilding;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.res.AssetsLoader;
+import com.res.Musics;
 import com.res.Textures;
 import com.world.Asteroid;
 import com.world.building.Base;
@@ -24,7 +30,9 @@ public class GameScreen implements Screen, InputProcessor {
 	private InputMultiplexer inputMultiplexer;
 
 	Asteroid asteroid;
-
+	private IsometricTiledMapRenderer renderer;
+	private TiledMapTileLayer freeLayer;
+	private TiledMap tiledMap;
 	DiplomacyScreen diplomacyScreen;
 		
 	Base base;
@@ -33,16 +41,36 @@ public class GameScreen implements Screen, InputProcessor {
 		game = gam;		
 		camera = new OrthographicCamera(Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);
 		camera.setToOrtho(false, Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);		
+		camera.position.set(1000, 0, 0);
+		camera.update();
 		
 		inputMultiplexer = new InputMultiplexer();
 		cameraController = new CameraController(camera);
 		inputMultiplexer.addProcessor(this);
-		inputMultiplexer.addProcessor(cameraController);		
+		inputMultiplexer.addProcessor(cameraController);
+		//TODO gameControler
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		
-
+		tiledMap = AssetsLoader.getInstance().getTileMap();
+		renderer = new IsometricTiledMapRenderer(tiledMap, 100f / 64f);//TODO wielkosc tili do sprawdzenia
+		freeLayer = (TiledMapTileLayer)tiledMap.getLayers().get("FreeSpace");
+		
 		asteroid = new Asteroid();		
-		diplomacyScreen = new DiplomacyScreen(game, this);
+		diplomacyScreen = new DiplomacyScreen(game, this);		
+		Musics.play("music");
+	}
+	
+	public void isFree(int cellCoordX, int cellCoordY) {
+		boolean free = false;
+		int getCellX = cellCoordX;
+		int getCellY = cellCoordY;
+		Cell cellToCheck = freeLayer.getCell(getCellX,getCellY);
+		
+		
+		try{
+			free = cellToCheck.getTile().getProperties().containsKey("free");
+		} catch (NullPointerException e){}
+		System.out.println("Is this cell free :" + free);
 	}
 
 	@Override
@@ -60,9 +88,9 @@ public class GameScreen implements Screen, InputProcessor {
 
 		game.batch.end();
 		
+		renderer.setView(camera);
+		renderer.render();		
 	}
-
-
 
 	
 	@Override

@@ -7,12 +7,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
@@ -22,7 +25,7 @@ public class AssetsLoader {
 
 	private AssetManager manager = new AssetManager();	
 	private TextureParameter textureParameter = new TextureParameter();
-	
+			
 	public static AssetsLoader getInstance() {
 		if(loader == null)
 			loader = new AssetsLoader();
@@ -32,6 +35,10 @@ public class AssetsLoader {
 	public Texture getTexture(String name){
 		return manager.get(name + ".png", Texture.class);
 	}
+	
+	public TiledMap getTileMap(){
+		return manager.get("MapData/testmap2.tmx");
+	}	
 						
 	public Sound getSound(String name){
 		String fullName = "Sounds/"+name+".mp3";
@@ -81,6 +88,10 @@ public class AssetsLoader {
 		manager.load("TestBuilding1.png", Texture.class, textureParameter);
 		manager.load("dipl_menu.png", Texture.class, textureParameter);
 		manager.load("ashtar_Button_128.png", Texture.class, textureParameter);
+		
+		manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+		manager.load("MapData/testmap2.tmx", TiledMap.class);
+
 							
 		loadSounds();
 		loadMusics();
@@ -122,10 +133,10 @@ public class AssetsLoader {
 		
 		try {
 			Element xmlRoot = new XmlReader().parse(Gdx.files.internal("ParticleEffects/effectsList.xml"));
-			Element effect;			 
+			Element effect;
 			for (int i = 0; i < xmlRoot.getChildCount(); i++) {
 				effect =  xmlRoot.getChild(i);
-				manager.load("ParticleEffects/" + effect.getAttribute("name") + ".p", ParticleEffect.class, particleParameters);				
+				manager.load("ParticleEffects/" + effect.getAttribute("name") + ".p", ParticleEffect.class, particleParameters);		
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -136,8 +147,8 @@ public class AssetsLoader {
 		return manager.get("fonts/foncik.fnt");
 	}
 	
-	public void createResourcesAfterLoad(){												
-		getFont().getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);			
+	public void createResourcesAfterLoad(){
+		getFont().getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
 	
 	private AssetsLoader() {
