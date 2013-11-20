@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
@@ -39,6 +40,17 @@ public class GameScreen implements Screen, InputProcessor {
 	Asteroid asteroid;
 	private IsometricTiledMapRenderer mapRenderer;
 	private TiledMapTileLayer freeLayer;
+	private TiledMapTileLayer selectionLayer;
+	private TiledMapTileLayer buldingsLayer;
+	
+	//TODO aaa dirty code
+	private TiledMapTile selectTile;
+	private TiledMapTile buldingTile;
+	private Vector2 lastSel = new Vector2(0,0);
+	
+	
+	
+	
 	private TiledMap tiledMap;
 	DiplomacyScreen diplomacyScreen;
 		
@@ -91,9 +103,15 @@ public class GameScreen implements Screen, InputProcessor {
 		tiledMap = AssetsLoader.getInstance().getTileMap();		
 		mapRenderer = new IsometricTiledMapRenderer(tiledMap, unitScale);		
 		freeLayer = (TiledMapTileLayer)tiledMap.getLayers().get("FreeSpace");
+		selectionLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Selection");
+		buldingsLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Buldings");
 		
-		((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(0, 0).setTile(null);
-		((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(19, 19).setTile(null);
+		//very dirty code just to work fast TODO poprawic wyrzucic itp itd;]
+		selectTile = selectionLayer.getCell(0, 0).getTile();
+		selectionLayer.getCell(0, 0).setTile(null);
+		buldingTile = buldingsLayer.getCell(0, 0).getTile();
+		buldingsLayer.getCell(0, 0).setTile(null);
+		
 		
 		asteroid = new Asteroid();		
 		diplomacyScreen = new DiplomacyScreen(game, this);		
@@ -271,6 +289,21 @@ public class GameScreen implements Screen, InputProcessor {
 		xx = xx -10;
 		yy = Math.abs(yy -9);
     	
+		
+		//TODO zamieniony xx,yy? dirty code
+		selectionLayer.setCell((int)lastSel.y ,(int)lastSel.x, null);
+		lastSel.x = xx;
+		lastSel.y = yy;		
+		Cell cell = new Cell();		
+		if(GameStateHolder.mode == GameStateHolder.Mode.BUILDING){
+			cell.setTile(buldingTile);
+			buldingsLayer.setCell(yy, xx, cell);			
+		}
+		else{
+			cell.setTile(selectTile);		
+			selectionLayer.setCell(yy, xx, cell);			
+		}
+		
     	Sounds.play("Click");
     	Gdx.app.log("Selected tile", "x,y : " + xx + "," + yy);
 	}
