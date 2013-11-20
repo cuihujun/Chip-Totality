@@ -1,6 +1,7 @@
 package com.res;
 
 import com.badlogic.gdx.audio.Music;
+import com.res.Loader.AssetsLoader;
 
 public class Musics {
 	
@@ -12,7 +13,7 @@ public class Musics {
 	}
 
 	static public void loop(String name) {
-		Music music = AssetsLoader.getInstance().getMusic(name);
+		Music music = AssetsLoader.getMusic(name);
 		if (music != null) {	
 			music.setVolume(volume);
 			music.setLooping(true);
@@ -22,7 +23,7 @@ public class Musics {
 	}		
 	
 	static public void play(String name) {
-		Music music = AssetsLoader.getInstance().getMusic(name);
+		Music music = AssetsLoader.getMusic(name);
 		if (music != null) {
 			music.setVolume(volume);			
 			music.setLooping(false);

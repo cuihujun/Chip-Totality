@@ -161,7 +161,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,88,88,88,88
 </data>
  </layer>
- <layer name="FreeSpace" width="20" height="20" visible="0">
+ <layer name="FreeSpace" width="20" height="20">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,89,89,0,

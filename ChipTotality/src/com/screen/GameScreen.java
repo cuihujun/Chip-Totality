@@ -9,20 +9,20 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.ChosenBuilding;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
-import com.res.AssetsLoader;
+import com.res.Loader.AssetsLoader;
 import com.res.Musics;
 import com.res.Textures;
 import com.world.Asteroid;
-import com.world.building.Base;
 import com.world.building.Building;
 
 public class GameScreen implements Screen, InputProcessor {
+	
 
 	final ChipTotality game;
 	public OrthographicCamera camera;
@@ -30,12 +30,14 @@ public class GameScreen implements Screen, InputProcessor {
 	private InputMultiplexer inputMultiplexer;
 
 	Asteroid asteroid;
+	
 	private IsometricTiledMapRenderer renderer;
 	private TiledMapTileLayer freeLayer;
 	private TiledMap tiledMap;
+	
 	DiplomacyScreen diplomacyScreen;
-		
-	Base base;
+	
+	
 	GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;		
@@ -51,32 +53,29 @@ public class GameScreen implements Screen, InputProcessor {
 		//TODO gameControler
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		
-		tiledMap = AssetsLoader.getInstance().getTileMap();
+		tiledMap = AssetsLoader.getTileMap();
 		renderer = new IsometricTiledMapRenderer(tiledMap, 100f / 64f);//TODO wielkosc tili do sprawdzenia
 		freeLayer = (TiledMapTileLayer)tiledMap.getLayers().get("FreeSpace");
+
 		
 		asteroid = new Asteroid();		
 		diplomacyScreen = new DiplomacyScreen(game, this);		
-		Musics.play("music");
+		Musics.play("Music");
 	}
 	
-	public void isFree(int cellCoordX, int cellCoordY) {
-		boolean free = false;
-		int getCellX = cellCoordX;
-		int getCellY = cellCoordY;
-		Cell cellToCheck = freeLayer.getCell(getCellX,getCellY);
+	public void isFree(float cellCoordX, float cellCoordY) {
+
+		boolean free = true;
 		
+		//Cell cellToCheck = freeLayer.getCell(cellCoordX, cellCoordY);
+		//if(cellToCheck==null)
+		//	System.out.println("pusto");
+		//free=cellToCheck.getTile().getProperties().containsKey("free");
 		
-		try{
-			free = cellToCheck.getTile().getProperties().containsKey("free");
-		} catch (NullPointerException e){}
-		System.out.println("Is this cell free :" + free);
 	}
 
 	@Override
-	public void render(float delta) {
-		//System.out.println(GameStateHolder.beings);
-		//System.out.println(Upgrade.directConnection.isResearched);				
+	public void render(float delta) {				
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
@@ -90,6 +89,16 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		renderer.setView(camera);
 		renderer.render();		
+		
+		 if(Gdx.input.isTouched()) {
+			    Vector3 touchPos = new Vector3();
+			    touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			    camera.unproject(touchPos);
+			    System.out.println("x:"+touchPos.x+"y"+touchPos.y);
+			    System.out.println("x1:"+32*1+16/2*1+"y1"+32*1+16*1);
+			    
+			    //isFree(touchPos.x, touchPos.y);
+		}
 	}
 
 	
@@ -112,9 +121,6 @@ public class GameScreen implements Screen, InputProcessor {
 			default:
 				break;
 			}
-			
-			Gdx.app.log("building", "building chosen:"
-					+ GameStateHolder.chosenBuilding.toString());
 		
 		case DIPLOMACY:
 			break;
@@ -125,11 +131,11 @@ public class GameScreen implements Screen, InputProcessor {
 			case Keys.B:
 				GameStateHolder.mode = GameStateHolder.Mode.BUILDING;
 				break;
+			case Keys.D:
+				GameStateHolder.mode = GameStateHolder.Mode.DIPLOMACY;
+				break;
 			}
-
-			break;
-			
-			
+			break;			
 		default:
 			Gdx.app.log("Default", "action");
 		}

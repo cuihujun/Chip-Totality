@@ -1,11 +1,12 @@
 package com.screen;
 
 import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.main.ChipTotality;
 import com.main.Settings;
-import com.res.AssetsLoader;
+import com.res.Loader.AssetsLoader;
 
 public class Ticker {
 	public int maxMessages;
@@ -41,7 +42,7 @@ public class Ticker {
 	}
 	
 	public void draw(ChipTotality game){
-		BitmapFont font = AssetsLoader.getInstance().getFont();		
+		BitmapFont font = AssetsLoader.getFont();		
 		font.draw(game.batch, info, x, y);
 		x-=Gdx.graphics.getDeltaTime()*speed;
 			

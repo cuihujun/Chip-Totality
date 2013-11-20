@@ -15,8 +15,7 @@ public class Main {
 		
 		
 		cfg.resizable = false;
-		new LwjglApplication(new ChipTotality(), cfg);
-		
+		new LwjglApplication(new ChipTotality(), cfg);	
 		
 	}
 }
