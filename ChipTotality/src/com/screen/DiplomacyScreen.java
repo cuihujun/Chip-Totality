@@ -12,14 +12,13 @@ import com.res.Textures;
 public class DiplomacyScreen implements Screen
 {
 	ChipTotality game;
-	GameScreen previous;
+	
 	
 	ArrayList<Rectangle> buttons;
 	
-	DiplomacyScreen(ChipTotality ct, GameScreen gscr)
+	public DiplomacyScreen(ChipTotality ct)
 	{
 		game = ct;
-		previous = gscr;
 		buttons = new ArrayList<Rectangle>();
 		
 		buttons.add(new Rectangle(25, 25, 128, 128));
