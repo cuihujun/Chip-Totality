@@ -10,6 +10,9 @@ public class TestBuilding1 extends Building {
 		super(x,y, width, height);
 		buildingTexture=TexturesHolder.testBuilding1Texture;
 	}
-	
+	public void run(float deltaTime)
+	{
+		
+	}
 	
 }

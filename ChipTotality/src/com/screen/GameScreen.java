@@ -58,7 +58,7 @@ public class GameScreen implements Screen, InputProcessor {
 		game.batch.draw(TexturesHolder.worldBackground, 0, 0);
 		for (Building buildings : asteroid.buildings)
 			game.batch.draw(buildings.buildingTexture, buildings.coords.x, buildings.coords.y);
-
+		asteroid.draw(game.batch);
 		game.batch.end();
 		
 	}
@@ -73,7 +73,7 @@ public class GameScreen implements Screen, InputProcessor {
 			switch(GameStateHolder.mode){ 
 			case BUILDING:
 				if (GameStateHolder.chosenBuilding != ChosenBuilding.none) {
-					build(touchPos.x, touchPos.y);
+					asteroid.build(touchPos.x, touchPos.y);
 				}
 				break;
 			
@@ -97,6 +97,9 @@ public class GameScreen implements Screen, InputProcessor {
 			
 		case Keys.F2:
 			modeVar = GameStateHolder.Mode.DIPLOMACY;
+			break;
+		case Keys.A:
+			asteroid.shoot();
 			break;
 		}
 		
@@ -144,7 +147,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	// Builds the building in the pointed location. Checks whether the location
 	// is contained by the asteroid and collisions between other buildings
-	
+	/*
 	private void build(float x, float y) 
 	{
 		// returns if the given coordinates are not contained by the asteroid
@@ -181,7 +184,7 @@ public class GameScreen implements Screen, InputProcessor {
 				+ GameStateHolder.chosenBuilding.toString());
 		GameStateHolder.chosenBuilding = ChosenBuilding.none;
 	}
-	
+	*/
 	public void manageResearch(){
 		GameStateHolder.researchTimeElapsed+=Gdx.graphics.getDeltaTime();
 
