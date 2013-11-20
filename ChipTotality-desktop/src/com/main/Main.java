@@ -11,11 +11,17 @@ public class Main {
 		cfg.title = "ChipTotality";
 		cfg.useGL20 = true;
 		cfg.width = Settings.WIDTH;
+<<<<<<< HEAD
 		cfg.height = Settings.HEIGHT;
 		
 		
 		cfg.resizable = false;
 		new LwjglApplication(new ChipTotality(), cfg);	
 		
+=======
+		cfg.height = Settings.HEIGHT;			
+		cfg.resizable = true;
+		new LwjglApplication(new ChipTotality(), cfg);			
+>>>>>>> upstream/master
 	}
 }
