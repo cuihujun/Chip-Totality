@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
@@ -47,7 +48,10 @@ public class AssetsLoader {
 		}
 		return null;
 	}
-	
+		
+	public Skin getSkin(){
+		return manager.get("uiSkin/uiskin.json", Skin.class);		
+	}	
 	
 	ParticleEffect getParticle(String name){			
 		String fullName = "ParticleEffects/"+name+".p";
@@ -88,7 +92,11 @@ public class AssetsLoader {
 		manager.load("TestBuilding1.png", Texture.class, textureParameter);
 		manager.load("dipl_menu.png", Texture.class, textureParameter);
 		manager.load("ashtar_Button_128.png", Texture.class, textureParameter);
+		
+		//skin do menu
+		manager.load("uiSkin/uiskin.json",Skin.class);
 				
+		//loading mapy
 		TmxMapLoader.Parameters para = new TmxMapLoader.Parameters();
 		para.generateMipMaps = true;		
 		para.textureMagFilter = Texture.TextureFilter.Linear;

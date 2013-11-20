@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,6 +19,16 @@ import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.gameInfo.ChosenBuilding;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
@@ -48,11 +59,12 @@ public class GameScreen implements Screen, InputProcessor {
 	private TiledMapTile buldingTile;
 	private Vector2 lastSel = new Vector2(0,0);
 	
-	
-	
-	
+		
 	private TiledMap tiledMap;
 	DiplomacyScreen diplomacyScreen;
+	
+	//do ui
+	private Stage stage;
 		
 	Base base;
 	
@@ -93,11 +105,35 @@ public class GameScreen implements Screen, InputProcessor {
 		camera.position.set(unitScale*tileSize*tilesCountVertical/2, unitScale*tileHeight/2, 0);
 		camera.update();
 		
+		
+        //do ui 
+        stage = new Stage(Settings.VIEW_WIDTH*4, Settings.VIEW_HEIGHT*4, true);
+        Skin skin = AssetsLoader.getInstance().getSkin();        
+        Button buttonBuldingTogle = new TextButton(" Bulding \n Mode ", skin, "toggle");  
+        buttonBuldingTogle.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor) {
+				if( GameStateHolder.mode != GameStateHolder.Mode.BUILDING){
+					GameStateHolder.mode =  GameStateHolder.Mode.BUILDING;
+				}
+				else{
+					 GameStateHolder.mode = GameStateHolder.Mode.NONE;
+				}
+			}
+		});         
+        
+		Table t = new Table();
+		t.align(Align.bottom);
+		t.add(buttonBuldingTogle);
+        t.pack();
+        stage.addActor(t);		
+		
+		
 		inputMultiplexer = new InputMultiplexer();
 		cameraController = new CameraController(camera);
 		inputMultiplexer.addProcessor(this);
 		inputMultiplexer.addProcessor(cameraController);
 		//TODO gameControler
+		inputMultiplexer.addProcessor(stage);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		
 		tiledMap = AssetsLoader.getInstance().getTileMap();		
@@ -111,6 +147,9 @@ public class GameScreen implements Screen, InputProcessor {
 		selectionLayer.getCell(0, 0).setTile(null);
 		buldingTile = buldingsLayer.getCell(0, 0).getTile();
 		buldingsLayer.getCell(0, 0).setTile(null);
+		
+		
+
 		
 		
 		asteroid = new Asteroid();		
@@ -144,10 +183,10 @@ public class GameScreen implements Screen, InputProcessor {
 		for (Building buildings : asteroid.buildings)
 			game.batch.draw(buildings.buildingTexture, buildings.coords.x, buildings.coords.y);
 
-		game.batch.end();
-		
+		game.batch.end();		
 		mapRenderer.setView(camera);
-		mapRenderer.render();	
+		mapRenderer.render();
+		stage.draw();
 				
 		if (Settings.IS_DEBUG) renderDebug(delta);
 	}
