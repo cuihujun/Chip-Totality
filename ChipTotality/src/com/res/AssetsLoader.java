@@ -88,10 +88,14 @@ public class AssetsLoader {
 		manager.load("TestBuilding1.png", Texture.class, textureParameter);
 		manager.load("dipl_menu.png", Texture.class, textureParameter);
 		manager.load("ashtar_Button_128.png", Texture.class, textureParameter);
-		
-		manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-		manager.load("MapData/testmap2.tmx", TiledMap.class);
-
+				
+		TmxMapLoader.Parameters para = new TmxMapLoader.Parameters();
+		para.generateMipMaps = true;		
+		para.textureMagFilter = Texture.TextureFilter.Linear;
+		para.textureMinFilter = Texture.TextureFilter.Linear;
+		TmxMapLoader tmxLoader = new TmxMapLoader(new InternalFileHandleResolver());	
+		manager.setLoader(TiledMap.class, tmxLoader);
+		manager.load("MapData/testmap2.tmx", TiledMap.class, para);
 							
 		loadSounds();
 		loadMusics();

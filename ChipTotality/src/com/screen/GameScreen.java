@@ -233,8 +233,8 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		mapRenderer.dispose();
+		tiledMap.dispose();
 	}
 
 	@Override
