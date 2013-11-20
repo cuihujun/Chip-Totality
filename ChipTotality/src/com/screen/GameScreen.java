@@ -5,18 +5,25 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.ChosenBuilding;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.AssetsLoader;
 import com.res.Musics;
+import com.res.Sounds;
 import com.res.Textures;
 import com.world.Asteroid;
 import com.world.building.Base;
@@ -30,18 +37,48 @@ public class GameScreen implements Screen, InputProcessor {
 	private InputMultiplexer inputMultiplexer;
 
 	Asteroid asteroid;
-	private IsometricTiledMapRenderer renderer;
+	private IsometricTiledMapRenderer mapRenderer;
 	private TiledMapTileLayer freeLayer;
 	private TiledMap tiledMap;
 	DiplomacyScreen diplomacyScreen;
 		
 	Base base;
-	GameScreen(ChipTotality gam) {
+	
+	
+	//TODO do wydzielenia do innje klasy np World, Asteroid, WorldRenderer?
+	private final int tilesCountVertical = 20;
+	private final float tileSize = 64f;
+	private final float tileHeight = 32f;
+	private final float unitScale = (Settings.VIEW_HEIGHT/10f)/tileSize;//wejdzie 10 tili(64f) 20 tili(32f) pionowo
+	
+	private ShapeRenderer shapeRenderer;
+	
+	public void renderDebug(float delta) {			
+		shapeRenderer.setProjectionMatrix(camera.combined);		
+		shapeRenderer.begin(ShapeType.Line);
+		
+		//osie z punktem 0,0 (worldSpace)
+		shapeRenderer.setColor(new Color(0, 1, 0, 1));
+		shapeRenderer.line(0, 0, 0, 200);
+		shapeRenderer.line(0, 0, 200, 0);
+		shapeRenderer.line(0, 0, 0, -200);
+		shapeRenderer.line(0, 0, -200, 0);
+		shapeRenderer.end();
+	}	
+	
+	GameScreen(ChipTotality gam) {	
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;		
-		camera = new OrthographicCamera(Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);
-		camera.setToOrtho(false, Settings.CAMERA_WIDTH, Settings.CAMERA_HEIGHT);		
-		camera.position.set(1000, 0, 0);
+		
+		shapeRenderer = new ShapeRenderer();
+		
+		
+		Settings.ASPECT_RATIO  = (float) ((float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight());         
+		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT* Settings.ASPECT_RATIO;
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Settings.VIEW_WIDTH ,  Settings.VIEW_HEIGHT);		
+		//wysrodkowanie na mape(TODO da sie przesunac jakos mape? albo czemu ona w takim miejscu sie renderuje ustawienia w edytorze Tiled?)
+		camera.position.set(unitScale*tileSize*tilesCountVertical/2, unitScale*tileHeight/2, 0);
 		camera.update();
 		
 		inputMultiplexer = new InputMultiplexer();
@@ -51,13 +88,16 @@ public class GameScreen implements Screen, InputProcessor {
 		//TODO gameControler
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		
-		tiledMap = AssetsLoader.getInstance().getTileMap();
-		renderer = new IsometricTiledMapRenderer(tiledMap, 100f / 64f);//TODO wielkosc tili do sprawdzenia
+		tiledMap = AssetsLoader.getInstance().getTileMap();		
+		mapRenderer = new IsometricTiledMapRenderer(tiledMap, unitScale);		
 		freeLayer = (TiledMapTileLayer)tiledMap.getLayers().get("FreeSpace");
+		
+		((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(0, 0).setTile(null);
+		((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(19, 19).setTile(null);
 		
 		asteroid = new Asteroid();		
 		diplomacyScreen = new DiplomacyScreen(game, this);		
-		Musics.play("music");
+		Musics.play("Music");
 	}
 	
 	public void isFree(int cellCoordX, int cellCoordY) {
@@ -88,8 +128,10 @@ public class GameScreen implements Screen, InputProcessor {
 
 		game.batch.end();
 		
-		renderer.setView(camera);
-		renderer.render();		
+		mapRenderer.setView(camera);
+		mapRenderer.render();	
+				
+		if (Settings.IS_DEBUG) renderDebug(delta);
 	}
 
 	
@@ -141,8 +183,10 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
+        float aspectRatio = (float) width / (float) height;
+        camera.viewportHeight = Settings.VIEW_HEIGHT;
+        camera.viewportWidth = Settings.VIEW_HEIGHT * aspectRatio;
+        camera.update();
 	}
 
 	@Override
@@ -195,8 +239,40 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+    	Vector3 pos = new Vector3(screenX, screenY, 0);
+    	camera.unproject(pos);    	        	
+    	checkTileClicked(pos.x, pos.y);
+    	
 		return false;
+	}
+		
+	private void checkTileClicked(float x, float y){
+    	int xx, yy;
+    	float tileHeightUnits = tileHeight*unitScale;
+    	float tileWidthUnits = tileSize*unitScale;
+    	    	
+    	//Gdx.app.log("World", "x,y : " + x + "," + y);
+    	//ze wzgledu na dziwne przesuniecie mapy...   (tak by punkt 0,0 dla lewy dolny róg)//TODO czy da sie wysrodkowac jakos mape? Tile editor? albo sam renderer?
+    	y = y + (tilesCountVertical/2-0.5f)*tileHeightUnits;
+    	    	
+    	//y = 20*tileHeightUnits-y; //(tak by punkt 0,0 dla lewy górny róg)
+    	//Gdx.app.log("World przesuniety", "x,y : " + x + "," + y);
+    	
+    	
+    	//y = (20*tileHeightUnits)/2-y; //(tak by punkt 0,0 na œrodku mapy)
+    	//x = (20*tileWidthUnits)/2-x; //(tak by punkt 0,0 na œrodku mapy)
+    	
+    	
+    	xx =  (int) Math.floor((y + x/2)/tileHeightUnits);
+    	yy = (int)Math.floor((y - x/2)/tileHeightUnits);
+
+    	
+    	//do kordynatów w tilach z layera na mapie//TODO usunac te magick numbery jakos;]
+		xx = xx -10;
+		yy = Math.abs(yy -9);
+    	
+    	Sounds.play("Click");
+    	Gdx.app.log("Selected tile", "x,y : " + xx + "," + yy);
 	}
 
 	@Override
