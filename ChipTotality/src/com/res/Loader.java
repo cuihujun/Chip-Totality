@@ -20,9 +20,7 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class Loader {
-	
-	
-	
+			
 	public static class AssetsLoader {
 		
 		public static AssetManager manager=new AssetManager();
@@ -91,8 +89,8 @@ public class Loader {
 			//loading mapy
 			TmxMapLoader.Parameters para = new TmxMapLoader.Parameters();
 			para.generateMipMaps = true;		
-			para.textureMagFilter = Texture.TextureFilter.Linear;
-			para.textureMinFilter = Texture.TextureFilter.Linear;
+			para.textureMagFilter = Texture.TextureFilter.Nearest;
+			para.textureMinFilter = Texture.TextureFilter.Nearest;
 			TmxMapLoader tmxLoader = new TmxMapLoader(new InternalFileHandleResolver());	
 			manager.setLoader(TiledMap.class, tmxLoader);
 			manager.load("MapData/testmap2.tmx", TiledMap.class, para);

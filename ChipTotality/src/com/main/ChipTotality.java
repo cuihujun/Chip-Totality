@@ -17,7 +17,7 @@ public class ChipTotality extends Game {
 	public DiplomacyScreen diplomacyScreen;
 	
 	@Override
-	public void create() {	
+	public void create() {
 		batch = new SpriteBatch();
 		
 		AssetsLoader.loadAssets();

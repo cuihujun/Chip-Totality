@@ -105,7 +105,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 		// do ui
 		stage = new Stage(Settings.VIEW_WIDTH * 4, Settings.VIEW_HEIGHT * 4,
-				true);
+				true);		
 		Skin skin = AssetsLoader.getSkin();
 		Button buttonBuldingTogle = new TextButton(" Bulding \n Mode ", skin,
 				"toggle");
@@ -113,8 +113,10 @@ public class GameScreen implements Screen, InputProcessor {
 			public void changed(ChangeEvent event, Actor actor) {
 				if (GameStateHolder.mode != GameStateHolder.Mode.BUILDING) {
 					GameStateHolder.mode = GameStateHolder.Mode.BUILDING;
+					freeLayer.setVisible(true);
 				} else {
 					GameStateHolder.mode = GameStateHolder.Mode.NONE;
+					freeLayer.setVisible(false);
 				}
 			}
 		});
@@ -226,11 +228,14 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height) {		
 		float aspectRatio = (float) width / (float) height;
+		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * aspectRatio;
+		
 		camera.viewportHeight = Settings.VIEW_HEIGHT;
-		camera.viewportWidth = Settings.VIEW_HEIGHT * aspectRatio;
+		camera.viewportWidth = Settings.VIEW_WIDTH;				
 		camera.update();
+		stage.setViewport(Settings.VIEW_WIDTH*4, Settings.VIEW_HEIGHT*4, true);
 	}
 
 	@Override
@@ -321,8 +326,18 @@ public class GameScreen implements Screen, InputProcessor {
 		lastSel.y = yy;
 		Cell cell = new Cell();
 		if (GameStateHolder.mode == GameStateHolder.Mode.BUILDING) {
-			cell.setTile(buldingTile);
-			buldingsLayer.setCell(yy, xx, cell);
+			//czy mozna budowac;]
+			Cell freeCell = freeLayer.getCell(yy, xx);
+			if ((freeCell!=null)&&(freeCell.getTile().getProperties().containsKey("free"))){
+				cell.setTile(buldingTile);
+				buldingsLayer.setCell(yy, xx, cell);	
+				freeLayer.setCell(yy, xx, null);
+			}
+			else
+			{
+				
+			}
+
 		} else {
 			cell.setTile(selectTile);
 			selectionLayer.setCell(yy, xx, cell);
