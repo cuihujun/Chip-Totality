@@ -10,20 +10,35 @@ public abstract class Building {
 	protected Rectangle bounds;
 
 	protected int hitpoints;
-	Boolean isResearching = true;
+	
+	public Boolean researchReady;
 
 	public Building(float x, float y, int width, int height) {
 		coords = new Vector2(x, y);
 		bounds = new Rectangle(x - (0.5f * width), y - (0.5f * height), width,
 				height);
+		setResearchingFlag(this);
 	}
 
+	
+	void setResearchingFlag(Building building){
+		if(building instanceof Upgradeable)
+			researchReady=true;
+		else 
+			researchReady=false;
+	
+			
+		
+	}
+	
 	public boolean overlaps(Building building) {
 		return this.bounds.overlaps(building.bounds);
 	}
-
+	
+	
+	
 	/**
-	 * Conducts research. Note that you have to make sure, if the exact upgrade
+	 * Conducts research. Note that you have to make sure, whether the exact upgrade
 	 * is available for the building, for your own.
 	 * 
 	 * 

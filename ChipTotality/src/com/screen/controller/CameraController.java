@@ -1,4 +1,4 @@
-package com.screen;
+package com.screen.controller;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;

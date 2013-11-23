@@ -25,12 +25,15 @@ public enum Upgrade {
 	
 	
 	static void scheduleResearch(final Upgrade upgrade, final Building building) {
-		if (upgrade.isBeingResearched || upgrade.isAlreadyResearched || GameStateHolder.beings<upgrade.cost || building.isResearching==true) {
+		if(!(building instanceof Upgradeable))
+			throw new RuntimeException("this building cannot conduct research");
+			
+		if (upgrade.isBeingResearched || upgrade.isAlreadyResearched || GameStateHolder.beings<upgrade.cost || building.researchReady==false) {
 			Gdx.app.log("upgrade", "already is being or already researched/not enough beings/building is already researching something");
 			return;
 		}
 		upgrade.isBeingResearched=true;
-		building.isResearching=true;
+		building.researchReady=false;
 		GameStateHolder.beings -= upgrade.cost;
 		Timer.schedule(new Task() {
 
@@ -60,7 +63,7 @@ public enum Upgrade {
 		}
 		upgrade.isBeingResearched = false;
 		upgrade.isAlreadyResearched = false;
-		building.isResearching=false;
+		building.researchReady=true;
 		
 	}
 	

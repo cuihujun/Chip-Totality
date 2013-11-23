@@ -1,13 +1,12 @@
 package com.world.building;
 
-public class holyMountains extends Building{
+public class HolyMountains extends Building implements Upgradeable{
 
 	private static int maxHitpoints=200;
 	private static int cost = 20;
 	
-	public holyMountains(float x, float y, int width, int height) {
+	public HolyMountains(float x, float y, int width, int height) {
 		super(x, y, width, height);
-		isResearching=false;
 	}
 	
 	@Override

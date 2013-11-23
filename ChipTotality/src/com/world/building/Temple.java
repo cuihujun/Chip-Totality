@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
 
-public class Temple extends Building {
+public class Temple extends Building implements Upgradeable{
 	private static int maxHitpoints=200;
 	private static int cost = 20;
 	private static int resourceDeliveryAmount = 5;

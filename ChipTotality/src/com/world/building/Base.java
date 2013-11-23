@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
 
-public class Base extends Building{
+public class Base extends Building implements Upgradeable{
 	static int maxHitpoints=500;
 	private static int cost = 100;
 	static int resourceDeliveryAmount = 5;
@@ -19,7 +19,6 @@ public class Base extends Building{
 		super(x, y, width, height);
 		GameStateHolder.beings -= cost;
 		hitpoints=maxHitpoints;
-		isResearching=false;
 		
 		addResources = new Task() {
 			@Override

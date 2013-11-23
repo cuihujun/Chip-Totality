@@ -87,7 +87,7 @@ public class DiplomacyScreen implements Screen
 	{
 		
 	}
-	
+
 	
 	
 }
