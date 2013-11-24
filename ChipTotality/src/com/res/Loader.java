@@ -32,7 +32,7 @@ public class Loader {
 		}
 		
 		public static TiledMap getTileMap(){
-			return manager.get("MapData/testmap2.tmx");
+			return manager.get("MapData/test_ortho2.tmx");
 		}	
 							
 		public static Sound getSound(String name){
@@ -82,7 +82,7 @@ public class Loader {
 			manager.load("TestBuilding1.png", Texture.class, textureParameter);
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
 			manager.load("ashtar_button_128.png", Texture.class, textureParameter);
-			
+	
 			//skin do menu
 			manager.load("uiSkin/uiskin.json",Skin.class);
 					
@@ -93,7 +93,8 @@ public class Loader {
 			para.textureMinFilter = Texture.TextureFilter.Nearest;
 			TmxMapLoader tmxLoader = new TmxMapLoader(new InternalFileHandleResolver());	
 			manager.setLoader(TiledMap.class, tmxLoader);
-			manager.load("MapData/testmap2.tmx", TiledMap.class, para);
+			manager.load("MapData/test_ortho2.tmx", TiledMap.class, para);
+			manager.load("MapData/tree2-final.png", Texture.class, textureParameter);
 								
 			loadSounds();
 			loadMusics();

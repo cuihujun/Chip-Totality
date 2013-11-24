@@ -8,14 +8,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.main.ChipTotality;
 import com.main.Settings;
-import com.res.Loader.AssetsLoader;
 import com.res.Musics;
-import com.res.Textures;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
@@ -30,15 +26,12 @@ public class GameScreen implements Screen {
 	private final CameraController cameraController;
 	private final InputMultiplexer inputMultiplexer;
 
-	Asteroid asteroid;
+	public Asteroid asteroid;
 
-	private final IsometricTiledMapRenderer mapRenderer;
+	private final OrthogonalTiledMapRenderer mapRenderer;
 
-	public TiledMapTileLayer freeLayer;
-	private final TiledMapTileLayer selectionLayer;
-	private final TiledMapTileLayer buldingsLayer;
 
-	private final TiledMap tiledMap;
+	//private final TiledMap tiledMap;
 	GameScreenGUI gameScreenGUI;
 
 	// TODO do wydzielenia do innje klasy np World, Asteroid, WorldRenderer?
@@ -68,10 +61,13 @@ public class GameScreen implements Screen {
 
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
-		game = gam;
+		game = gam;	
 		asteroid = new Asteroid();
+		
+		
 		shapeRenderer = new ShapeRenderer();
-
+		mapRenderer = new OrthogonalTiledMapRenderer(asteroid.getTiledMap(), unitScale);
+		
 		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics
 				.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;
@@ -88,21 +84,9 @@ public class GameScreen implements Screen {
 		inputMultiplexer.addProcessor(cameraController);
 		inputMultiplexer.addProcessor(gameController);
 		Gdx.input.setInputProcessor(inputMultiplexer);
-
-		tiledMap = AssetsLoader.getTileMap();
-		mapRenderer = new IsometricTiledMapRenderer(tiledMap, unitScale);
-		freeLayer = (TiledMapTileLayer) tiledMap.getLayers().get("FreeSpace");
-		selectionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(
-				"Selection");
-		buldingsLayer = (TiledMapTileLayer) tiledMap.getLayers()
-				.get("Buldings");
-
-		// very dirty code just to work fast TODO poprawic wyrzucic itp itd;]
-		// selectTile = selectionLayer.getCell(0, 0).getTile();
-		selectionLayer.getCell(0, 0).setTile(null);
-		// buldingTile = buldingsLayer.getCell(0, 0).getTile();
-		buldingsLayer.getCell(0, 0).setTile(null);
-
+		
+		
+		
 		Musics.play("Music");
 	}
 
@@ -113,7 +97,6 @@ public class GameScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();
-		game.batch.draw(Textures.get("background"), 0, 0);
 		game.batch.end();
 
 		mapRenderer.setView(camera);
@@ -163,7 +146,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		mapRenderer.dispose();
-		tiledMap.dispose();
+		asteroid.dispose();
 	}
 
 }

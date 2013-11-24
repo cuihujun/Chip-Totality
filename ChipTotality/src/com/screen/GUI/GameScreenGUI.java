@@ -34,10 +34,10 @@ public class GameScreenGUI {
 			public void changed(ChangeEvent event, Actor actor) {
 				if (GameStateHolder.mode != GameStateHolder.Mode.BUILDING) {
 					GameStateHolder.mode = GameStateHolder.Mode.BUILDING;
-					game.gameScreen.freeLayer.setVisible(true);
+					//TODO game.gameScreen.asteroid.freeLayer.setVisible(true);
 				} else {
 					GameStateHolder.mode = GameStateHolder.Mode.NONE;
-					 game.gameScreen.freeLayer.setVisible(false);
+					//TODO game.gameScreen.asteroid.freeLayer.setVisible(false);
 				}
 
 			}
