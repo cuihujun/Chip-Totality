@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Musics;
@@ -101,8 +102,11 @@ public class GameScreen implements Screen {
 
 		mapRenderer.setView(camera);
 		mapRenderer.render();
+		game.batch.begin();	// Renderowanie rzeczy znajdujacych sie na asteroidzie
+		asteroid.draw(game.batch);
+		game.batch.end();
 		gameScreenGUI.stage.draw();
-
+		
 		if (Settings.DEBUG)
 			renderDebug(delta);
 	}
