@@ -8,14 +8,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.main.ChipTotality;
 import com.main.Settings;
-import com.res.Musics;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
-import com.world.Asteroid;
+import com.world.building.Building;
 
 public class GameScreen implements Screen {
 
@@ -26,24 +24,10 @@ public class GameScreen implements Screen {
 	private final CameraController cameraController;
 	private final InputMultiplexer inputMultiplexer;
 
-	public Asteroid asteroid;
-
-	private final OrthogonalTiledMapRenderer mapRenderer;
-
-
-	//private final TiledMap tiledMap;
 	GameScreenGUI gameScreenGUI;
 
-	// TODO do wydzielenia do innje klasy np World, Asteroid, WorldRenderer?
-	private final int tilesCountVertical = 20;
-	private final float tileSize = 64f;
-	private final float tileHeight = 32f;
-	private final float unitScale = (Settings.VIEW_HEIGHT / 10f) / tileSize;// wejdzie
-																			// 10
-																			// tili(64f)
-																			// 20
-																			// tili(32f)
-																			// pionowo
+
+	
 
 	private final ShapeRenderer shapeRenderer;
 
@@ -62,12 +46,11 @@ public class GameScreen implements Screen {
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;	
-		asteroid = new Asteroid();
+		
 		
 		
 		shapeRenderer = new ShapeRenderer();
-		mapRenderer = new OrthogonalTiledMapRenderer(asteroid.getTiledMap(), unitScale);
-		
+			
 		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics
 				.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;
@@ -87,7 +70,7 @@ public class GameScreen implements Screen {
 		
 		
 		
-		Musics.play("Music");
+		//Musics.play("Music");
 	}
 
 	@Override
@@ -95,12 +78,13 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
-
+		
 		game.batch.begin();
+		for (Building building : game.asteroid.buildings) {
+			game.batch.draw(building.buildingTexture, building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
+		}
 		game.batch.end();
 
-		mapRenderer.setView(camera);
-		mapRenderer.render();
 		gameScreenGUI.stage.draw();
 
 		if (Settings.DEBUG)
@@ -115,8 +99,8 @@ public class GameScreen implements Screen {
 		camera.viewportHeight = Settings.VIEW_HEIGHT;
 		camera.viewportWidth = Settings.VIEW_WIDTH;
 		camera.update();
-		gameScreenGUI.stage.setViewport(Settings.VIEW_WIDTH * 4,
-				Settings.VIEW_HEIGHT * 4, true);
+		gameScreenGUI.stage.setViewport(Settings.VIEW_WIDTH ,
+				Settings.VIEW_HEIGHT , true);
 	}
 
 	@Override
@@ -145,8 +129,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		mapRenderer.dispose();
-		asteroid.dispose();
+
 	}
 
 }

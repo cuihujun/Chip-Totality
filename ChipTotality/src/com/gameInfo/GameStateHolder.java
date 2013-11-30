@@ -14,7 +14,7 @@ public final class GameStateHolder
 	//resources
 	public static int dirtyAcodin=0;
 	public static int acodin=0;
-	public static int beings=100;
+	public static int beings=0;
 	
 	
 	//current gamemode

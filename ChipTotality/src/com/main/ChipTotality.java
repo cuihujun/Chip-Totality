@@ -6,8 +6,9 @@ import com.res.Loader.AssetsLoader;
 import com.screen.DiplomacyScreen;
 import com.screen.GameScreen;
 import com.screen.MainMenuScreen;
+import com.world.Asteroid;
 
-
+ 
 public class ChipTotality extends Game {
 
 	public SpriteBatch batch;
@@ -16,10 +17,12 @@ public class ChipTotality extends Game {
 	public GameScreen gameScreen;
 	public DiplomacyScreen diplomacyScreen;
 	
+	public Asteroid asteroid;
+	
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		
+		asteroid = new Asteroid();
 		AssetsLoader.loadAssets();
 		//TODO loadingScreen
 		AssetsLoader.finishLoading();//normlanie robi sie update i get progress na loading screenie 		
@@ -32,6 +35,7 @@ public class ChipTotality extends Game {
 		this.setScreen(mainMenuScreen);
 	}
 	
+	@Override
 	public void render(){
 		super.render();
 	}

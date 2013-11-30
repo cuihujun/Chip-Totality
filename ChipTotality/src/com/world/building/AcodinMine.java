@@ -5,7 +5,8 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
 
 public class AcodinMine extends Building{
-
+	final static int width=2;
+	final static int height=2;
 	private static int maxHitpoints=200;
 	private static int cost = 20;
 	private static int resourceDeliveryAmount = 5;
@@ -14,20 +15,10 @@ public class AcodinMine extends Building{
 	private Task addResources;
 	
 	
-	public AcodinMine(float x, float y, int width, int height) {
+	public AcodinMine(int x, int y) {
 		super(x, y, width, height);
-		GameStateHolder.beings -= cost;
 		hitpoints=maxHitpoints;
-		
-		addResources=new Task() {
-			
-			@Override
-			public void run() {
-				GameStateHolder.dirtyAcodin+=resourceDeliveryAmount;
-			}
-		};
-		Timer.schedule(addResources, resourceDeliveryTime);
-		
+		doTask();
 	}
 	
 	@Override
@@ -35,6 +26,22 @@ public class AcodinMine extends Building{
 		super.destroy();
 		addResources.cancel();
 	}
-	
-	
+
+	@Override
+	public void pay() {
+		GameStateHolder.beings -= cost;
+		
+	}
+
+	@Override
+	public void doTask() {
+		addResources=new Task() {
+			
+			@Override
+			public void run() {
+				GameStateHolder.dirtyAcodin+=resourceDeliveryAmount;
+			}
+		};
+		Timer.schedule(addResources, resourceDeliveryTime);	
+	}
 }
