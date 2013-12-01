@@ -1,5 +1,6 @@
 package com.world.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
@@ -21,7 +22,6 @@ public class Base extends Building implements Upgradeable{
 	public Base(int x, int y) {
 		super(x, y, width, height);		
 		hitpoints=maxHitpoints;
-		buildingTexture=AssetsLoader.getTexture("TestBuilding1");
 	}
 	
 
@@ -48,6 +48,12 @@ public class Base extends Building implements Upgradeable{
 		};
 		Timer.schedule(addResources, resourceDeliveryTime, resourceDeliveryTime);
 		
+	}
+
+
+	@Override
+	public Texture getTexture() {
+		return AssetsLoader.getTexture("TestBuilding1");
 	}
 	
 

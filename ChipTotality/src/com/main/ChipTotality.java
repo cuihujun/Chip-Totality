@@ -12,13 +12,13 @@ import com.world.Asteroid;
 public class ChipTotality extends Game {
 
 	public SpriteBatch batch;
+	public Asteroid asteroid;
 	
 	public MainMenuScreen mainMenuScreen;
 	public GameScreen gameScreen;
 	public DiplomacyScreen diplomacyScreen;
 	
-	public Asteroid asteroid;
-	
+
 	@Override
 	public void create() {
 		batch = new SpriteBatch();

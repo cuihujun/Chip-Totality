@@ -7,11 +7,17 @@ public abstract class Building {
 	public final Vector2 coords;	//left bottom corner of the building
 	public final Vector2 size;		//width and height of the building, in tiles; e.g. size(3,2) looks like [][][]
 									//																		[][][]
-	public Texture buildingTexture;
 	protected int hitpoints;
 	public Boolean researchReady;
 	
 	protected int cost;
+	
+	
+	
+	public abstract void pay();
+	public abstract void doTask();
+	public abstract Texture getTexture();
+	
 	
 	public Building(int x, int y, int width, int height) {
 		coords = new Vector2(x, y);
@@ -19,9 +25,6 @@ public abstract class Building {
 		setResearchingFlag(this);
 	}
 
-	public abstract void pay();
-	public abstract void doTask();
-	
 	void setResearchingFlag(Building building){
 		if(building instanceof Upgradeable)
 			researchReady=true;

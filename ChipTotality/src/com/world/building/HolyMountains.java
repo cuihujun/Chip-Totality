@@ -1,5 +1,6 @@
 package com.world.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.gameInfo.GameStateHolder;
 
 public class HolyMountains extends Building implements Upgradeable{
@@ -8,7 +9,7 @@ public class HolyMountains extends Building implements Upgradeable{
 	private static int maxHitpoints=200;
 	private static int cost = 20;
 	
-	public HolyMountains(int x, int y, int width, int height) {
+	public HolyMountains(int x, int y) {
 		super(x, y, width, height);
 	}
 	
@@ -27,6 +28,12 @@ public class HolyMountains extends Building implements Upgradeable{
 	public void doTask() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Texture getTexture() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

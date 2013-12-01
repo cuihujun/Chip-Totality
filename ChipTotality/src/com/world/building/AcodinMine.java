@@ -1,5 +1,6 @@
 package com.world.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
@@ -43,5 +44,11 @@ public class AcodinMine extends Building{
 			}
 		};
 		Timer.schedule(addResources, resourceDeliveryTime);	
+	}
+
+	@Override
+	public Texture getTexture() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

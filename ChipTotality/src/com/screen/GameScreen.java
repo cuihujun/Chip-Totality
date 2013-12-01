@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.screen.GUI.GameScreenGUI;
@@ -25,8 +28,6 @@ public class GameScreen implements Screen {
 	private final InputMultiplexer inputMultiplexer;
 
 	GameScreenGUI gameScreenGUI;
-
-
 	
 
 	private final ShapeRenderer shapeRenderer;
@@ -36,10 +37,10 @@ public class GameScreen implements Screen {
 		shapeRenderer.begin(ShapeType.Line);
 
 		shapeRenderer.setColor(new Color(0, 1, 0, 1));
-		shapeRenderer.line(0, 0, 0, 200);
-		shapeRenderer.line(0, 0, 200, 0);
-		shapeRenderer.line(0, 0, 0, -200);
-		shapeRenderer.line(0, 0, -200, 0);
+		shapeRenderer.line(0, 0, 0, Settings.tilesHorizontal*Settings.tileSize);
+		shapeRenderer.line(0, 0, Settings.tilesHorizontal*Settings.tileSize, 0);
+		shapeRenderer.line(0, 0, 0, -Settings.tilesHorizontal*Settings.tileSize);
+		shapeRenderer.line(0, 0, -Settings.tilesHorizontal*Settings.tileSize, 0);
 		shapeRenderer.end();
 	}
 
@@ -81,8 +82,17 @@ public class GameScreen implements Screen {
 		
 		game.batch.begin();
 		for (Building building : game.asteroid.buildings) {
-			game.batch.draw(building.buildingTexture, building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
+			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
 		}
+		
+		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none){
+			Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+			game.gameScreen.camera.unproject(pos);
+			Vector2 tile = gameController.unprojectTile(pos.x, pos.y);
+			if(tile!=null)
+				game.batch.draw(GameStateHolder.chosenBuilding.getTexture(), tile.x*Settings.tileSize, tile.y*Settings.tileSize);
+		}
+		
 		game.batch.end();
 
 		gameScreenGUI.stage.draw();
