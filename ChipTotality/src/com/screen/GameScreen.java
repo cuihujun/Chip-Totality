@@ -16,6 +16,7 @@ import com.main.Settings;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
+import com.world.Tile.TileType;
 import com.world.building.Building;
 
 public class GameScreen implements Screen {
@@ -89,8 +90,18 @@ public class GameScreen implements Screen {
 			Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 			game.gameScreen.camera.unproject(pos);
 			Vector2 tile = gameController.unprojectTile(pos.x, pos.y);
-			if(tile!=null)
+			
+			if(tile!=null){
+				if(game.asteroid.worldGrid[(int)tile.x][(int)tile.y].tileType==TileType.blocked || game.asteroid.worldGrid[(int)tile.x][(int)tile.y].building!=null)
+					game.batch.setColor(1, 0, 0, 0.6f);							
+				else
+					game.batch.setColor(0.1f, 1f, 0.1f, 0.7f);
+				
 				game.batch.draw(GameStateHolder.chosenBuilding.getTexture(), tile.x*Settings.tileSize, tile.y*Settings.tileSize);
+				game.batch.setColor(Color.WHITE);
+			}
+			
+			
 		}
 		
 		game.batch.end();
