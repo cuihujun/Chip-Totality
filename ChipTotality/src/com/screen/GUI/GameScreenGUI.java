@@ -51,5 +51,13 @@ public class GameScreenGUI {
 	void dispose(){
 		stage.dispose();
 	}
+	
+	public void render(float delta){
+		game.batch.begin();
+		AssetsLoader.getSprite("infoPanel").draw(game.batch);
+		AssetsLoader.getSprite("actionPanel").draw(game.batch);
+		game.batch.end();
+		stage.draw();
+	}
 
 }
