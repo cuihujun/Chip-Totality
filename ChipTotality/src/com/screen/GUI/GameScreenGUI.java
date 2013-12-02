@@ -32,10 +32,9 @@ public class GameScreenGUI {
 		Table mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.setSkin(skin);	
-		stage.addActor(mainTable);
-        
-
-        
+		mainTable.debug();
+		
+		
 		Button buildingButton = new TextButton(" Bulding \n Mode ", skin);	
 		buildingButton.addListener(new ChangeListener() {
 			@Override
@@ -50,17 +49,10 @@ public class GameScreenGUI {
 
 			}
 		});
-		mainTable.add(buildingButton);
+		mainTable.add(buildingButton).bottom().center();
+
 		
-		
-		
-		
-		
-		Table infoTable = new Table();
-		infoTable.setFillParent(true);
-		infoTable.setSkin(skin);
-		infoTable.padRight(40);//TODO no magick number
-		mainTable.add(infoTable).top();
+
 
 		LabelStyle style = new LabelStyle();
 		style.font = AssetsLoader.getFont();		
@@ -77,9 +69,12 @@ public class GameScreenGUI {
 		dirtyAcodinLabel.setStyle(style);		
 		dirtyAcodinLabel.setAlignment(Align.top | Align.left);	
 				
-		infoTable.add(acodinLabel);
-		infoTable.add(beingsLabel);
-		infoTable.add(dirtyAcodinLabel);
+		mainTable.add(acodinLabel).top().right();
+		//mainTable.add(beingsLabel).top().right();
+		//mainTable.add(dirtyAcodinLabel).top().right();
+		
+		mainTable.pack();
+		stage.addActor(mainTable);
 	}
 	
 	void dispose(){
@@ -99,7 +94,8 @@ public class GameScreenGUI {
 		AssetsLoader.getSprite("infoPanel").draw(game.batch);
 		AssetsLoader.getSprite("actionPanel").draw(game.batch);
 		game.batch.end();
-		stage.draw();		
+		stage.draw();
+		if (Settings.DEBUG) Table.drawDebug(stage);
 	}
 
 }

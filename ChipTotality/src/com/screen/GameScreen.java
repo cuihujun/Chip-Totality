@@ -140,7 +140,7 @@ public class GameScreen implements Screen {
 		camera.viewportWidth = Settings.VIEW_WIDTH;
 		camera.update();
 		gameScreenGUI.stage.setViewport(Settings.VIEW_WIDTH ,
-				Settings.VIEW_HEIGHT , true);
+				Settings.VIEW_HEIGHT , true);		
 		
 		AssetsLoader.recreateAfterResize();
 	}
