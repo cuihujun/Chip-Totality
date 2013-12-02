@@ -125,8 +125,7 @@ public class GameScreen implements Screen {
 		}
 		
 		game.batch.end();
-
-		gameScreenGUI.stage.draw();
+		gameScreenGUI.render(delta);
 
 		if (Settings.DEBUG)
 			renderDebug(delta);
@@ -142,6 +141,8 @@ public class GameScreen implements Screen {
 		camera.update();
 		gameScreenGUI.stage.setViewport(Settings.VIEW_WIDTH ,
 				Settings.VIEW_HEIGHT , true);
+		
+		AssetsLoader.recreateAfterResize();
 	}
 
 	@Override
