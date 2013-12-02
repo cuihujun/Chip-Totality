@@ -23,16 +23,19 @@ public class GameScreenGUI {
 	private Label dirtyAcodinLabel;
 	private Label beingsLabel;
 	
+	private float acc=0;
+	private final float ONE_SECOND = 1.0f;
+	
 
 	public GameScreenGUI(final ChipTotality game) {
 		this.game = game;
 		stage = new Stage(Settings.VIEW_WIDTH , Settings.VIEW_HEIGHT , true);
 		Skin skin = AssetsLoader.getSkin();
 			
-		Table mainTable = new Table();
-		mainTable.setFillParent(true);
-		mainTable.setSkin(skin);	
-		mainTable.debug();
+		Table actionTable = new Table();
+		actionTable.setFillParent(true);
+		actionTable.setSkin(skin);			
+		actionTable.debug();
 		
 		
 		Button buildingButton = new TextButton(" Bulding \n Mode ", skin);	
@@ -49,17 +52,25 @@ public class GameScreenGUI {
 
 			}
 		});
-		mainTable.add(buildingButton).bottom().center();
+		actionTable.center().bottom();
+		actionTable.add(buildingButton);
 
 		
 
 
+
+		Table infoTable = new Table();
+		infoTable.setFillParent(true);
+		infoTable.setSkin(skin);			
+		infoTable.debug();
+		infoTable.top().right();
+		
 		LabelStyle style = new LabelStyle();
 		style.font = AssetsLoader.getFont();		
 		
 		acodinLabel = new Label("Acodin : ", skin);
 		acodinLabel.setStyle(style);		
-		acodinLabel.setAlignment(Align.top | Align.left);
+		acodinLabel.setAlignment(Align.top | Align.left);		
 
 		beingsLabel = new Label("Beings : ", skin);
 		beingsLabel.setStyle(style);		
@@ -68,13 +79,18 @@ public class GameScreenGUI {
 		dirtyAcodinLabel = new Label("Dirty Acodin : ", skin);
 		dirtyAcodinLabel.setStyle(style);		
 		dirtyAcodinLabel.setAlignment(Align.top | Align.left);	
-				
-		mainTable.add(acodinLabel).top().right();
-		//mainTable.add(beingsLabel).top().right();
-		//mainTable.add(dirtyAcodinLabel).top().right();
+			
 		
-		mainTable.pack();
-		stage.addActor(mainTable);
+		infoTable.add(acodinLabel).top().right();
+		infoTable.add(beingsLabel).top().right();
+		infoTable.add(dirtyAcodinLabel).top().right();
+		
+		infoTable.pack();
+		actionTable.pack();
+		stage.addActor(infoTable);
+		stage.addActor(actionTable);
+		
+		update(ONE_SECOND);
 	}
 	
 	void dispose(){
@@ -82,9 +98,13 @@ public class GameScreenGUI {
 	}
 	
 	private void update(float delta){
-		acodinLabel.setText("Acodin: " + GameStateHolder.acodin + " ");
-		beingsLabel.setText("Beings: " + GameStateHolder.beings + " ");
-		dirtyAcodinLabel.setText("Dirty Acodin: " + GameStateHolder.dirtyAcodin + " ");
+		acc+=delta;
+		if (acc>ONE_SECOND){
+			acc-=ONE_SECOND;
+			acodinLabel.setText("Acodin: " + GameStateHolder.acodin + " ");
+			beingsLabel.setText("Beings: " + GameStateHolder.beings + " ");
+			dirtyAcodinLabel.setText("Dirty Acodin: " + GameStateHolder.dirtyAcodin + " ");
+		}
 	}
 	
 	public void render(float delta){
