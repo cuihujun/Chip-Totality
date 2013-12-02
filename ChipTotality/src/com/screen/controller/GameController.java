@@ -71,6 +71,10 @@ public class GameController extends InputAdapter {
 		switch (GameStateHolder.mode) {
 		case BUILDING:
 			switch (keycode) {
+			
+			case Keys.F10:
+				Settings.DEBUG = !Settings.DEBUG;
+				break;
 
 			case Keys.F1:
 				GameStateHolder.chosenBuilding = ChosenBuilding.Base;
