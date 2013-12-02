@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.res.Loader.AssetsLoader;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
@@ -37,11 +38,28 @@ public class GameScreen implements Screen {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeType.Line);
 
+		//grid
+		shapeRenderer.setColor(new Color(0, 0, 1, 1));
+		int size = Settings.tileSize;		
+		for(int row=0;row<Settings.tilesHorizontal;row++){
+			for(int column=0;column<Settings.tilesVertical;column++){
+				shapeRenderer.setColor(new Color(0, 0, 1, 1));
+				shapeRenderer.line((row+0)*size, (column+0)*size, (row+1)*size, (column+0)*size);
+				shapeRenderer.line((row+0)*size, (column+0)*size, (row+0)*size, (column+1)*size);
+				shapeRenderer.line((row+1)*size, (column+0)*size, (row+1)*size, (column+1)*size);
+				shapeRenderer.line((row+1)*size, (column+1)*size, (row+0)*size, (column+1)*size);					
+			}
+		}		
+		
+		//2d axis
 		shapeRenderer.setColor(new Color(0, 1, 0, 1));
 		shapeRenderer.line(0, 0, 0, Settings.tilesHorizontal*Settings.tileSize);
 		shapeRenderer.line(0, 0, Settings.tilesHorizontal*Settings.tileSize, 0);
 		shapeRenderer.line(0, 0, 0, -Settings.tilesHorizontal*Settings.tileSize);
 		shapeRenderer.line(0, 0, -Settings.tilesHorizontal*Settings.tileSize, 0);
+		
+		
+		
 		shapeRenderer.end();
 	}
 
@@ -81,7 +99,9 @@ public class GameScreen implements Screen {
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 		
-		game.batch.begin();
+		//TODO moze jakas klasa Renderer? albo chociaz metoda?
+		game.batch.begin();		
+		game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
 		for (Building building : game.asteroid.buildings) {
 			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
 		}
@@ -93,7 +113,7 @@ public class GameScreen implements Screen {
 			
 			if(tile!=null){
 				if(game.asteroid.worldGrid[(int)tile.x][(int)tile.y].tileType==TileType.blocked || game.asteroid.worldGrid[(int)tile.x][(int)tile.y].building!=null)
-					game.batch.setColor(1, 0, 0, 0.6f);							
+					game.batch.setColor(1f, 0.1f, 0.1f, 0.7f);							
 				else
 					game.batch.setColor(0.1f, 1f, 0.1f, 0.7f);
 				
