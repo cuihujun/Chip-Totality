@@ -82,19 +82,20 @@ public class Loader {
 			manager.load("TestBuilding1.png", Texture.class, textureParameter);
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
 			manager.load("ashtar_button_128.png", Texture.class, textureParameter);
+			manager.load("tabBackground.png", Texture.class, textureParameter);
 	
 			//skin do menu
 			manager.load("uiSkin/uiskin.json",Skin.class);
 					
 			//loading mapy
-			TmxMapLoader.Parameters para = new TmxMapLoader.Parameters();
+			/*TmxMapLoader.Parameters para = new TmxMapLoader.Parameters();
 			para.generateMipMaps = true;		
 			para.textureMagFilter = Texture.TextureFilter.Nearest;
 			para.textureMinFilter = Texture.TextureFilter.Nearest;
 			TmxMapLoader tmxLoader = new TmxMapLoader(new InternalFileHandleResolver());	
 			manager.setLoader(TiledMap.class, tmxLoader);
 			manager.load("MapData/test_ortho2.tmx", TiledMap.class, para);
-			manager.load("MapData/tree2-final.png", Texture.class, textureParameter);
+			manager.load("MapData/tree2-final.png", Texture.class, textureParameter);*/
 								
 			loadSounds();
 			loadMusics();
