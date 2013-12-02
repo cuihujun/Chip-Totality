@@ -20,7 +20,6 @@ import com.world.Tile.TileType;
 import com.world.building.Building;
 
 public class GameScreen implements Screen {
-
 	final ChipTotality game;
 	public OrthographicCamera camera;
 
@@ -28,7 +27,7 @@ public class GameScreen implements Screen {
 	private final CameraController cameraController;
 	private final InputMultiplexer inputMultiplexer;
 
-	GameScreenGUI gameScreenGUI;
+	private final GameScreenGUI gameScreenGUI;
 	
 
 	private final ShapeRenderer shapeRenderer;

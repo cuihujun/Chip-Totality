@@ -25,8 +25,7 @@ public class Asteroid {
 		String text = file.readString();
 		String newText=text.replaceAll("\\s+", "");
 		
-		worldGrid = new Tile[Settings.tilesVertical][Settings.tilesHorizontal];
-    		
+		worldGrid = new Tile[Settings.tilesVertical][Settings.tilesHorizontal];  		
 		
 		int index = 0;
 		while (index < Settings.tilesHorizontal*Settings.tilesVertical) {
