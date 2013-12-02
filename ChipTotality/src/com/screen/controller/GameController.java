@@ -65,13 +65,25 @@ public class GameController extends InputAdapter {
 			}
 		}
 	}
+	
+	@Override
+	public boolean keyUp(int keycode) {
+		switch (keycode) {
+		case Keys.F10:
+			Settings.DEBUG = !Settings.DEBUG;
+			Gdx.app.log("Debug rendering", "status changed too: "+ Settings.DEBUG);
+			break;
+		}
+
+		return true;
+	}
 
 	@Override
 	public boolean keyDown(int keycode) {
 		switch (GameStateHolder.mode) {
 		case BUILDING:
 			switch (keycode) {
-
+			
 			case Keys.F1:
 				GameStateHolder.chosenBuilding = ChosenBuilding.Base;
 				break;
