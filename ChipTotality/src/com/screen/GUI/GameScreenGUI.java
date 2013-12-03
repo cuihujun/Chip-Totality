@@ -1,16 +1,22 @@
 package com.screen.GUI;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gameInfo.GameStateHolder;
+import com.gameInfo.GameStateHolder.ChosenBuilding;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
@@ -23,23 +29,51 @@ public class GameScreenGUI {
 	private Label dirtyAcodinLabel;
 	private Label beingsLabel;
 	
+	private float acc=0;
+	private final float ONE_SECOND = 1.0f;
+	
 
 	public GameScreenGUI(final ChipTotality game) {
 		this.game = game;
 		stage = new Stage(Settings.VIEW_WIDTH , Settings.VIEW_HEIGHT , true);
 		Skin skin = AssetsLoader.getSkin();
 			
-		Table mainTable = new Table();
-		mainTable.setFillParent(true);
-		mainTable.setSkin(skin);	
-		stage.addActor(mainTable);
-        
-
-        
-		Button buildingButton = new TextButton(" Bulding \n Mode ", skin);	
+		Table actionTable = new Table();
+		actionTable.setFillParent(true);
+		actionTable.setSkin(skin);	
+		actionTable.debug();
+		
+		actionTable.center().bottom();
+		
+		
+		for(ChosenBuilding buildingType: ChosenBuilding.values() ){
+			if (buildingType!=ChosenBuilding.none){
+				final String buildingTypeString = buildingType.toString();
+											
+				//TextureRegion region = new TextureRegion(buildingType.getTexture());
+				TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
+	    		ImageButtonStyle style = new ImageButtonStyle(skin.get(ButtonStyle.class));    	
+	    		style.imageUp = new TextureRegionDrawable(region);
+	    		style.imageDown = new TextureRegionDrawable(region);
+	    		ImageButton iconButton = new ImageButton(style);
+	    			    		
+	    			    	
+	    		iconButton.addListener(new ChangeListener() {
+	    			@Override
+	    			public void changed(ChangeEvent event, Actor actor) {
+	    				GameStateHolder.chosenBuilding = ChosenBuilding.valueOf(buildingTypeString);	    				
+	    			}
+	    		});
+	    		
+	    		actionTable.add(iconButton);
+			}
+		}
+		
+		/*Button buildingButton = new TextButton(" Bulding \n Mode ", skin);	
 		buildingButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				GameStateHolder.chosenBuilding = ChosenBuilding.Base;
 				if (GameStateHolder.mode != GameStateHolder.Mode.BUILDING) {
 					GameStateHolder.mode = GameStateHolder.Mode.BUILDING;
 					//TODO game.gameScreen.asteroid.freeLayer.setVisible(true);
@@ -50,24 +84,25 @@ public class GameScreenGUI {
 
 			}
 		});
-		mainTable.add(buildingButton);
 		
+		actionTable.add(buildingButton);*/
+
 		
-		
-		
-		
+
+
+
 		Table infoTable = new Table();
 		infoTable.setFillParent(true);
-		infoTable.setSkin(skin);
-		infoTable.padRight(40);//TODO no magick number
-		mainTable.add(infoTable).top();
-
+		infoTable.setSkin(skin);			
+		infoTable.debug();
+		infoTable.top().right();
+		
 		LabelStyle style = new LabelStyle();
 		style.font = AssetsLoader.getFont();		
 		
 		acodinLabel = new Label("Acodin : ", skin);
 		acodinLabel.setStyle(style);		
-		acodinLabel.setAlignment(Align.top | Align.left);
+		acodinLabel.setAlignment(Align.top | Align.left);		
 
 		beingsLabel = new Label("Beings : ", skin);
 		beingsLabel.setStyle(style);		
@@ -76,10 +111,18 @@ public class GameScreenGUI {
 		dirtyAcodinLabel = new Label("Dirty Acodin : ", skin);
 		dirtyAcodinLabel.setStyle(style);		
 		dirtyAcodinLabel.setAlignment(Align.top | Align.left);	
-				
-		infoTable.add(acodinLabel);
-		infoTable.add(beingsLabel);
-		infoTable.add(dirtyAcodinLabel);
+			
+		
+		infoTable.add(acodinLabel).top().right();
+		infoTable.add(beingsLabel).top().right();
+		infoTable.add(dirtyAcodinLabel).top().right();
+		
+		infoTable.pack();
+		actionTable.pack();
+		stage.addActor(infoTable);
+		stage.addActor(actionTable);
+		
+		update(ONE_SECOND);
 	}
 	
 	void dispose(){
@@ -87,9 +130,13 @@ public class GameScreenGUI {
 	}
 	
 	private void update(float delta){
-		acodinLabel.setText("Acodin: " + GameStateHolder.acodin + " ");
-		beingsLabel.setText("Beings: " + GameStateHolder.beings + " ");
-		dirtyAcodinLabel.setText("Dirty Acodin: " + GameStateHolder.dirtyAcodin + " ");
+		acc+=delta;
+		if (acc>ONE_SECOND){
+			acc-=ONE_SECOND;
+			acodinLabel.setText("Acodin: " + GameStateHolder.acodin + " ");
+			beingsLabel.setText("Beings: " + GameStateHolder.beings + " ");
+			dirtyAcodinLabel.setText("Dirty Acodin: " + GameStateHolder.dirtyAcodin + " ");
+		}
 	}
 	
 	public void render(float delta){
@@ -99,7 +146,8 @@ public class GameScreenGUI {
 		AssetsLoader.getSprite("infoPanel").draw(game.batch);
 		AssetsLoader.getSprite("actionPanel").draw(game.batch);
 		game.batch.end();
-		stage.draw();		
+		stage.draw();
+		if (Settings.DEBUG) Table.drawDebug(stage);
 	}
 
 }
