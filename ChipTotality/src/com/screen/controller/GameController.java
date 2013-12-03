@@ -17,7 +17,6 @@ public class GameController extends InputAdapter {
 
 	public GameController(final ChipTotality game) {
 		this.game = game;
-
 	}
 
 	public Vector2 unprojectTile(float x, float y) {

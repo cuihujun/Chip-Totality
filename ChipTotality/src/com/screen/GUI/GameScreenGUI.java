@@ -37,6 +37,9 @@ public class GameScreenGUI {
 		this.game = game;
 		stage = new Stage(Settings.VIEW_WIDTH , Settings.VIEW_HEIGHT , true);
 		Skin skin = AssetsLoader.getSkin();
+		
+		LabelStyle style = new LabelStyle();
+		style.font = AssetsLoader.getFont();
 			
 		Table actionTable = new Table();
 		actionTable.setFillParent(true);
@@ -52,10 +55,10 @@ public class GameScreenGUI {
 											
 				//TextureRegion region = new TextureRegion(buildingType.getTexture());
 				TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
-	    		ImageButtonStyle style = new ImageButtonStyle(skin.get(ButtonStyle.class));    	
-	    		style.imageUp = new TextureRegionDrawable(region);
-	    		style.imageDown = new TextureRegionDrawable(region);
-	    		ImageButton iconButton = new ImageButton(style);
+	    		ImageButtonStyle imageStyle = new ImageButtonStyle(skin.get(ButtonStyle.class));    	
+	    		imageStyle.imageUp = new TextureRegionDrawable(region);
+	    		imageStyle.imageDown = new TextureRegionDrawable(region);
+	    		ImageButton iconButton = new ImageButton(imageStyle);
 	    			    		
 	    			    	
 	    		iconButton.addListener(new ChangeListener() {
@@ -64,8 +67,14 @@ public class GameScreenGUI {
 	    				GameStateHolder.chosenBuilding = ChosenBuilding.valueOf(buildingTypeString);	    				
 	    			}
 	    		});
+	    			    		
+	    		Label buildingNameLabel = new Label(buildingTypeString, skin);	    		
+	    		iconButton.add(buildingNameLabel).bottom();
+	    		actionTable.add(iconButton).top();
 	    		
-	    		actionTable.add(iconButton);
+	    		
+	    		
+	    		
 			}
 		}
 		
@@ -97,8 +106,7 @@ public class GameScreenGUI {
 		infoTable.debug();
 		infoTable.top().right();
 		
-		LabelStyle style = new LabelStyle();
-		style.font = AssetsLoader.getFont();		
+		
 		
 		acodinLabel = new Label("Acodin : ", skin);
 		acodinLabel.setStyle(style);		
