@@ -101,6 +101,7 @@ public class GameScreen implements Screen {
 		//TODO moze jakas klasa Renderer? albo chociaz metoda?
 		game.batch.begin();		
 		game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
+		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);
 		for (Building building : game.asteroid.buildings) {
 			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
 		}

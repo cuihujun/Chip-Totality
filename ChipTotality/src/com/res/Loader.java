@@ -98,6 +98,10 @@ public class Loader {
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
 			manager.load("ashtar_button_128.png", Texture.class, textureParameter);
 			manager.load("tabBackground.png", Texture.class, textureParameter);
+			
+			
+			manager.load("Meteorite.png", Texture.class, textureParameter);
+			
 	
 			
 			//buldings
