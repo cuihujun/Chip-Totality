@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
+import com.res.Loader.AssetsLoader;
 
 public class Temple extends Building implements Upgradeable {
 	final static int width = 2;
@@ -46,8 +47,7 @@ public class Temple extends Building implements Upgradeable {
 
 	@Override
 	public Texture getTexture() {
-		// TODO Auto-generated method stub
-		return null;
+		return AssetsLoader.getTexture("Temple");
 	}
 
 }
