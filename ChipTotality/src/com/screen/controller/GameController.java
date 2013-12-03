@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.GameStateHolder.ChosenBuilding;
+import com.gameInfo.GameStateHolder.Mode;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.world.Tile.TileType;
@@ -52,6 +53,9 @@ public class GameController extends InputAdapter {
 		}
 		Gdx.app.log("building", building.toString() + " added at "
 				+ (int) building.coords.x + ", " + (int) building.coords.y);
+		
+		GameStateHolder.mode = Mode.NONE;
+		GameStateHolder.chosenBuilding = GameStateHolder.ChosenBuilding.none;		
 	}
 
 	
@@ -131,9 +135,16 @@ public class GameController extends InputAdapter {
 		game.gameScreen.camera.unproject(pos);
 		
 		Vector2 tileClicked=unprojectTile(pos.x, pos.y);
-		if (tileClicked!=null)
-			if(GameStateHolder.chosenBuilding!= ChosenBuilding.none)
-			addBuilding(GameStateHolder.chosenBuilding.getBuilding((int) tileClicked.x, (int) tileClicked.y));
+		if (tileClicked!=null){
+			if((GameStateHolder.mode == Mode.BUILDING) && (GameStateHolder.chosenBuilding!= ChosenBuilding.none)){
+				addBuilding(GameStateHolder.chosenBuilding.getBuilding((int) tileClicked.x, (int) tileClicked.y));
+			}
+			
+			if((GameStateHolder.mode == Mode.NONE)){
+				
+			}
+		}
+			
 		return false;
 	}
 

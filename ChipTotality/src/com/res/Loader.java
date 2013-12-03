@@ -35,7 +35,7 @@ public class Loader {
 		
 
 		public static TextureRegion getBuildingIcon(String name){			
-			TextureAtlas atlas = manager.get("Icons/BuildingsIconsPack/buildingsIconsPack.atlas", TextureAtlas.class);			
+			TextureAtlas atlas = manager.get("IconsPack/iconsPack.atlas", TextureAtlas.class);			
 			return atlas.findRegion(name);
 		}		
 		
@@ -107,8 +107,8 @@ public class Loader {
 			manager.load("Rafinery.png", Texture.class, textureParameter);
 			manager.load("Temple.png", Texture.class, textureParameter);
 			
-			//buildings icons
-			manager.load("Icons/BuildingsIconsPack/buildingsIconsPack.atlas", TextureAtlas.class);			
+			//icons
+			manager.load("IconsPack/iconsPack.atlas", TextureAtlas.class);			
 			
 			//skin do menu
 			manager.load("uiSkin/uiskin.json",Skin.class);

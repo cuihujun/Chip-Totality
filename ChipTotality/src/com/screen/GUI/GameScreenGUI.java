@@ -1,5 +1,6 @@
 package com.screen.GUI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.GameStateHolder.ChosenBuilding;
+import com.gameInfo.GameStateHolder.Mode;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
@@ -27,6 +29,7 @@ public class GameScreenGUI {
 	private Label acodinLabel;
 	private Label dirtyAcodinLabel;
 	private Label beingsLabel;
+	private Label fpsLabel;
 	
 	private float acc=0;
 	private final float ONE_SECOND = 1.0f;
@@ -40,7 +43,9 @@ public class GameScreenGUI {
 	public GameScreenGUI(final ChipTotality game) {
 		this.game = game;
 		stage = new Stage(Settings.VIEW_WIDTH , Settings.VIEW_HEIGHT , true);
-		
+				
+		//TODO background tabelek
+		//table.add(new Image(skin.newDrawable("white", Color.RED))).size(64);
 		createInfoTab();
 		createTowersTab();
 		createMainBuildingsTab();	
@@ -87,6 +92,7 @@ public class GameScreenGUI {
 	    		iconButton.addListener(new ChangeListener() {
 	    			@Override
 	    			public void changed(ChangeEvent event, Actor actor) {
+	    				GameStateHolder.mode = Mode.BUILDING;
 	    				GameStateHolder.chosenBuilding = ChosenBuilding.valueOf(buildingTypeString);	    				
 	    			}
 	    		});
@@ -135,12 +141,19 @@ public class GameScreenGUI {
 		
 		dirtyAcodinLabel = new Label("Dirty Acodin : ", skin);
 		dirtyAcodinLabel.setStyle(style);		
-		dirtyAcodinLabel.setAlignment(Align.top | Align.left);	
+		dirtyAcodinLabel.setAlignment(Align.top | Align.left);
+		
+		fpsLabel = new Label("Fps : ", skin);
+		fpsLabel.setStyle(style);		
+		fpsLabel.setAlignment(Align.top | Align.left);
 			
+		infoTable.add(fpsLabel).left();
+		
 		
 		infoTable.add(acodinLabel).top().right();
 		infoTable.add(beingsLabel).top().right();
-		infoTable.add(dirtyAcodinLabel).top().right();
+		infoTable.add(dirtyAcodinLabel).top().right();		
+		
 		
 		infoTable.pack();		
 	}
@@ -181,6 +194,7 @@ public class GameScreenGUI {
 	    		iconButton.addListener(new ChangeListener() {
 	    			@Override
 	    			public void changed(ChangeEvent event, Actor actor) {
+	    				GameStateHolder.mode = Mode.BUILDING;
 	    				GameStateHolder.chosenBuilding = ChosenBuilding.valueOf(buildingTypeString);	    				
 	    			}
 	    		});
@@ -205,6 +219,7 @@ public class GameScreenGUI {
 			acodinLabel.setText("Acodin: " + GameStateHolder.acodin + " ");
 			beingsLabel.setText("Beings: " + GameStateHolder.beings + " ");
 			dirtyAcodinLabel.setText("Dirty Acodin: " + GameStateHolder.dirtyAcodin + " ");
+			fpsLabel.setText("Fps : " + Gdx.graphics.getFramesPerSecond() + "         ");
 		}
 	}
 	
