@@ -132,9 +132,11 @@ public class GameController extends InputAdapter {
 		game.gameScreen.camera.unproject(pos);
 		
 		Vector2 tileClicked=unprojectTile(pos.x, pos.y);
-		if (tileClicked!=null)
+		if (tileClicked!=null){
+			if (GameStateHolder.chosenBuilding != ChosenBuilding.none){
 			addBuilding(GameStateHolder.chosenBuilding.getBuilding((int) tileClicked.x, (int) tileClicked.y));
-
+			}
+		}
 		return false;
 	}
 

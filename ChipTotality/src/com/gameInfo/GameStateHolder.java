@@ -32,7 +32,7 @@ public final class GameStateHolder
 	
 	//Building mode
 	public static Mode mode = Mode.NONE;
-	public static ChosenBuilding chosenBuilding = ChosenBuilding.Base;
+	public static ChosenBuilding chosenBuilding = ChosenBuilding.none;
 
 	
 	
@@ -62,16 +62,16 @@ public final class GameStateHolder
 		}
 		public Texture getTexture(){
 			switch(this){
-			case AcodinMine:
-				return null;
+			case AcodinMine:				
+				return AssetsLoader.getTexture("AcodinMine");				
 			case Base:
 				return AssetsLoader.getTexture("TestBuilding1");
 			case HolyMountains:
-				return null;
+				return AssetsLoader.getTexture("HolyMountains");				
 			case Rafinery:
-				return null;
+				return AssetsLoader.getTexture("Rafinery");				
 			case Temple:
-				return null;
+				return AssetsLoader.getTexture("Temple");
 			default:
 				return null;
 			}
