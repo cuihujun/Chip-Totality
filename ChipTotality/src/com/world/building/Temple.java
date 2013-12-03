@@ -16,6 +16,10 @@ public class Temple extends Building implements Upgradeable {
 
 	Task addResources;
 
+	public Temple(){
+		super(width, height);
+	}
+	
 	public Temple(int x, int y) {
 		super(x, y, width, height);
 		hitpoints = maxHitpoints;
@@ -48,6 +52,12 @@ public class Temple extends Building implements Upgradeable {
 	@Override
 	public Texture getTexture() {
 		return AssetsLoader.getTexture("Temple");
+	}
+
+	@Override
+	public void dispose() {
+		addResources.cancel();
+		
 	}
 
 }

@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector3;
-import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
@@ -17,21 +15,19 @@ import com.res.Loader.AssetsLoader;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
-import com.world.building.Building;
 
 public class GameScreen implements Screen {
 	final ChipTotality game;
 	public OrthographicCamera camera;
 
-	private final GameController gameController;
-	private final CameraController cameraController;
+	final GameController gameController;
+	final CameraController cameraController;
 	private final InputMultiplexer inputMultiplexer;
-
-	private final GameScreenGUI gameScreenGUI;
-	
-
+	final GameScreenGUI gameScreenGUI;
 	private final ShapeRenderer shapeRenderer;
-
+	private final GameScreenRenderer renderer;
+	
+	
 	public void renderDebug(float delta) {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeType.Line);
@@ -64,11 +60,8 @@ public class GameScreen implements Screen {
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;	
+
 		
-		
-		
-		shapeRenderer = new ShapeRenderer();
-			
 		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics
 				.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;
@@ -87,6 +80,8 @@ public class GameScreen implements Screen {
 		Gdx.input.setInputProcessor(inputMultiplexer);
 
 		
+		shapeRenderer = new ShapeRenderer();
+		renderer = new GameScreenRenderer(game);
 		//Musics.play("Music");
 	}
 
@@ -96,40 +91,29 @@ public class GameScreen implements Screen {
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 		
-		//TODO moze jakas klasa Renderer? albo chociaz metoda?
-		game.batch.begin();		
-		game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
-		for (Building building : game.asteroid.buildings) {
-			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
-		}
+		game.batch.begin();	
 		
-		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none){
-			Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-			game.gameScreen.camera.unproject(pos);
-			Coords tile = gameController.unprojectTile(pos.x, pos.y);
-			
-			if(tile!=null){
-				//not possbile - tint red
-				if(!gameController.buildingPossibleHere(GameStateHolder.chosenBuilding.getBuilding(tile.x, tile.y)))
-					game.batch.setColor(1f, 0.1f, 0.1f, 0.7f);							
-				else	//else tint green
-					game.batch.setColor(0.1f, 1f, 0.1f, 0.7f);
-				
-				game.batch.draw(GameStateHolder.chosenBuilding.getTexture(), tile.x*Settings.tileSize, tile.y*Settings.tileSize);
-				game.batch.setColor(Color.WHITE);
-			}
-			
-			
-		}
-		
+		renderer.renderBackground();
+		renderer.renderBuildings();
+		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none)
+			renderer.renderSelectedBuilding();
 		game.batch.end();
+		
+		//camera scrolling
+		if(Gdx.input.getX()<=0.05*Settings.WIDTH )
+			camera.position.add(-Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0, 0);
+		if(Gdx.input.getX()>=0.95*Settings.WIDTH)
+			camera.position.add(Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0, 0);
+		if(Gdx.input.getY()>=0.95*Settings.HEIGHT)
+			camera.position.add(0, -Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0);
+		if(Gdx.input.getY()<=0.*Settings.HEIGHT)
+			camera.position.add(0, Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0);
+		
+		
 		gameScreenGUI.render(delta);
-
 		if (Settings.DEBUG)
 			renderDebug(delta);
 		
-		System.out.println(Gdx.input.getX());
-		System.out.println(Gdx.input.getY());
 	}
 
 	@Override

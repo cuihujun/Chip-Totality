@@ -48,6 +48,24 @@ public class GameController extends InputAdapter {
 		return true;
 	}
 	
+	public boolean buildingPossibleHere(int x, int y, int width, int height){
+		//check if building may be built on selected tiles
+		for (int i =  x; i <  x+ width; i++) {
+			for (int j =  y; j < y+ height; j++) {
+				if (i>=Settings.tilesHorizontal || 
+					j>=Settings.tilesVertical ||
+					i<0 ||
+					j<0 ||
+					game.asteroid.worldGrid[i][j].tileType != TileType.free ||
+					game.asteroid.worldGrid[i][j].building != null)
+						return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
 	private void addBuilding(Building building) {
 		
 		if(!buildingPossibleHere(building))
@@ -75,6 +93,7 @@ public class GameController extends InputAdapter {
 	private void removeBuilding(Building building) {
 		game.asteroid.buildings.remove(building);
 		// remove references from tiles
+		building.dispose();
 		for (int i =  building.coords.x; i < building.coords.x + building.size.x; i++) {
 			for (int j =  building.coords.y; j < building.coords.y + building.size.y; j++) {
 				game.asteroid.worldGrid[i][j].building = null;
@@ -147,10 +166,13 @@ public class GameController extends InputAdapter {
 		Vector3 pos = new Vector3(screenX, screenY, 0);
 		game.gameScreen.camera.unproject(pos);
 		
+
+		
+		
 		Coords tileClicked=unprojectTile(pos.x, pos.y);
 		if (tileClicked!=null){
-			if((GameStateHolder.mode == Mode.BUILDING) && (GameStateHolder.chosenBuilding!= ChosenBuilding.none)){
-				addBuilding(GameStateHolder.chosenBuilding.getBuilding(tileClicked.x, tileClicked.y));
+			if((GameStateHolder.mode == Mode.BUILDING) && (GameStateHolder.chosenBuilding!= ChosenBuilding.none)){	
+				addBuilding(GameStateHolder.chosenBuilding.getChosenBuilding(tileClicked.x, tileClicked.y));			
 			}
 			
 			if((GameStateHolder.mode == Mode.NONE)){

@@ -11,4 +11,6 @@ public class Settings {
 	
 	public final static int tileSize=40;
 	public final static int tilesVertical=40, tilesHorizontal=40;
+	
+	public final static int cameraScrollSpeed = 800;
 }

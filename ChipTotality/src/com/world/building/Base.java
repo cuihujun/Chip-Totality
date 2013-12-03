@@ -18,6 +18,9 @@ public class Base extends Building implements Upgradeable{
 	private Task addResources;
 
 	
+	public Base(){
+		super(width, height);
+	}
 	
 	public Base(int x, int y) {
 		super(x, y, width, height);		
@@ -53,7 +56,14 @@ public class Base extends Building implements Upgradeable{
 
 	@Override
 	public Texture getTexture() {
-		return AssetsLoader.getTexture("TestBuilding1");
+		return AssetsLoader.getTexture("Base");
+	}
+
+
+	@Override
+	public void dispose() {
+		addResources.cancel();
+		
 	}
 	
 

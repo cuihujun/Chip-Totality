@@ -10,8 +10,13 @@ public class HolyMountains extends Building implements Upgradeable{
 	private static int maxHitpoints=200;
 	private static int cost = 20;
 	
+	public HolyMountains(){
+		super(width, height);
+	}
+	
 	public HolyMountains(int x, int y) {
 		super(x, y, width, height);
+		hitpoints=maxHitpoints;
 	}
 	
 	@Override
@@ -34,6 +39,12 @@ public class HolyMountains extends Building implements Upgradeable{
 	@Override
 	public Texture getTexture() {
 		return AssetsLoader.getTexture("HolyMountains");
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
