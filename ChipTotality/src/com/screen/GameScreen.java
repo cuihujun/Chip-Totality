@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
@@ -17,7 +17,6 @@ import com.res.Loader.AssetsLoader;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
-import com.world.Tile.TileType;
 import com.world.building.Building;
 
 public class GameScreen implements Screen {
@@ -86,8 +85,7 @@ public class GameScreen implements Screen {
 		inputMultiplexer.addProcessor(cameraController);
 		inputMultiplexer.addProcessor(gameController);
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		
-		
+
 		
 		//Musics.play("Music");
 	}
@@ -108,12 +106,13 @@ public class GameScreen implements Screen {
 		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none){
 			Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 			game.gameScreen.camera.unproject(pos);
-			Vector2 tile = gameController.unprojectTile(pos.x, pos.y);
+			Coords tile = gameController.unprojectTile(pos.x, pos.y);
 			
 			if(tile!=null){
-				if(game.asteroid.worldGrid[(int)tile.x][(int)tile.y].tileType==TileType.blocked || game.asteroid.worldGrid[(int)tile.x][(int)tile.y].building!=null)
+				//not possbile - tint red
+				if(!gameController.buildingPossibleHere(GameStateHolder.chosenBuilding.getBuilding(tile.x, tile.y)))
 					game.batch.setColor(1f, 0.1f, 0.1f, 0.7f);							
-				else
+				else	//else tint green
 					game.batch.setColor(0.1f, 1f, 0.1f, 0.7f);
 				
 				game.batch.draw(GameStateHolder.chosenBuilding.getTexture(), tile.x*Settings.tileSize, tile.y*Settings.tileSize);
@@ -128,6 +127,9 @@ public class GameScreen implements Screen {
 
 		if (Settings.DEBUG)
 			renderDebug(delta);
+		
+		System.out.println(Gdx.input.getX());
+		System.out.println(Gdx.input.getY());
 	}
 
 	@Override
