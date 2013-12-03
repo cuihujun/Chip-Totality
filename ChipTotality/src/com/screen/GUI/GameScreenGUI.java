@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -30,6 +30,7 @@ public class GameScreenGUI {
 	private Label dirtyAcodinLabel;
 	private Label beingsLabel;
 	private Label fpsLabel;
+	private Label buildingInfoLabel;
 	
 	private float acc=0;
 	private final float ONE_SECOND = 1.0f;
@@ -38,6 +39,7 @@ public class GameScreenGUI {
 	Table mainBuildingsTable;
 	Table towersTable;
 	Table confirmBuildTable;
+	
 	
 
 	public GameScreenGUI(final ChipTotality game) {
@@ -56,6 +58,7 @@ public class GameScreenGUI {
 		update(ONE_SECOND);
 	}
 	
+
 	private void createTowersTab(){
 		Skin skin = AssetsLoader.getSkin();
 		
@@ -146,10 +149,14 @@ public class GameScreenGUI {
 		fpsLabel = new Label("Fps : ", skin);
 		fpsLabel.setStyle(style);		
 		fpsLabel.setAlignment(Align.top | Align.left);
-			
+		
+		
+		buildingInfoLabel= new Label("ds", skin);
+		buildingInfoLabel.setStyle(style);			
+		buildingInfoLabel.setAlignment(Align.top | Align.left);
+		
+		infoTable.add(buildingInfoLabel).top().left();
 		infoTable.add(fpsLabel).left();
-		
-		
 		infoTable.add(acodinLabel).top().right();
 		infoTable.add(beingsLabel).top().right();
 		infoTable.add(dirtyAcodinLabel).top().right();		
@@ -203,6 +210,7 @@ public class GameScreenGUI {
 	    		iconButton.add(buildingNameLabel).bottom();
 	    		mainBuildingsTable.add(iconButton).top();
 			}
+			
 		}
 		
 		mainBuildingsTable.pack();

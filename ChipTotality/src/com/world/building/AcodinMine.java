@@ -11,16 +11,19 @@ public class AcodinMine extends Building{
 	final static int height=2;
 	private static int maxHitpoints=200;
 	private static int cost = 20;
-	private static int resourceDeliveryAmount = 5;
+	private static int resourceDeliveryAmount = 7;
 	private static int resourceDeliveryTime = 5;
 
 	private Task addResources;
 	
 	
+	public AcodinMine(){
+		super(width, height);
+	}
+	
 	public AcodinMine(int x, int y) {
 		super(x, y, width, height);
 		hitpoints=maxHitpoints;
-		doTask();
 	}
 	
 	@Override
@@ -44,11 +47,17 @@ public class AcodinMine extends Building{
 				GameStateHolder.dirtyAcodin+=resourceDeliveryAmount;
 			}
 		};
-		Timer.schedule(addResources, resourceDeliveryTime);	
+		Timer.schedule(addResources, resourceDeliveryTime, resourceDeliveryTime);	
 	}
 
 	@Override
 	public Texture getTexture() {
 		return AssetsLoader.getTexture("AcodinMine");
+	}
+
+	@Override
+	public void dispose() {
+		addResources.cancel();
+		
 	}
 }

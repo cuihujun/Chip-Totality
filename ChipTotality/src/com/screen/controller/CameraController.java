@@ -33,4 +33,10 @@ public class CameraController  extends InputAdapter{
 		return false;
 	}		
 	
+	
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {			
+		return false;
+	}
+	
 }
