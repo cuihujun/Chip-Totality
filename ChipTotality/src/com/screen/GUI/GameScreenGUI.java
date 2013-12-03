@@ -3,7 +3,6 @@ package com.screen.GUI;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -32,30 +31,54 @@ public class GameScreenGUI {
 	private float acc=0;
 	private final float ONE_SECOND = 1.0f;
 	
+	Table infoTable;	
+	Table mainBuildingsTable;
+	Table towersTable;
+	Table confirmBuildTable;
+	
 
 	public GameScreenGUI(final ChipTotality game) {
 		this.game = game;
 		stage = new Stage(Settings.VIEW_WIDTH , Settings.VIEW_HEIGHT , true);
+		
+		createInfoTab();
+		createTowersTab();
+		createMainBuildingsTab();	
+						
+		stage.addActor(infoTable);
+		stage.addActor(mainBuildingsTable);
+		
+		update(ONE_SECOND);
+	}
+	
+	private void createTowersTab(){
 		Skin skin = AssetsLoader.getSkin();
 		
 		LabelStyle style = new LabelStyle();
 		style.font = AssetsLoader.getFont();
-			
-		Table actionTable = new Table();
-		actionTable.setFillParent(true);
-		actionTable.setSkin(skin);	
-		actionTable.debug();
 		
-		actionTable.center().bottom();
+					
+		towersTable = new Table();
+		towersTable.setFillParent(true);
+		towersTable.setSkin(skin);
+		towersTable.debug();
+		towersTable.center().bottom();
 		
+		TextButton buildingsButton = new TextButton("Buildings", skin);		
+		buildingsButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				switchTooBuildings();	    				
+			}
+		});		
+		towersTable.add(buildingsButton).top().fill();
 		
 		for(ChosenBuilding buildingType: ChosenBuilding.values() ){
 			if (buildingType!=ChosenBuilding.none){
 				final String buildingTypeString = buildingType.toString();
-											
-				//TextureRegion region = new TextureRegion(buildingType.getTexture());
+				
 				TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
-	    		ImageButtonStyle imageStyle = new ImageButtonStyle(skin.get(ButtonStyle.class));    	
+	    		ImageButtonStyle imageStyle = new ImageButtonStyle(skin.get(ButtonStyle.class));   	
 	    		imageStyle.imageUp = new TextureRegionDrawable(region);
 	    		imageStyle.imageDown = new TextureRegionDrawable(region);
 	    		ImageButton iconButton = new ImageButton(imageStyle);
@@ -70,43 +93,37 @@ public class GameScreenGUI {
 	    			    		
 	    		Label buildingNameLabel = new Label(buildingTypeString, skin);	    		
 	    		iconButton.add(buildingNameLabel).bottom();
-	    		actionTable.add(iconButton).top();
-	    		
-	    		
-	    		
-	    		
+	    		towersTable.add(iconButton).top();
 			}
 		}
 		
-		/*Button buildingButton = new TextButton(" Bulding \n Mode ", skin);	
-		buildingButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				GameStateHolder.chosenBuilding = ChosenBuilding.Base;
-				if (GameStateHolder.mode != GameStateHolder.Mode.BUILDING) {
-					GameStateHolder.mode = GameStateHolder.Mode.BUILDING;
-					//TODO game.gameScreen.asteroid.freeLayer.setVisible(true);
-				} else {
-					GameStateHolder.mode = GameStateHolder.Mode.NONE;
-					//TODO game.gameScreen.asteroid.freeLayer.setVisible(false);
-				}
-
-			}
-		});
+		towersTable.pack();
 		
-		actionTable.add(buildingButton);*/
-
+	}
+	
+	private void switchTooTowers(){		
+		stage.clear();
+		stage.addActor(infoTable);
+		stage.addActor(towersTable);
+	}
+	
+	private void switchTooBuildings(){		
+		stage.clear();
+		stage.addActor(infoTable);
+		stage.addActor(mainBuildingsTable);
+	}
+	
+	private void createInfoTab(){
+		Skin skin = AssetsLoader.getSkin();
 		
-
-
-
-		Table infoTable = new Table();
+		LabelStyle style = new LabelStyle();
+		style.font = AssetsLoader.getFont();		
+		
+		infoTable = new Table();
 		infoTable.setFillParent(true);
 		infoTable.setSkin(skin);			
 		infoTable.debug();
-		infoTable.top().right();
-		
-		
+		infoTable.top().right();				
 		
 		acodinLabel = new Label("Acodin : ", skin);
 		acodinLabel.setStyle(style);		
@@ -125,12 +142,56 @@ public class GameScreenGUI {
 		infoTable.add(beingsLabel).top().right();
 		infoTable.add(dirtyAcodinLabel).top().right();
 		
-		infoTable.pack();
-		actionTable.pack();
-		stage.addActor(infoTable);
-		stage.addActor(actionTable);
+		infoTable.pack();		
+	}
+	
+	private void createMainBuildingsTab(){
+		Skin skin = AssetsLoader.getSkin();
 		
-		update(ONE_SECOND);
+		LabelStyle style = new LabelStyle();
+		style.font = AssetsLoader.getFont();
+		
+					
+		mainBuildingsTable = new Table();
+		mainBuildingsTable.setFillParent(true);
+		mainBuildingsTable.setSkin(skin);
+		mainBuildingsTable.debug();
+		mainBuildingsTable.center().bottom();
+		
+		TextButton towersButton = new TextButton("Towers", skin);		
+		towersButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				switchTooTowers();	    				
+			}
+		});		
+		mainBuildingsTable.add(towersButton).top().fill();		
+		
+		for(ChosenBuilding buildingType: ChosenBuilding.values() ){
+			if (buildingType!=ChosenBuilding.none){
+				final String buildingTypeString = buildingType.toString();
+				
+				TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
+	    		ImageButtonStyle imageStyle = new ImageButtonStyle(skin.get(ButtonStyle.class));    	
+	    		imageStyle.imageUp = new TextureRegionDrawable(region);
+	    		imageStyle.imageDown = new TextureRegionDrawable(region);
+	    		ImageButton iconButton = new ImageButton(imageStyle);
+	    			    		
+	    			    	
+	    		iconButton.addListener(new ChangeListener() {
+	    			@Override
+	    			public void changed(ChangeEvent event, Actor actor) {
+	    				GameStateHolder.chosenBuilding = ChosenBuilding.valueOf(buildingTypeString);	    				
+	    			}
+	    		});
+	    			    		
+	    		Label buildingNameLabel = new Label(buildingTypeString, skin);	    		
+	    		iconButton.add(buildingNameLabel).bottom();
+	    		mainBuildingsTable.add(iconButton).top();
+			}
+		}
+		
+		mainBuildingsTable.pack();
 	}
 	
 	void dispose(){
