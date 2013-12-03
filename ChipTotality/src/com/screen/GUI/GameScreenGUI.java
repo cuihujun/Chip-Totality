@@ -40,7 +40,7 @@ public class GameScreenGUI {
 			
 		Table actionTable = new Table();
 		actionTable.setFillParent(true);
-		actionTable.setSkin(skin);			
+		actionTable.setSkin(skin);	
 		actionTable.debug();
 		
 		actionTable.center().bottom();
@@ -48,14 +48,16 @@ public class GameScreenGUI {
 		
 		for(ChosenBuilding buildingType: ChosenBuilding.values() ){
 			if (buildingType!=ChosenBuilding.none){
-				TextureRegion region = new TextureRegion(buildingType.getTexture());
+				final String buildingTypeString = buildingType.toString();
+											
+				//TextureRegion region = new TextureRegion(buildingType.getTexture());
+				TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
 	    		ImageButtonStyle style = new ImageButtonStyle(skin.get(ButtonStyle.class));    	
 	    		style.imageUp = new TextureRegionDrawable(region);
 	    		style.imageDown = new TextureRegionDrawable(region);
 	    		ImageButton iconButton = new ImageButton(style);
 	    			    		
-	    		
-	    		final String buildingTypeString = buildingType.toString();
+	    			    	
 	    		iconButton.addListener(new ChangeListener() {
 	    			@Override
 	    			public void changed(ChangeEvent event, Actor actor) {

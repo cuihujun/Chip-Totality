@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
+import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -30,6 +33,11 @@ public class Loader {
 		public static TextureParameter textureParameter= new TextureParameter();		
 		private static HashMap<String, Sprite> sprites;
 		
+
+		public static TextureRegion getBuildingIcon(String name){			
+			TextureAtlas atlas = manager.get("Icons/BuildingsIconsPack/buildingsIconsPack.atlas", TextureAtlas.class);			
+			return atlas.findRegion(name);
+		}		
 		
 		public static Sprite getSprite(String name){
 			return sprites.get(name);
@@ -97,7 +105,10 @@ public class Loader {
 			manager.load("TestBuilding1.png", Texture.class, textureParameter);
 			manager.load("HolyMountains.png", Texture.class, textureParameter);
 			manager.load("Rafinery.png", Texture.class, textureParameter);
-			manager.load("Temple.png", Texture.class, textureParameter);							
+			manager.load("Temple.png", Texture.class, textureParameter);
+			
+			//buildings icons
+			manager.load("Icons/BuildingsIconsPack/buildingsIconsPack.atlas", TextureAtlas.class);			
 			
 			//skin do menu
 			manager.load("uiSkin/uiskin.json",Skin.class);
@@ -190,7 +201,7 @@ public class Loader {
 		
 		private AssetsLoader() {
 			textureParameter.magFilter = Texture.TextureFilter.Linear;
-			textureParameter.minFilter = Texture.TextureFilter.Linear;
+			textureParameter.minFilter = Texture.TextureFilter.Linear;				
 		}
 
 	}
