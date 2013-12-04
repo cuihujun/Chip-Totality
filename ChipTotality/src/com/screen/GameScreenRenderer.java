@@ -2,6 +2,7 @@ package com.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
@@ -12,10 +13,11 @@ import com.world.Asteroid;
 import com.world.building.Building;
 import com.world.ship.Ship;
 import com.world.tower.Tower;
+import com.res.Particles;
 
 public class GameScreenRenderer {
 	final ChipTotality game;
-	
+	float delta;
 	
 	
 	
@@ -24,8 +26,24 @@ public class GameScreenRenderer {
 	}
 	
 	public void renderBackground(){
-		game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
-		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);		
+		delta = Gdx.graphics.getDeltaTime();//TODO z render metod z GameScreen przekazac jakos do renderera		
+		
+		Texture stars = AssetsLoader.getTexture("blackDreams");
+		//Texture stars = AssetsLoader.getTexture("starSpaceTile");
+		//Texture stars = AssetsLoader.getTexture("starsSeamless");		
+				
+		int repeatCount = 6;
+		for(int row = -repeatCount; row<repeatCount; row++){
+			for(int column = -repeatCount; column<repeatCount; column++){
+				game.batch.draw(stars, row*stars.getWidth(), column*stars.getHeight());
+			}			
+		}
+		
+		Texture meteorite = AssetsLoader.getTexture("Meteorite");
+		game.batch.draw(meteorite, 0, 0);
+		Particles.get("stars1").setPosition(meteorite.getWidth()/2,meteorite.getHeight()*0.35f);
+		Particles.get("stars1").update(delta);
+		Particles.get("stars1").draw(game.batch);			
 	}
 	
 	public void renderBuildings(){

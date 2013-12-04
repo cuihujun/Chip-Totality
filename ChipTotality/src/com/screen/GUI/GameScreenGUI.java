@@ -234,10 +234,10 @@ public class GameScreenGUI {
 	public void render(float delta){
 		update(delta);
 		
-		game.batch.begin();
-		AssetsLoader.getSprite("infoPanel").draw(game.batch);
-		AssetsLoader.getSprite("actionPanel").draw(game.batch);
-		game.batch.end();
+		//game.batch.begin();
+		//AssetsLoader.getSprite("infoPanel").draw(game.batch);
+		//AssetsLoader.getSprite("actionPanel").draw(game.batch);
+		//game.batch.end();
 		stage.draw();
 		if (Settings.DEBUG) Table.drawDebug(stage);
 	}
