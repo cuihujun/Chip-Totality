@@ -13,8 +13,8 @@ public class HolyMountains extends Building implements Upgradeable{
 	}
 	
 	public HolyMountains(int x, int y) {
-		super(x, y, width, height);
-		hitpoints=maxHitpoints;
+		super(x, y, width, height, maxHitpoints);
+		
 	}
 	
 	@Override

@@ -62,11 +62,7 @@ public class GameScreen implements Screen {
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;	
-		//TODO usunac to
-		game.asteroid.ships.add(new TestShip1(250, 250));
-		game.asteroid.towers.add(new TestTower1(10, 10));
-		
-		
+				
 		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics
 				.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;
@@ -88,6 +84,10 @@ public class GameScreen implements Screen {
 		shapeRenderer = new ShapeRenderer();
 		renderer = new GameScreenRenderer(game);
 		//Musics.play("Music");
+			
+		//TODO usunac to
+		game.asteroid.ships.add(new TestShip1(250, 250));
+		gameController.addBuilding(new TestTower1(10, 10));
 	}
 
 	@Override
@@ -100,7 +100,6 @@ public class GameScreen implements Screen {
 		
 		renderer.renderBackground();
 		renderer.renderBuildings();
-		renderer.renderTowers();
 		renderer.renderShips();
 		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none)
 			renderer.renderSelectedBuilding();

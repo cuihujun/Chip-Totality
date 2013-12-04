@@ -19,9 +19,7 @@ public class Temple extends Building implements Upgradeable {
 	}
 	
 	public Temple(int x, int y) {
-		super(x, y, width, height);
-		hitpoints = maxHitpoints;
-
+		super(x, y, width, height, maxHitpoints);
 	}
 
 	@Override
