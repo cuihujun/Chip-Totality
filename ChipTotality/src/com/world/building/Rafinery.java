@@ -1,10 +1,14 @@
 package com.world.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
+import com.res.Loader.AssetsLoader;
 
 public class Rafinery extends Building{
+	final static int width=3;
+	final static int height=3;
 	private static int maxHitpoints=500;
 	private static int cost = 100;
 	private static int resourceDeliveryTime = 5;
@@ -14,13 +18,26 @@ public class Rafinery extends Building{
 	
 	
 	
-	public Rafinery(float x, float y, int width, int height) {
+	public Rafinery(int x, int y) {
 		super(x, y, width, height);
-		hitpoints=maxHitpoints;
+		hitpoints=maxHitpoints;		
+	}
+	
+	@Override
+	public void destroy(){
+		super.destroy();
+		process.cancel();
+	}
+
+	@Override
+	public void pay() {
 		GameStateHolder.beings -= cost;
 		
+	}
+
+	@Override
+	public void doTask() {
 		process = new Task() {
-		
 			@Override
 			public void run() {
 				if(GameStateHolder.dirtyAcodin>=efficiency){
@@ -30,12 +47,12 @@ public class Rafinery extends Building{
 			}	
 		};
 		Timer.schedule(process, resourceDeliveryTime);
+		
 	}
-	
+
 	@Override
-	public void destroy(){
-		super.destroy();
-		process.cancel();
+	public Texture getTexture() {
+		return AssetsLoader.getTexture("Rafinery");	
 	}
 	
 }

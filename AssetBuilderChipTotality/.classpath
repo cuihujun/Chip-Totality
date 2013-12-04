@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="lib/gdx.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-openal.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-tools.jar" sourcepath="lib/gdx-tools-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

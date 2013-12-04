@@ -1,40 +1,37 @@
 package com.world.building;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Building {
-	public final Vector2 coords;
-	public Texture buildingTexture;
-	protected Rectangle bounds;
-
+	public final Vector2 coords;	//left bottom corner of the building
+	public final Vector2 size;		//width and height of the building, in tiles; e.g. size(3,2) looks like [][][]
+									//																		[][][]
 	protected int hitpoints;
-	
 	public Boolean researchReady;
-
-	public Building(float x, float y, int width, int height) {
+	
+	protected int cost;
+	
+	
+	
+	public abstract void pay();
+	public abstract void doTask();
+	public abstract Texture getTexture();
+	
+	
+	public Building(int x, int y, int width, int height) {
 		coords = new Vector2(x, y);
-		bounds = new Rectangle(x - (0.5f * width), y - (0.5f * height), width,
-				height);
+		size = new Vector2(width, height);
 		setResearchingFlag(this);
 	}
 
-	
 	void setResearchingFlag(Building building){
 		if(building instanceof Upgradeable)
 			researchReady=true;
 		else 
-			researchReady=false;
-	
-			
+			researchReady=false;			
 		
 	}
-	
-	public boolean overlaps(Building building) {
-		return this.bounds.overlaps(building.bounds);
-	}
-	
 	
 	
 	/**
@@ -48,7 +45,7 @@ public abstract class Building {
 	}
 
 	public void destroy() {
-		buildingTexture.dispose();
+		
 	}
 
 }

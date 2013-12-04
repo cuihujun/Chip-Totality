@@ -3,96 +3,96 @@ package com.screen.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.gameInfo.ChosenBuilding;
 import com.gameInfo.GameStateHolder;
+import com.gameInfo.GameStateHolder.ChosenBuilding;
+import com.gameInfo.GameStateHolder.Mode;
 import com.main.ChipTotality;
+import com.main.Settings;
+import com.world.Tile.TileType;
+import com.world.building.Building;
 
 public class GameController extends InputAdapter {
 	final ChipTotality game;
-	
-	
-	// TODO aaa dirty code
-	private TiledMapTile selectTile;
-	private TiledMapTile buldingTile;
-	private Vector2 lastSel = new Vector2(0, 0);
-	
-	
-	
-	
-	
+
 	public GameController(final ChipTotality game) {
-		this.game=game;
+		this.game = game;
 	}
-	
-	/*private void checkTileClicked(float x, float y) {
-		int xx, yy;
-		float tileHeightUnits = tileHeight * unitScale;
-		float tileWidthUnits = tileSize * unitScale;
 
-		// Gdx.app.log("World", "x,y : " + x + "," + y);
-		// ze wzgledu na dziwne przesuniecie mapy... (tak by punkt 0,0 dla lewy
-		// dolny róg)//TODO czy da sie wysrodkowac jakos mape? Tile editor? albo
-		// sam renderer?
-		y = y + (tilesCountVertical / 2 - 0.5f) * tileHeightUnits;
+	public Vector2 unprojectTile(float x, float y) {
+		int tileX = (int) x / Settings.tileSize;
+		int tileY = (int) y / Settings.tileSize;
+		
+		if (tileY >=Settings.tilesHorizontal || tileX >=Settings.tilesVertical || tileX <0 || tileY<0)
+			return null;			
+		else 
+			return new Vector2(tileX, tileY);
+	}
 
-		// y = 20*tileHeightUnits-y; //(tak by punkt 0,0 dla lewy górny róg)
-		// Gdx.app.log("World przesuniety", "x,y : " + x + "," + y);
-
-		// y = (20*tileHeightUnits)/2-y; //(tak by punkt 0,0 na rodku mapy)
-		// x = (20*tileWidthUnits)/2-x; //(tak by punkt 0,0 na rodku mapy)
-
-		xx = (int) Math.floor((y + x / 2) / tileHeightUnits);
-		yy = (int) Math.floor((y - x / 2) / tileHeightUnits);
-
-		// do kordynatów w tilach z layera na mapie//TODO usunac te magick
-		// numbery jakos;]
-		xx = xx - 10;
-		yy = Math.abs(yy - 9);
-
-		// TODO zamieniony xx,yy? dirty code
-		selectionLayer.setCell((int) lastSel.y, (int) lastSel.x, null);
-		lastSel.x = xx;
-		lastSel.y = yy;
-		Cell cell = new Cell();
-		if (GameStateHolder.mode == GameStateHolder.Mode.BUILDING) {
-			//czy mozna budowac;]
-			Cell freeCell = freeLayer.getCell(yy, xx);
-			if ((freeCell!=null)&&(freeCell.getTile().getProperties().containsKey("free"))){
-				cell.setTile(buldingTile);
-				buldingsLayer.setCell(yy, xx, cell);	
-				freeLayer.setCell(yy, xx, null);
+	private void addBuilding(Building building) {
+		
+		// check tile types and buildings
+		for (int i = (int) building.coords.x; i < (int) building.coords.x+ building.size.x; i++) {
+			for (int j = (int) building.coords.y; j < building.coords.y+ building.size.y; j++) {
+				if (game.asteroid.worldGrid[i][j].tileType != TileType.free || game.asteroid.worldGrid[i][j].building != null)
+					return;
 			}
-			else
-			{
-				
-			}
-
-		} else {
-			cell.setTile(selectTile);
-			selectionLayer.setCell(yy, xx, cell);
 		}
 
-		Sounds.play("Click");
-		Gdx.app.log("Selected tile", "x,y : " + xx + "," + yy);
+		game.asteroid.buildings.add(building);
+		building.pay();
+		building.doTask();
+		// add reference to building for all tiles occupied by it
+		for (int i = (int) building.coords.x; i < building.coords.x
+				+ building.size.x; i++) {
+			for (int j = (int) building.coords.y; j < building.coords.y
+					+ building.size.y; j++) {
+				game.asteroid.worldGrid[i][j].building = building;
+			}
+		}
+		Gdx.app.log("building", building.toString() + " added at "
+				+ (int) building.coords.x + ", " + (int) building.coords.y);
+		
+		GameStateHolder.mode = Mode.NONE;
+		GameStateHolder.chosenBuilding = GameStateHolder.ChosenBuilding.none;		
 	}
-	*/
+
 	
+	private void removeBuilding(Building building) {
+		game.asteroid.buildings.remove(building);
+		// remove references from tiles
+		for (int i = (int) building.coords.x; i < building.coords.x + building.size.x; i++) {
+			for (int j = (int) building.coords.y; j < building.coords.y + building.size.y; j++) {
+				game.asteroid.worldGrid[i][j].building = null;
+			}
+		}
+	}
 	
+	@Override
+	public boolean keyUp(int keycode) {
+		switch (keycode) {
+		case Keys.F10:
+			Settings.DEBUG = !Settings.DEBUG;
+			Gdx.app.log("Debug rendering", "status changed too: "+ Settings.DEBUG);
+			break;
+		}
+
+		return true;
+	}
+
 	@Override
 	public boolean keyDown(int keycode) {
 		switch (GameStateHolder.mode) {
 		case BUILDING:
 			switch (keycode) {
-
+			
 			case Keys.F1:
-				GameStateHolder.chosenBuilding = ChosenBuilding.testBuilding1;
+				GameStateHolder.chosenBuilding = ChosenBuilding.Base;
 				break;
 
 			case Keys.ESCAPE:
-				GameStateHolder.chosenBuilding = ChosenBuilding.none;
+				GameStateHolder.chosenBuilding = GameStateHolder.ChosenBuilding.none;
 				GameStateHolder.mode = GameStateHolder.Mode.NONE;
 				Gdx.app.log("buildingMode", "building mode:"
 						+ GameStateHolder.mode.toString());
@@ -128,14 +128,34 @@ public class GameController extends InputAdapter {
 
 		return false;
 	}
-	
+
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		Vector3 pos = new Vector3(screenX, screenY, 0);
 		game.gameScreen.camera.unproject(pos);
-		//checkTileClicked(pos.x, pos.y);
+		
+		Vector2 tileClicked=unprojectTile(pos.x, pos.y);
+		if (tileClicked!=null){
+			if((GameStateHolder.mode == Mode.BUILDING) && (GameStateHolder.chosenBuilding!= ChosenBuilding.none)){
+				addBuilding(GameStateHolder.chosenBuilding.getBuilding((int) tileClicked.x, (int) tileClicked.y));
+			}
+			
+			if((GameStateHolder.mode == Mode.NONE)){
+				
+			}
+		}
+			
 		return false;
 	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+	
+	
+	
+	
 	
 	
 }

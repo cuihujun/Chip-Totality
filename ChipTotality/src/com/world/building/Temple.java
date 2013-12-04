@@ -1,39 +1,53 @@
 package com.world.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
+import com.res.Loader.AssetsLoader;
 
-public class Temple extends Building implements Upgradeable{
-	private static int maxHitpoints=200;
+public class Temple extends Building implements Upgradeable {
+	final static int width = 2;
+	final static int height = 2;
+	private static int maxHitpoints = 200;
 	private static int cost = 20;
 	private static int resourceDeliveryAmount = 5;
 	private static int resourceDeliveryTime = 5;
-	
+
 	Task addResources;
-	
-	public Temple(float x, float y, int width, int height) {
-		super(x, y, width, height);		
-		hitpoints=maxHitpoints;
+
+	public Temple(int x, int y) {
+		super(x, y, width, height);
+		hitpoints = maxHitpoints;
+
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+	}
+
+	@Override
+	public void pay() {
 		GameStateHolder.beings -= cost;
-		
-		addResources=new Task() {
-			
+
+	}
+
+	@Override
+	public void doTask() {
+		addResources = new Task() {
+
 			@Override
 			public void run() {
-				GameStateHolder.beings+=resourceDeliveryAmount;
+				GameStateHolder.beings += resourceDeliveryAmount;
 			}
 		};
 		Timer.schedule(addResources, resourceDeliveryTime);
 	}
-	
-	
+
 	@Override
-	public void destroy(){
-		super.destroy();	
+	public Texture getTexture() {
+		return AssetsLoader.getTexture("Temple");
 	}
 
-
-
-	
 }
