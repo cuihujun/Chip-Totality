@@ -1,8 +1,10 @@
 package com.world.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
+import com.res.Loader.AssetsLoader;
 
 public class Rafinery extends Building{
 	final static int width=3;
@@ -23,6 +25,14 @@ public class Rafinery extends Building{
 		hitpoints=maxHitpoints;		
 	}
 	
+<<<<<<< HEAD
+	public Rafinery(int x, int y) {
+		super(x, y, width, height);
+		hitpoints=maxHitpoints;		
+	}
+	
+=======
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	@Override
 	public void destroy(){
 		super.destroy();
@@ -46,6 +56,15 @@ public class Rafinery extends Building{
 				}				
 			}	
 		};
+<<<<<<< HEAD
+		Timer.schedule(process, resourceDeliveryTime);
+		
+	}
+
+	@Override
+	public Texture getTexture() {
+		return AssetsLoader.getTexture("Rafinery");	
+=======
 		Timer.schedule(process, resourceDeliveryTime, resourceDeliveryTime);
 		
 	}
@@ -54,6 +73,7 @@ public class Rafinery extends Building{
 	@Override
 	public void dispose() {
 		process.cancel();		
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	}
 	
 }

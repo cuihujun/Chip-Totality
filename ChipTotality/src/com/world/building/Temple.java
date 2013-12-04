@@ -1,8 +1,10 @@
 package com.world.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
+import com.res.Loader.AssetsLoader;
 
 public class Temple extends Building implements Upgradeable {
 	final static int width = 2;
@@ -14,14 +16,25 @@ public class Temple extends Building implements Upgradeable {
 
 	Task addResources;
 
+<<<<<<< HEAD
+	public Temple(int x, int y) {
+		super(x, y, width, height);
+		hitpoints = maxHitpoints;
+
+=======
 	public Temple(){
 		super(width, height);
 	}
 	
 	public Temple(int x, int y) {
+<<<<<<< HEAD
 		super(x, y, width, height);
 		hitpoints = maxHitpoints;
 
+=======
+		super(x, y, width, height, maxHitpoints);
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
+>>>>>>> 555e9397ac1e207a3f6ce48ac2fe572784fe5ff5
 	}
 
 	@Override
@@ -46,6 +59,14 @@ public class Temple extends Building implements Upgradeable {
 		};
 		Timer.schedule(addResources, resourceDeliveryTime);
 	}
+<<<<<<< HEAD
+
+	@Override
+	public Texture getTexture() {
+		return AssetsLoader.getTexture("Temple");
+	}
+
+=======
 
 
 	@Override
@@ -54,4 +75,5 @@ public class Temple extends Building implements Upgradeable {
 		
 	}
 
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 }

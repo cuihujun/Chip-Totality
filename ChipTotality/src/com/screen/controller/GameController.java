@@ -3,8 +3,13 @@ package com.screen.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+<<<<<<< HEAD
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+=======
 import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.Coords;
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.GameStateHolder.ChosenBuilding;
 import com.gameInfo.GameStateHolder.Mode;
@@ -20,13 +25,60 @@ public class GameController extends InputAdapter {
 		this.game = game;
 	}
 
+<<<<<<< HEAD
+	public Vector2 unprojectTile(float x, float y) {
+=======
 	public Coords unprojectTile(float x, float y) {
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 		int tileX = (int) x / Settings.tileSize;
 		int tileY = (int) y / Settings.tileSize;
 		
 		if (tileY >=Settings.tilesHorizontal || tileX >=Settings.tilesVertical || tileX <0 || tileY<0)
 			return null;			
 		else 
+<<<<<<< HEAD
+			return new Vector2(tileX, tileY);
+	}
+
+	private void addBuilding(Building building) {
+		
+		// check tile types and buildings
+		for (int i = (int) building.coords.x; i < (int) building.coords.x+ building.size.x; i++) {
+			for (int j = (int) building.coords.y; j < building.coords.y+ building.size.y; j++) {
+				if (game.asteroid.worldGrid[i][j].tileType != TileType.free || game.asteroid.worldGrid[i][j].building != null)
+					return;
+			}
+		}
+
+		game.asteroid.buildings.add(building);
+		building.pay();
+		building.doTask();
+		// add reference to building for all tiles occupied by it
+		for (int i = (int) building.coords.x; i < building.coords.x
+				+ building.size.x; i++) {
+			for (int j = (int) building.coords.y; j < building.coords.y
+					+ building.size.y; j++) {
+				game.asteroid.worldGrid[i][j].building = building;
+			}
+		}
+		Gdx.app.log("building", building.toString() + " added at "
+				+ (int) building.coords.x + ", " + (int) building.coords.y);
+		
+		GameStateHolder.mode = Mode.NONE;
+		GameStateHolder.chosenBuilding = GameStateHolder.ChosenBuilding.none;		
+	}
+
+	
+	private void removeBuilding(Building building) {
+		game.asteroid.buildings.remove(building);
+		// remove references from tiles
+		for (int i = (int) building.coords.x; i < building.coords.x + building.size.x; i++) {
+			for (int j = (int) building.coords.y; j < building.coords.y + building.size.y; j++) {
+				game.asteroid.worldGrid[i][j].building = null;
+			}
+		}
+	}
+=======
 			return new Coords(tileX, tileY);
 	}
 
@@ -100,6 +152,7 @@ public class GameController extends InputAdapter {
 			}
 		}
 	}
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	
 	@Override
 	public boolean keyUp(int keycode) {
@@ -166,6 +219,12 @@ public class GameController extends InputAdapter {
 		Vector3 pos = new Vector3(screenX, screenY, 0);
 		game.gameScreen.camera.unproject(pos);
 		
+<<<<<<< HEAD
+		Vector2 tileClicked=unprojectTile(pos.x, pos.y);
+		if (tileClicked!=null){
+			if((GameStateHolder.mode == Mode.BUILDING) && (GameStateHolder.chosenBuilding!= ChosenBuilding.none)){
+				addBuilding(GameStateHolder.chosenBuilding.getBuilding((int) tileClicked.x, (int) tileClicked.y));
+=======
 
 		
 		
@@ -173,6 +232,7 @@ public class GameController extends InputAdapter {
 		if (tileClicked!=null){
 			if((GameStateHolder.mode == Mode.BUILDING) && (GameStateHolder.chosenBuilding!= ChosenBuilding.none)){	
 				addBuilding(GameStateHolder.chosenBuilding.getChosenBuilding(tileClicked.x, tileClicked.y));			
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 			}
 			
 			if((GameStateHolder.mode == Mode.NONE)){
@@ -180,6 +240,14 @@ public class GameController extends InputAdapter {
 			}
 		}
 			
+<<<<<<< HEAD
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+=======
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 		return false;
 	}
 
@@ -187,6 +255,10 @@ public class GameController extends InputAdapter {
 	public boolean mouseMoved(int screenX, int screenY) {
 		return false;
 	}
+	
+	
+	
+	
 	
 	
 	

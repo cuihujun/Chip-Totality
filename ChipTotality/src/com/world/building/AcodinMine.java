@@ -1,8 +1,10 @@
 package com.world.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
+import com.res.Loader.AssetsLoader;
 
 public class AcodinMine extends Building{
 	final static int width=2;
@@ -15,13 +17,24 @@ public class AcodinMine extends Building{
 	private Task addResources;
 	
 	
+<<<<<<< HEAD
+	public AcodinMine(int x, int y) {
+		super(x, y, width, height);
+		hitpoints=maxHitpoints;
+		doTask();
+=======
 	public AcodinMine(){
 		super(width, height);
 	}
 	
 	public AcodinMine(int x, int y) {
+<<<<<<< HEAD
 		super(x, y, width, height);
 		hitpoints=maxHitpoints;
+=======
+		super(x, y, width, height, maxHitpoints);	
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
+>>>>>>> 555e9397ac1e207a3f6ce48ac2fe572784fe5ff5
 	}
 	
 	@Override
@@ -45,6 +58,14 @@ public class AcodinMine extends Building{
 				GameStateHolder.dirtyAcodin+=resourceDeliveryAmount;
 			}
 		};
+<<<<<<< HEAD
+		Timer.schedule(addResources, resourceDeliveryTime);	
+	}
+
+	@Override
+	public Texture getTexture() {
+		return AssetsLoader.getTexture("AcodinMine");
+=======
 		Timer.schedule(addResources, resourceDeliveryTime, resourceDeliveryTime);	
 	}
 
@@ -53,5 +74,6 @@ public class AcodinMine extends Building{
 	public void dispose() {
 		addResources.cancel();
 		
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	}
 }

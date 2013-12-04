@@ -6,6 +6,26 @@ import com.gameInfo.Coords;
 import com.res.Loader.AssetsLoader;
 
 public abstract class Building {
+<<<<<<< HEAD
+	public final Vector2 coords;	//left bottom corner of the building
+	public final Vector2 size;		//width and height of the building, in tiles; e.g. size(3,2) looks like [][][]
+									//																		[][][]
+	protected int hitpoints;
+	public Boolean researchReady;
+	
+	protected int cost;
+	
+	
+	
+	public abstract void pay();
+	public abstract void doTask();
+	public abstract Texture getTexture();
+	
+	
+	public Building(int x, int y, int width, int height) {
+		coords = new Vector2(x, y);
+		size = new Vector2(width, height);
+=======
 	public final Coords coords;	
 	public final Vector2 size;
 	
@@ -36,6 +56,11 @@ public abstract class Building {
 	public Building(int x, int y, int width, int height) {
 		coords = new Coords(x, y);
 		size = new Vector2(width, height);
+<<<<<<< HEAD
+=======
+		hitpoints=maxHP;
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
+>>>>>>> 555e9397ac1e207a3f6ce48ac2fe572784fe5ff5
 		setResearchingFlag(this);
 	}
 

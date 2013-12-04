@@ -1,0 +1,111 @@
+package com.world;
+
+import java.util.Vector;
+
+<<<<<<< HEAD
+
+
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
+import com.res.Loader.AssetsLoader;
+=======
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.main.Settings;
+import com.world.Tile.TileType;
+>>>>>>> 39c63cf56b3a7e3293aa1d9de2a2c915efbaff84
+import com.world.building.Building;
+import com.world.spaceship.Shoot;
+import com.world.spaceship.Spaceship;
+import com.world.spaceship.WeakShip;
+
+public class Asteroid {
+
+	public final Tile[][] worldGrid; // worldGrind axis orientation:
+										// ^
+										// |
+										// --->
+
+	public Vector<Building> buildings;
+<<<<<<< HEAD
+	public Vector<Spaceship> spaceships;
+	public Vector<Shoot>	shoots;
+	
+	private final TiledMap tiledMap;
+	//public TiledMapTileLayer freeLayer;
+	///private final TiledMapTileLayer selectionLayer;
+	///private final TiledMapTileLayer buldingsLayer;
+	
+	
+
+	
+	
+	public Asteroid(){
+		buildings = new Vector<Building>();
+		tiledMap=AssetsLoader.getTileMap();
+		shoots = new Vector<Shoot>();
+
+	
+		spaceships = new Vector<Spaceship>();
+		spaceships.add(new WeakShip(new Vector2(10, 10)));
+
+		//freeLayer = (TiledMapTileLayer) tiledMap.getLayers().get("FreeSpace");
+	}
+	public TiledMap getTiledMap(){
+		return tiledMap;
+	}
+	public void dispose(){
+		tiledMap.dispose();
+
+	}
+	public void draw(SpriteBatch batch)
+	{
+		for (Spaceship spaceship : spaceships)	{
+			spaceship.draw(batch);
+			spaceship.run(0.01f,this);
+		}
+		for(Shoot shoot : shoots)
+		{
+			shoot.draw(batch);
+			shoot.run(0.01f, this);
+		}
+=======
+
+	public Asteroid() {
+		buildings = new Vector<Building>();
+
+		// load text file containing informations about tiles type
+		FileHandle file = Gdx.files.internal("world.txt");
+		String text = file.readString();
+		String newText=text.replaceAll("\\s+", "");
+		
+		worldGrid = new Tile[Settings.tilesVertical][Settings.tilesHorizontal];  		
+		
+		int index = 0;
+		while (index < Settings.tilesHorizontal*Settings.tilesVertical) {
+			TileType tileType;
+			switch (newText.charAt(index)) {
+			case '#':
+				tileType = TileType.free;
+				break;
+			case '@':
+				tileType = TileType.blocked;
+				break;
+			case '*':
+				tileType  =TileType.acodinField;
+				break;
+			default:
+				tileType = TileType.free;
+			}
+			
+			worldGrid[index % Settings.tilesHorizontal][Settings.tilesVertical- 1 - index / 40] = new Tile(tileType);
+			index++;
+		}
+
+>>>>>>> 39c63cf56b3a7e3293aa1d9de2a2c915efbaff84
+	}
+
+}
