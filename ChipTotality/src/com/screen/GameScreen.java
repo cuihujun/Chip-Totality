@@ -8,27 +8,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-<<<<<<< HEAD
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.GameStateHolder;
-
-=======
-import com.gameInfo.GameStateHolder;
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
-<<<<<<< HEAD
-import com.world.Tile.TileType;
-import com.world.building.Building;
-=======
 import com.world.ship.TestShip1;
 import com.world.tower.TestTower1;
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 
 public class GameScreen implements Screen {
 	final ChipTotality game;
@@ -37,14 +25,7 @@ public class GameScreen implements Screen {
 	final GameController gameController;
 	final CameraController cameraController;
 	private final InputMultiplexer inputMultiplexer;
-<<<<<<< HEAD
-
-	private final GameScreenGUI gameScreenGUI;
-	
-
-=======
 	final GameScreenGUI gameScreenGUI;
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	private final ShapeRenderer shapeRenderer;
 	private final GameScreenRenderer renderer;
 	
@@ -81,23 +62,7 @@ public class GameScreen implements Screen {
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;	
-<<<<<<< HEAD
-		//TODO usunac to
-		game.asteroid.ships.add(new TestShip1(250, 250));
-		game.asteroid.towers.add(new TestTower1(10, 10));
-		
-		
-=======
-<<<<<<< HEAD
-		
-		
-		
-		shapeRenderer = new ShapeRenderer();
-			
-=======
 				
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
->>>>>>> 555e9397ac1e207a3f6ce48ac2fe572784fe5ff5
 		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics
 				.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;
@@ -116,22 +81,13 @@ public class GameScreen implements Screen {
 		Gdx.input.setInputProcessor(inputMultiplexer);
 
 		
-<<<<<<< HEAD
-		
-		
-		//Musics.play("Music");
-=======
 		shapeRenderer = new ShapeRenderer();
 		renderer = new GameScreenRenderer(game);
 		//Musics.play("Music");
-<<<<<<< HEAD
-=======
 			
 		//TODO usunac to
 		game.asteroid.ships.add(new TestShip1(250, 250));
 		gameController.addBuilding(new TestTower1(10, 10));
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
->>>>>>> 555e9397ac1e207a3f6ce48ac2fe572784fe5ff5
 	}
 
 	@Override
@@ -140,47 +96,10 @@ public class GameScreen implements Screen {
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 		
-<<<<<<< HEAD
-		//TODO moze jakas klasa Renderer? albo chociaz metoda?
-		game.batch.begin();		
-		game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
-		for (Building building : game.asteroid.buildings) {
-			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
-		}
-		
-		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none){
-			Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-			game.gameScreen.camera.unproject(pos);
-			Vector2 tile = gameController.unprojectTile(pos.x, pos.y);
-			
-			if(tile!=null){
-				if(game.asteroid.worldGrid[(int)tile.x][(int)tile.y].tileType==TileType.blocked || game.asteroid.worldGrid[(int)tile.x][(int)tile.y].building!=null)
-					game.batch.setColor(1f, 0.1f, 0.1f, 0.7f);							
-				else
-					game.batch.setColor(0.1f, 1f, 0.1f, 0.7f);
-				
-				game.batch.draw(GameStateHolder.chosenBuilding.getTexture(), tile.x*Settings.tileSize, tile.y*Settings.tileSize);
-				game.batch.setColor(Color.WHITE);
-			}
-			
-			
-		}
-		
-		game.batch.end();
-		gameScreenGUI.render(delta);
-
-mapRenderer.setView(camera);
-		mapRenderer.render();
-		game.batch.begin();	// Renderowanie rzeczy znajdujacych sie na asteroidzie
-		asteroid.draw(game.batch);
-		game.batch.end();
-		gameScreenGUI.stage.draw();		if (Settings.DEBUG)
-=======
 		game.batch.begin();	
 		
 		renderer.renderBackground();
 		renderer.renderBuildings();
-		renderer.renderTowers();
 		renderer.renderShips();
 		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none)
 			renderer.renderSelectedBuilding();
@@ -199,7 +118,6 @@ mapRenderer.setView(camera);
 		
 		gameScreenGUI.render(delta);
 		if (Settings.DEBUG)
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 			renderDebug(delta);
 		
 		

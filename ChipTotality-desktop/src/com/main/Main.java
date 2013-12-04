@@ -17,8 +17,4 @@ public class Main {
 		
 	}
 }
-<<<<<<< HEAD
  
-=======
- 
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1

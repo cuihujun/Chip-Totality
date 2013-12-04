@@ -9,11 +9,10 @@ import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
+import com.res.Particles;
 import com.world.Asteroid;
 import com.world.building.Building;
 import com.world.ship.Ship;
-import com.world.tower.Tower;
-import com.res.Particles;
 
 public class GameScreenRenderer {
 	final ChipTotality game;
@@ -26,10 +25,9 @@ public class GameScreenRenderer {
 	}
 	
 	public void renderBackground(){
-<<<<<<< HEAD
+
 		//game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
 		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);		
-=======
 		delta = Gdx.graphics.getDeltaTime();//TODO z render metod z GameScreen przekazac jakos do renderera		
 		
 		Texture stars = AssetsLoader.getTexture("blackDreams");
@@ -48,7 +46,7 @@ public class GameScreenRenderer {
 		Particles.get("stars1").setPosition(meteorite.getWidth()/2,meteorite.getHeight()*0.35f);
 		Particles.get("stars1").update(delta);
 		Particles.get("stars1").draw(game.batch);			
->>>>>>> 65e39efd36fd776707d7406c22b5ffb7cf448a20
+
 	}
 	
 	public void renderBuildings(){
@@ -56,11 +54,7 @@ public class GameScreenRenderer {
 			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
 		}
 	}
-	public void renderTowers(){
-		for (Tower  tower : Asteroid.towers) {
-			game.batch.draw(tower.getTexture(), tower.coords.x*Settings.tileSize, tower.coords.y*Settings.tileSize);
-		}
-	}
+
 	public void renderShips(){
 		for (Ship ship : Asteroid.ships) {
 			game.batch.draw(ship.getTexture(), ship.coords.x, ship.coords.y);

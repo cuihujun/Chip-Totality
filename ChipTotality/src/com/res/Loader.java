@@ -6,7 +6,6 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
-import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -92,19 +91,6 @@ public class Loader {
 					
 		public static void loadAssets() {
 			
-<<<<<<< HEAD
-			manager.load("background.png", Texture.class, textureParameter);			
-			manager.load("dipl_menu.png", Texture.class, textureParameter);
-			manager.load("ashtar_button_128.png", Texture.class, textureParameter);
-manager.load("shoot1.png",Texture.class, textureParameter);
-			manager.load("spaceship.png",Texture.class, textureParameter);			
-			//buldings
-			manager.load("AcodinMine.png", Texture.class, textureParameter);
-			manager.load("TestBuilding1.png", Texture.class, textureParameter);
-			manager.load("HolyMountains.png", Texture.class, textureParameter);
-			manager.load("Rafinery.png", Texture.class, textureParameter);
-			manager.load("Temple.png", Texture.class, textureParameter);
-=======
 			//manager.load("background.png", Texture.class, textureParameter);
 			manager.load("starsSeamless.png", Texture.class, textureParameter);
 			manager.load("starSpaceTile.png", Texture.class, textureParameter);
@@ -112,17 +98,9 @@ manager.load("shoot1.png",Texture.class, textureParameter);
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
 			manager.load("ashtar_button_128.png", Texture.class, textureParameter);
 			manager.load("tabBackground.png", Texture.class, textureParameter);
-<<<<<<< HEAD
 
 			
 			manager.load("Meteorite.png", Texture.class, textureParameter);
-			
-	
-=======
-			
-			
-			manager.load("Meteorite.png", Texture.class, textureParameter);
->>>>>>> 65e39efd36fd776707d7406c22b5ffb7cf448a20
 
 			
 			//ships
@@ -135,7 +113,6 @@ manager.load("shoot1.png",Texture.class, textureParameter);
 			manager.load("Temple.png", Texture.class, textureParameter);
 			//towers
 			manager.load("TestTower1.png", Texture.class, textureParameter);
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 			
 			//icons
 			manager.load("IconsPack/iconsPack.atlas", TextureAtlas.class);			
@@ -150,15 +127,9 @@ manager.load("shoot1.png",Texture.class, textureParameter);
 			para.textureMinFilter = Texture.TextureFilter.Nearest;
 			TmxMapLoader tmxLoader = new TmxMapLoader(new InternalFileHandleResolver());	
 			manager.setLoader(TiledMap.class, tmxLoader);
-
 			manager.load("MapData/test_ortho2.tmx", TiledMap.class, para);
 			manager.load("MapData/tree2-final.png", Texture.class, textureParameter);*/
 								
-
-						manager.load("MapData/test_ortho2.tmx", TiledMap.class, para);
-			manager.load("MapData/tree2-final.png", Texture.class, textureParameter);
-					
-
 			loadSounds();
 			loadMusics();
 			loadParticleEffects();

@@ -5,23 +5,9 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.main.Settings;
-<<<<<<< HEAD
-import com.world.Tile.TileType;import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
-import com.res.Loader.AssetsLoader;import com.badlogic.gdx.graphics.g2d.SpriteBatch;import com.world.building.Building;
-import com.world.spaceship.Shoot;
-import com.world.spaceship.Spaceship;
-import com.world.spaceship.WeakShip;
-=======
 import com.world.Tile.TileType;
 import com.world.building.Building;
 import com.world.ship.Ship;
-<<<<<<< HEAD
-import com.world.tower.Tower;
-=======
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
->>>>>>> 555e9397ac1e207a3f6ce48ac2fe572784fe5ff5
 
 public class Asteroid {
 
@@ -30,43 +16,13 @@ public class Asteroid {
 										// |
 										// --->
 
-<<<<<<< HEAD
-	public Vector<Building> buildings;
-=======
-<<<<<<< HEAD
-	public Vector<Building> buildings;
-	public Vector<Spaceship> spaceships;
-	public Vector<Shoot>	shoots;
-	
-	public Asteroid() {
-		buildings = new Vector<Building>();
-
-		// load text file containing informations about tiles type
-		FileHandle file = Gdx.files.internal("world.txt");
-		String text = file.readString();
-		String newText=text.replaceAll("\\s+", "");
-		shoots = new Vector<Shoot>();
-
-	
-		spaceships = new Vector<Spaceship>();
-		spaceships.add(new WeakShip(new Vector2(10, 10)));
-
-		worldGrid = new Tile[Settings.tilesVertical][Settings.tilesHorizontal];  		
-		
-=======
 	public Vector<Building> buildings;	
 	public static Vector<Ship> ships;
 	
->>>>>>> 555e9397ac1e207a3f6ce48ac2fe572784fe5ff5
 	
-	public static Vector<Ship> ships;
-	public static Vector<Tower> towers;
 	public Asteroid() {
 		buildings = new Vector<Building>();		
 		ships = new Vector<Ship>();
-		towers = new Vector<Tower>();
-		
-		
 		
 		// load text file containing informations about tiles type
 		FileHandle file = Gdx.files.internal("world.txt");
@@ -75,7 +31,6 @@ public class Asteroid {
 		
 		worldGrid = new Tile[Settings.tilesVertical][Settings.tilesHorizontal];  		
 		
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 		int index = 0;
 		while (index < Settings.tilesHorizontal*Settings.tilesVertical) {
 			TileType tileType;
@@ -97,22 +52,6 @@ public class Asteroid {
 			index++;
 		}
 
-<<<<<<< HEAD
-	}
-
-		public void draw(SpriteBatch batch)
-	{
-		for (Spaceship spaceship : spaceships)	{
-			spaceship.draw(batch);
-			spaceship.run(0.01f,this);
-		}
-		for(Shoot shoot : shoots)
-		{
-			shoot.draw(batch);
-			shoot.run(0.01f, this);
-		}
-=======
->>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	}
 
 }
