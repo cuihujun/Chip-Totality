@@ -91,15 +91,24 @@ public class Loader {
 					
 		public static void loadAssets() {
 			
-			manager.load("background.png", Texture.class, textureParameter);			
+			//manager.load("background.png", Texture.class, textureParameter);
+			manager.load("starsSeamless.png", Texture.class, textureParameter);
+			manager.load("starSpaceTile.png", Texture.class, textureParameter);
+			manager.load("blackDreams.png", Texture.class, textureParameter);			
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
 			manager.load("ashtar_button_128.png", Texture.class, textureParameter);
 			manager.load("tabBackground.png", Texture.class, textureParameter);
+<<<<<<< HEAD
 
 			
 			manager.load("Meteorite.png", Texture.class, textureParameter);
 			
 	
+=======
+			
+			
+			manager.load("Meteorite.png", Texture.class, textureParameter);
+>>>>>>> 65e39efd36fd776707d7406c22b5ffb7cf448a20
 
 			
 			//ships
