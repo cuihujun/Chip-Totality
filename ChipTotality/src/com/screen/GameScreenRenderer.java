@@ -52,6 +52,10 @@ public class GameScreenRenderer {
 			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
 		}
 	}
+	public void renderStage(){
+		game.gameStage.act();
+		game.gameStage.draw();
+	}
 
 
 	public void renderSelectedBuilding(){

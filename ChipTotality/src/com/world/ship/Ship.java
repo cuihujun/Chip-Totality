@@ -1,21 +1,21 @@
 package com.world.ship;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.res.Loader.AssetsLoader;
 
-public abstract class Ship extends Actor{
+public abstract class Ship extends Image{
 	public int hitpoints;
-	public Vector2 coords;
+	public Texture texture;
 	
 	Ship(float x, float y, int hitpoints){
 		this.hitpoints=hitpoints;
-		coords= new Vector2(x, y);
 		
 		addListener(new InputListener(){
+			//TODO zrobic jakis sensowny element GUI, ktory by po kliknieciu na statek sie pojawial i dawal jakies info  o nim
 			@Override
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("down");
@@ -23,11 +23,11 @@ public abstract class Ship extends Actor{
         }
 		});
 		
-		
-		
+		texture=getTexture();
 		setWidth(getTexture().getWidth());
 		setHeight( getTexture().getHeight());
-		setBounds(x, y, getWidth(), getHeight());		
+		setBounds(x, y, getWidth(), getHeight());	
+		
 	}
 	
 	
@@ -35,6 +35,11 @@ public abstract class Ship extends Actor{
 		return AssetsLoader.getTexture(this.getClass().getSimpleName());
 	}
 	
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		batch.draw(texture, getX(), getY());
+		
+	}
 	
 	
 }

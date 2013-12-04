@@ -19,10 +19,8 @@ public class GameScreen implements Screen {
 	public final GameScreenGUI gameScreenGUI;
 	private final ShapeRenderer shapeRenderer;
 	private final GameScreenRenderer renderer;
-	
-	
-	
-	
+
+		
 	public void renderDebug(float delta) {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeType.Line);
@@ -81,8 +79,9 @@ public class GameScreen implements Screen {
 		renderer.renderBackground();
 		renderer.renderBuildings();
 		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none)
-			renderer.renderSelectedBuilding();
+			renderer.renderSelectedBuilding();	
 		game.batch.end();
+		renderer.renderStage();
 		
 		gameScreenGUI.render(delta);
 		if (Settings.DEBUG)

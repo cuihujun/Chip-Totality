@@ -1,6 +1,6 @@
 package com.world.tower;
 
-import com.world.Asteroid;
+import com.screen.GameStage;
 import com.world.ship.Ship;
 
 public class TestTower1 extends Tower{
@@ -20,7 +20,7 @@ public class TestTower1 extends Tower{
 	
 	@Override
 	public boolean targetInRange() {
-		if(currentTarget!=null && coordsFloat.dst(currentTarget.coords) <=range){
+		if(currentTarget!=null && coordsFloat.dst2(currentTarget.getX(), currentTarget.getY()) <=range){
 			return true;
 		}
 		return false;
@@ -31,7 +31,7 @@ public class TestTower1 extends Tower{
 	public void shoot(Ship target) {
 		target.hitpoints-=firepower;
 		if(target.hitpoints<=0){
-			Asteroid.ships.remove(target);		
+			//TODO remove ship from stage	
 			currentTarget=null;
 		}
 	}
@@ -39,8 +39,8 @@ public class TestTower1 extends Tower{
 	
 	@Override
 	public Ship findTarget() {
-		for (Ship ship : Asteroid.ships) {
-			if(coordsFloat.dst(ship.coords) <= range)
+		for (Ship ship : GameStage.ships) {
+			if(coordsFloat.dst2(ship.getX(), ship.getY()) <= range)
 				currentTarget=ship;
 		}	
 		return null;

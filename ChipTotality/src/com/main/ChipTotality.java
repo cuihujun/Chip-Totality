@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.res.Loader.AssetsLoader;
 import com.screen.DiplomacyScreen;
 import com.screen.GameScreen;
+import com.screen.GameStage;
 import com.screen.MainMenuScreen;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
@@ -21,6 +22,8 @@ public class ChipTotality extends Game {
 	public  MainMenuScreen mainMenuScreen;
 	public  GameScreen gameScreen;
 	public  DiplomacyScreen diplomacyScreen;
+	public GameStage gameStage;
+	
 	
 	private  InputMultiplexer inputMultiplexer;
 	public CameraController cameraController;
@@ -39,6 +42,7 @@ public class ChipTotality extends Game {
 		mainMenuScreen =new MainMenuScreen(this);
 		gameScreen = new GameScreen(this);
 		diplomacyScreen= new DiplomacyScreen(this);
+		gameStage=new GameStage(this);
 			
 		gameController=new GameController(this);
 		cameraController= new CameraController(gameScreen.camera);
@@ -46,6 +50,7 @@ public class ChipTotality extends Game {
 		inputMultiplexer.addProcessor(gameScreen.gameScreenGUI.stage);
 		inputMultiplexer.addProcessor(cameraController);
 		inputMultiplexer.addProcessor(gameController);
+		inputMultiplexer.addProcessor(gameStage);
 		Gdx.input.setInputProcessor(inputMultiplexer);	
 		
 		this.setScreen(mainMenuScreen);
