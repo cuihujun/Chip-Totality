@@ -3,22 +3,23 @@ package com.world.building;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.gameInfo.Coords;
+import com.res.Loader.AssetsLoader;
 
 public abstract class Building {
-	public final Coords coords;	//left bottom corner of the building
-	public final Vector2 size;		//width and height of the building, in tiles; e.g. size(3,2) looks like [][][]
-									//																		[][][]
+	public final Coords coords;	
+	public final Vector2 size;
+	
 	protected int hitpoints;
 	public Boolean researchReady;
-	
-	protected int cost;
-	
 	
 	
 	public abstract void pay();
 	public abstract void doTask();
 	public abstract void dispose();
-	public abstract Texture getTexture();
+	
+	public Texture getTexture() {
+		return AssetsLoader.getTexture(this.getClass().getSimpleName());
+	}
 	
 	
 

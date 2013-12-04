@@ -7,6 +7,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.main.Settings;
 import com.world.Tile.TileType;
 import com.world.building.Building;
+import com.world.ship.Ship;
+import com.world.tower.Tower;
 
 public class Asteroid {
 
@@ -16,10 +18,16 @@ public class Asteroid {
 										// --->
 
 	public Vector<Building> buildings;
-
+	
+	public static Vector<Ship> ships;
+	public static Vector<Tower> towers;
 	public Asteroid() {
-		buildings = new Vector<Building>();
-
+		buildings = new Vector<Building>();		
+		ships = new Vector<Ship>();
+		towers = new Vector<Tower>();
+		
+		
+		
 		// load text file containing informations about tiles type
 		FileHandle file = Gdx.files.internal("world.txt");
 		String text = file.readString();

@@ -95,14 +95,17 @@ public class Loader {
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
 			manager.load("ashtar_button_128.png", Texture.class, textureParameter);
 			manager.load("tabBackground.png", Texture.class, textureParameter);
-	
 			
+			//ships
+			manager.load("TestShip1.png", Texture.class, textureParameter);
 			//buldings
 			manager.load("AcodinMine.png", Texture.class, textureParameter);
 			manager.load("Base.png", Texture.class, textureParameter);
 			manager.load("HolyMountains.png", Texture.class, textureParameter);
 			manager.load("Rafinery.png", Texture.class, textureParameter);
 			manager.load("Temple.png", Texture.class, textureParameter);
+			//towers
+			manager.load("TestTower1.png", Texture.class, textureParameter);
 			
 			//icons
 			manager.load("IconsPack/iconsPack.atlas", TextureAtlas.class);			

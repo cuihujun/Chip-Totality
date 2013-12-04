@@ -1,10 +1,8 @@
 package com.world.building;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
-import com.res.Loader.AssetsLoader;
 
 public class Base extends Building implements Upgradeable{
 	final static int width=1;
@@ -53,11 +51,6 @@ public class Base extends Building implements Upgradeable{
 		
 	}
 
-
-	@Override
-	public Texture getTexture() {
-		return AssetsLoader.getTexture("Base");
-	}
 
 
 	@Override

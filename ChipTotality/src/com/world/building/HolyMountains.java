@@ -1,8 +1,6 @@
 package com.world.building;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.gameInfo.GameStateHolder;
-import com.res.Loader.AssetsLoader;
 
 public class HolyMountains extends Building implements Upgradeable{
 	final static int width=3;
@@ -36,10 +34,6 @@ public class HolyMountains extends Building implements Upgradeable{
 		
 	}
 
-	@Override
-	public Texture getTexture() {
-		return AssetsLoader.getTexture("HolyMountains");
-	}
 
 	@Override
 	public void dispose() {

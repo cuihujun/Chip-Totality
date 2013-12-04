@@ -15,6 +15,8 @@ import com.res.Loader.AssetsLoader;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
+import com.world.ship.TestShip1;
+import com.world.tower.TestTower1;
 
 public class GameScreen implements Screen {
 	final ChipTotality game;
@@ -60,7 +62,10 @@ public class GameScreen implements Screen {
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;	
-
+		//TODO usunac to
+		game.asteroid.ships.add(new TestShip1(250, 250));
+		game.asteroid.towers.add(new TestTower1(10, 10));
+		
 		
 		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics
 				.getHeight();
@@ -95,6 +100,8 @@ public class GameScreen implements Screen {
 		
 		renderer.renderBackground();
 		renderer.renderBuildings();
+		renderer.renderTowers();
+		renderer.renderShips();
 		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none)
 			renderer.renderSelectedBuilding();
 		game.batch.end();
@@ -113,6 +120,7 @@ public class GameScreen implements Screen {
 		gameScreenGUI.render(delta);
 		if (Settings.DEBUG)
 			renderDebug(delta);
+		
 		
 	}
 
