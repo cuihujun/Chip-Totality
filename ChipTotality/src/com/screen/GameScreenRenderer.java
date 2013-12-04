@@ -25,6 +25,7 @@ public class GameScreenRenderer {
 	
 	public void renderBackground(){
 		game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
+		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);		
 	}
 	
 	public void renderBuildings(){
