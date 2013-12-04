@@ -4,6 +4,8 @@ import com.world.Asteroid;
 import com.world.ship.Ship;
 
 public class TestTower1 extends Tower{
+	
+	
 	final static int width = 2;
 	final static int height = 2;
 	static int firepower=45;
@@ -44,30 +46,6 @@ public class TestTower1 extends Tower{
 				currentTarget=ship;
 		}	
 		return null;
-	}
-
-
-
-	@Override
-	public void pay() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void doTask() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	

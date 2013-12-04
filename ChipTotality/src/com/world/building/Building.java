@@ -33,10 +33,9 @@ public abstract class Building {
 		size = new Vector2(width, height);
 	}
 	
-	public Building(int x, int y, int width, int height, int maxHP) {
+	public Building(int x, int y, int width, int height) {
 		coords = new Coords(x, y);
 		size = new Vector2(width, height);
-		hitpoints=maxHP;
 		setResearchingFlag(this);
 	}
 

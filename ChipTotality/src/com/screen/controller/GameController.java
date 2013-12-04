@@ -66,7 +66,7 @@ public class GameController extends InputAdapter {
 	}
 	
 	
-	public void addBuilding(Building building) {
+	private void addBuilding(Building building) {
 		
 		if(!buildingPossibleHere(building))
 			return;

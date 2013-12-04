@@ -21,7 +21,8 @@ public class Base extends Building implements Upgradeable{
 	}
 	
 	public Base(int x, int y) {
-		super(x, y, width, height, maxHitpoints);		
+		super(x, y, width, height);		
+		hitpoints=maxHitpoints;
 	}
 	
 

@@ -19,7 +19,8 @@ public class Rafinery extends Building{
 	}
 	
 	public Rafinery(int x, int y) {
-		super(x, y, width, height, maxHitpoints);	
+		super(x, y, width, height);
+		hitpoints=maxHitpoints;		
 	}
 	
 	@Override
