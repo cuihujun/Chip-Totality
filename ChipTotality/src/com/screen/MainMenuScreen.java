@@ -12,8 +12,7 @@ public class MainMenuScreen implements Screen{
 	public Ticker ticker;
 	
 	
-	public MainMenuScreen(ChipTotality gam) {
-		Gdx.app.log("screen", "MainMenuScreen set");
+	public MainMenuScreen(ChipTotality gam) {	
 		game=gam;
 		ticker = new Ticker(50, 50, 10, 120);
 		ticker.addMessage("petycja: nie bedziemy cipowani");
@@ -24,7 +23,9 @@ public class MainMenuScreen implements Screen{
 		ticker.addMessage("jaszczur piekielny = smierc");
 		ticker.addMessage("witam i pozdrawiam, astar seran");
 		ticker.addMessage("stara ziem niewolnictwo cipowe wiezienie");
+		Gdx.app.log("screen", "MainMenuScreen set");
 	}
+	
 	
 
 	@Override

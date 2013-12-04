@@ -10,9 +10,7 @@ import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
 import com.res.Particles;
-import com.world.Asteroid;
 import com.world.building.Building;
-import com.world.ship.Ship;
 
 public class GameScreenRenderer {
 	final ChipTotality game;
@@ -55,20 +53,15 @@ public class GameScreenRenderer {
 		}
 	}
 
-	public void renderShips(){
-		for (Ship ship : Asteroid.ships) {
-			game.batch.draw(ship.getTexture(), ship.coords.x, ship.coords.y);
-		}
-	}
 
 	public void renderSelectedBuilding(){
 		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		game.gameScreen.camera.unproject(pos);
-		Coords tile = game.gameScreen.gameController.unprojectTile(pos.x, pos.y);
+		Coords tile = game.gameController.unprojectTile(pos.x, pos.y);
 		
 		if(tile!=null){
 			//building not possbile - tint red
-			if(!game.gameScreen.gameController.buildingPossibleHere(tile.x, tile.y, GameStateHolder.chosenBuilding.getBuildingWidth(), GameStateHolder.chosenBuilding.getBuildingHeight()))
+			if(!game.gameController.buildingPossibleHere(tile.x, tile.y, GameStateHolder.chosenBuilding.getBuildingWidth(), GameStateHolder.chosenBuilding.getBuildingHeight()))
 				game.batch.setColor(1f, 0.1f, 0.1f, 0.7f);							
 			else	//else tint green
 				game.batch.setColor(0.1f, 1f, 0.1f, 0.7f);		

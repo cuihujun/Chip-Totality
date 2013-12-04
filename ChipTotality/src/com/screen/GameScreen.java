@@ -1,7 +1,6 @@
 package com.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,21 +12,15 @@ import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
 import com.screen.GUI.GameScreenGUI;
-import com.screen.controller.CameraController;
-import com.screen.controller.GameController;
-import com.world.ship.TestShip1;
-import com.world.tower.TestTower1;
 
 public class GameScreen implements Screen {
 	final ChipTotality game;
 	public OrthographicCamera camera;
-
-	final GameController gameController;
-	final CameraController cameraController;
-	private final InputMultiplexer inputMultiplexer;
-	final GameScreenGUI gameScreenGUI;
+	public final GameScreenGUI gameScreenGUI;
 	private final ShapeRenderer shapeRenderer;
 	private final GameScreenRenderer renderer;
+	
+	
 	
 	
 	public void renderDebug(float delta) {
@@ -71,23 +64,10 @@ public class GameScreen implements Screen {
 		camera.setToOrtho(false, Settings.VIEW_WIDTH, Settings.VIEW_HEIGHT);
 		camera.update();
 
-		gameScreenGUI = new GameScreenGUI(game);
-		inputMultiplexer = new InputMultiplexer();
-		cameraController = new CameraController(camera);
-		gameController = new GameController(game);
-		inputMultiplexer.addProcessor(gameScreenGUI.stage);
-		inputMultiplexer.addProcessor(cameraController);
-		inputMultiplexer.addProcessor(gameController);
-		Gdx.input.setInputProcessor(inputMultiplexer);
-
-		
+		gameScreenGUI = new GameScreenGUI(game);		
 		shapeRenderer = new ShapeRenderer();
-		renderer = new GameScreenRenderer(game);
-		//Musics.play("Music");
-			
-		//TODO usunac to
-		game.asteroid.ships.add(new TestShip1(250, 250));
-		gameController.addBuilding(new TestTower1(10, 10));
+		renderer = new GameScreenRenderer(game);	
+		
 	}
 
 	@Override
@@ -100,21 +80,9 @@ public class GameScreen implements Screen {
 		
 		renderer.renderBackground();
 		renderer.renderBuildings();
-		renderer.renderShips();
 		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none)
 			renderer.renderSelectedBuilding();
 		game.batch.end();
-		
-		//camera scrolling
-		if(Gdx.input.getX()<=0.05*Settings.WIDTH )
-			camera.position.add(-Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0, 0);
-		if(Gdx.input.getX()>=0.95*Settings.WIDTH)
-			camera.position.add(Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0, 0);
-		if(Gdx.input.getY()>=0.95*Settings.HEIGHT)
-			camera.position.add(0, -Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0);
-		if(Gdx.input.getY()<=0.*Settings.HEIGHT)
-			camera.position.add(0, Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0);
-		
 		
 		gameScreenGUI.render(delta);
 		if (Settings.DEBUG)

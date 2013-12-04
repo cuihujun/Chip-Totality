@@ -6,7 +6,7 @@ import com.world.ship.Ship;
 public class TestTower1 extends Tower{
 	final static int width = 2;
 	final static int height = 2;
-	static int firepower=45;
+	static int firepower=5;
 	static int maxHitpoints=150;
 	static float range=1150;
 	static float shootDelay=1;
