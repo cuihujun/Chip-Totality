@@ -16,10 +16,19 @@ public class Temple extends Building implements Upgradeable {
 
 	Task addResources;
 
+<<<<<<< HEAD
 	public Temple(int x, int y) {
 		super(x, y, width, height);
 		hitpoints = maxHitpoints;
 
+=======
+	public Temple(){
+		super(width, height);
+	}
+	
+	public Temple(int x, int y) {
+		super(x, y, width, height, maxHitpoints);
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	}
 
 	@Override
@@ -44,10 +53,21 @@ public class Temple extends Building implements Upgradeable {
 		};
 		Timer.schedule(addResources, resourceDeliveryTime);
 	}
+<<<<<<< HEAD
 
 	@Override
 	public Texture getTexture() {
 		return AssetsLoader.getTexture("Temple");
 	}
 
+=======
+
+
+	@Override
+	public void dispose() {
+		addResources.cancel();
+		
+	}
+
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 }

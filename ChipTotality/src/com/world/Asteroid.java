@@ -5,6 +5,7 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.main.Settings;
+<<<<<<< HEAD
 import com.world.Tile.TileType;import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +13,11 @@ import com.res.Loader.AssetsLoader;import com.badlogic.gdx.graphics.g2d.SpriteBa
 import com.world.spaceship.Shoot;
 import com.world.spaceship.Spaceship;
 import com.world.spaceship.WeakShip;
+=======
+import com.world.Tile.TileType;
+import com.world.building.Building;
+import com.world.ship.Ship;
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 
 public class Asteroid {
 
@@ -20,6 +26,7 @@ public class Asteroid {
 										// |
 										// --->
 
+<<<<<<< HEAD
 	public Vector<Building> buildings;
 	public Vector<Spaceship> spaceships;
 	public Vector<Shoot>	shoots;
@@ -39,6 +46,23 @@ public class Asteroid {
 
 		worldGrid = new Tile[Settings.tilesVertical][Settings.tilesHorizontal];  		
 		
+=======
+	public Vector<Building> buildings;	
+	public static Vector<Ship> ships;
+	
+	
+	public Asteroid() {
+		buildings = new Vector<Building>();		
+		ships = new Vector<Ship>();
+		
+		// load text file containing informations about tiles type
+		FileHandle file = Gdx.files.internal("world.txt");
+		String text = file.readString();
+		String newText=text.replaceAll("\\s+", "");
+		
+		worldGrid = new Tile[Settings.tilesVertical][Settings.tilesHorizontal];  		
+		
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 		int index = 0;
 		while (index < Settings.tilesHorizontal*Settings.tilesVertical) {
 			TileType tileType;
@@ -60,6 +84,7 @@ public class Asteroid {
 			index++;
 		}
 
+<<<<<<< HEAD
 	}
 
 		public void draw(SpriteBatch batch)
@@ -73,5 +98,8 @@ public class Asteroid {
 			shoot.draw(batch);
 			shoot.run(0.01f, this);
 		}
+=======
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	}
+
 }

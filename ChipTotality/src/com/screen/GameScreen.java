@@ -8,32 +8,47 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+<<<<<<< HEAD
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.GameStateHolder;
 
+=======
+import com.gameInfo.GameStateHolder;
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
 import com.screen.GUI.GameScreenGUI;
 import com.screen.controller.CameraController;
 import com.screen.controller.GameController;
+<<<<<<< HEAD
 import com.world.Tile.TileType;
 import com.world.building.Building;
+=======
+import com.world.ship.TestShip1;
+import com.world.tower.TestTower1;
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 
 public class GameScreen implements Screen {
 	final ChipTotality game;
 	public OrthographicCamera camera;
 
-	private final GameController gameController;
-	private final CameraController cameraController;
+	final GameController gameController;
+	final CameraController cameraController;
 	private final InputMultiplexer inputMultiplexer;
+<<<<<<< HEAD
 
 	private final GameScreenGUI gameScreenGUI;
 	
 
+=======
+	final GameScreenGUI gameScreenGUI;
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	private final ShapeRenderer shapeRenderer;
-
+	private final GameScreenRenderer renderer;
+	
+	
 	public void renderDebug(float delta) {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeType.Line);
@@ -66,11 +81,15 @@ public class GameScreen implements Screen {
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;	
+<<<<<<< HEAD
 		
 		
 		
 		shapeRenderer = new ShapeRenderer();
 			
+=======
+				
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics
 				.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;
@@ -87,10 +106,21 @@ public class GameScreen implements Screen {
 		inputMultiplexer.addProcessor(cameraController);
 		inputMultiplexer.addProcessor(gameController);
 		Gdx.input.setInputProcessor(inputMultiplexer);
+
 		
+<<<<<<< HEAD
 		
 		
 		//Musics.play("Music");
+=======
+		shapeRenderer = new ShapeRenderer();
+		renderer = new GameScreenRenderer(game);
+		//Musics.play("Music");
+			
+		//TODO usunac to
+		game.asteroid.ships.add(new TestShip1(250, 250));
+		gameController.addBuilding(new TestTower1(10, 10));
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 	}
 
 	@Override
@@ -99,6 +129,7 @@ public class GameScreen implements Screen {
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 		
+<<<<<<< HEAD
 		//TODO moze jakas klasa Renderer? albo chociaz metoda?
 		game.batch.begin();		
 		game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
@@ -133,7 +164,33 @@ mapRenderer.setView(camera);
 		asteroid.draw(game.batch);
 		game.batch.end();
 		gameScreenGUI.stage.draw();		if (Settings.DEBUG)
+=======
+		game.batch.begin();	
+		
+		renderer.renderBackground();
+		renderer.renderBuildings();
+		renderer.renderShips();
+		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none)
+			renderer.renderSelectedBuilding();
+		game.batch.end();
+		
+		//camera scrolling
+		if(Gdx.input.getX()<=0.05*Settings.WIDTH )
+			camera.position.add(-Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0, 0);
+		if(Gdx.input.getX()>=0.95*Settings.WIDTH)
+			camera.position.add(Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0, 0);
+		if(Gdx.input.getY()>=0.95*Settings.HEIGHT)
+			camera.position.add(0, -Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0);
+		if(Gdx.input.getY()<=0.*Settings.HEIGHT)
+			camera.position.add(0, Settings.cameraScrollSpeed*Gdx.graphics.getDeltaTime(), 0);
+		
+		
+		gameScreenGUI.render(delta);
+		if (Settings.DEBUG)
+>>>>>>> 5d92dc957f51a7f999b4229a43f19e3eb417e2e1
 			renderDebug(delta);
+		
+		
 	}
 
 	@Override
