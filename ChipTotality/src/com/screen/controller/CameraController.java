@@ -1,17 +1,20 @@
 package com.screen.controller;
 
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 
-public class CameraController  extends InputAdapter{
+public class CameraController  extends GestureDetector{
 	public OrthographicCamera camera;
 	final Vector3 curr = new Vector3();
 	final Vector3 last = new Vector3(-1, -1, -1);
 	final Vector3 delta = new Vector3();	
-
+	
+	final static public float MAX_ZOOM_OUT = 5f;//TODO only for test max zoom out will be smaller
+	final static public float MIN_ZOOM = 0.4f;
 	
 	public CameraController(OrthographicCamera cam) {
+		super(new CameraGestureListener(cam));
 		camera = cam;		
 	}
 	
@@ -33,10 +36,13 @@ public class CameraController  extends InputAdapter{
 		return false;
 	}		
 	
-	
 	@Override
-	public boolean mouseMoved(int screenX, int screenY) {			
-		return false;
+	public boolean scrolled(int amount){
+		
+		camera.zoom += 0.1 * amount;
+		if (camera.zoom < MIN_ZOOM) camera.zoom = MIN_ZOOM;
+		if (camera.zoom > MAX_ZOOM_OUT) camera.zoom = MAX_ZOOM_OUT;
+		return true;
 	}
 	
 }

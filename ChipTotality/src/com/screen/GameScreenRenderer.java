@@ -25,25 +25,32 @@ public class GameScreenRenderer {
 	public void renderBackground(){
 
 		//game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
-		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);		
+		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);
 		delta = Gdx.graphics.getDeltaTime();//TODO z render metod z GameScreen przekazac jakos do renderera		
 		
-		Texture stars = AssetsLoader.getTexture("blackDreams");
-		//Texture stars = AssetsLoader.getTexture("starSpaceTile");
+		//Texture stars = AssetsLoader.getTexture("blackDreams");
+		Texture stars = AssetsLoader.getTexture("starSpaceTile");
 		//Texture stars = AssetsLoader.getTexture("starsSeamless");		
 				
-		int repeatCount = 6;
-		for(int row = -repeatCount; row<repeatCount; row++){
-			for(int column = -repeatCount; column<repeatCount; column++){
-				game.batch.draw(stars, row*stars.getWidth(), column*stars.getHeight());
-			}			
+		
+		Vector3 postion = game.gameScreen.camera.position;
+		float x,y,w,h;
+		w = stars.getWidth();
+		h = stars.getHeight();
+		x = (postion.x - (postion.x % w)); 
+		y = (postion.y - (postion.y % h));
+		int repeatCount = 4;
+		for(int row = -(repeatCount+2); row<repeatCount+2; row++){
+			for(int column = -(repeatCount); column<repeatCount; column++){
+				game.batch.draw(stars, x + row*stars.getWidth(), y + column*stars.getHeight());
+			}
 		}
 		
 		Texture meteorite = AssetsLoader.getTexture("Meteorite");
 		game.batch.draw(meteorite, 0, 0);
-		Particles.get("stars1").setPosition(meteorite.getWidth()/2,meteorite.getHeight()*0.35f);
+		/*Particles.get("stars1").setPosition(meteorite.getWidth()/2,meteorite.getHeight()*0.35f);
 		Particles.get("stars1").update(delta);
-		Particles.get("stars1").draw(game.batch);			
+		Particles.get("stars1").draw(game.batch);*/			
 
 	}
 	
