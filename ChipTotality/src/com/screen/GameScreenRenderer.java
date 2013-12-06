@@ -39,8 +39,8 @@ public class GameScreenRenderer {
 		h = stars.getHeight();
 		x = (postion.x - (postion.x % w)); 
 		y = (postion.y - (postion.y % h));
-		int repeatCount = 4;
-		for(int row = -(repeatCount+2); row<repeatCount+2; row++){
+		int repeatCount = 3;
+		for(int row = -(repeatCount+1); row<repeatCount+1; row++){
 			for(int column = -(repeatCount); column<repeatCount; column++){
 				game.batch.draw(stars, x + row*stars.getWidth(), y + column*stars.getHeight());
 			}

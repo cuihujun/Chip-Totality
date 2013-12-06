@@ -40,7 +40,7 @@ public class Loader {
 			return sprites.get(name);
 		}
 		
-		public static Texture getTexture(String name){
+		public static Texture getTexture(String name){								
 			return manager.get(name + ".png", Texture.class);
 		}
 		
@@ -207,8 +207,8 @@ public class Loader {
 		}
 		
 		private AssetsLoader() {
-			textureParameter.magFilter = Texture.TextureFilter.Linear;
-			textureParameter.minFilter = Texture.TextureFilter.Linear;				
+			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
+			textureParameter.minFilter = Texture.TextureFilter.MipMapNearestNearest;				
 		}
 
 	}
