@@ -20,74 +20,105 @@ public class GameScreen implements Screen {
 	private final ShapeRenderer shapeRenderer;
 	private final GameScreenRenderer renderer;
 
-		
 	public void renderDebug(float delta) {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeType.Line);
 
-		//grid
+		// grid
 		shapeRenderer.setColor(new Color(0, 0, 1, 1));
-		int size = Settings.tileSize;		
-		for(int row=0;row<Settings.tilesHorizontal;row++){
-			for(int column=0;column<Settings.tilesVertical;column++){
+		int size = Settings.tileSize;
+		for (int row = 0; row < Settings.tilesHorizontal; row++) {
+			for (int column = 0; column < Settings.tilesVertical; column++) {
 				shapeRenderer.setColor(new Color(0, 0, 1, 1));
-				shapeRenderer.line((row+0)*size, (column+0)*size, (row+1)*size, (column+0)*size);
-				shapeRenderer.line((row+0)*size, (column+0)*size, (row+0)*size, (column+1)*size);
-				shapeRenderer.line((row+1)*size, (column+0)*size, (row+1)*size, (column+1)*size);
-				shapeRenderer.line((row+1)*size, (column+1)*size, (row+0)*size, (column+1)*size);					
+				shapeRenderer.line((row + 0) * size, (column + 0) * size,
+						(row + 1) * size, (column + 0) * size);
+				shapeRenderer.line((row + 0) * size, (column + 0) * size,
+						(row + 0) * size, (column + 1) * size);
+				shapeRenderer.line((row + 1) * size, (column + 0) * size,
+						(row + 1) * size, (column + 1) * size);
+				shapeRenderer.line((row + 1) * size, (column + 1) * size,
+						(row + 0) * size, (column + 1) * size);
 			}
-		}		
-		
-		//2d axis
+		}
+
+		// 2d axis
 		shapeRenderer.setColor(new Color(0, 1, 0, 1));
-		shapeRenderer.line(0, 0, 0, Settings.tilesHorizontal*Settings.tileSize);
-		shapeRenderer.line(0, 0, Settings.tilesHorizontal*Settings.tileSize, 0);
-		shapeRenderer.line(0, 0, 0, -Settings.tilesHorizontal*Settings.tileSize);
-		shapeRenderer.line(0, 0, -Settings.tilesHorizontal*Settings.tileSize, 0);
-		
-		
-		
+		shapeRenderer.line(0, 0, 0, Settings.tilesHorizontal
+				* Settings.tileSize);
+		shapeRenderer.line(0, 0, Settings.tilesHorizontal * Settings.tileSize,
+				0);
+		shapeRenderer.line(0, 0, 0, -Settings.tilesHorizontal
+				* Settings.tileSize);
+		shapeRenderer.line(0, 0, -Settings.tilesHorizontal * Settings.tileSize,
+				0);
+
 		shapeRenderer.end();
 	}
 
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
-		game = gam;	
-				
-		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics
-				.getHeight();
+		game = gam;
+
+		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth()
+				/ (float) Gdx.graphics.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Settings.VIEW_WIDTH, Settings.VIEW_HEIGHT);
 		camera.update();
 
-		gameScreenGUI = new GameScreenGUI(game);		
+		gameScreenGUI = new GameScreenGUI(game);
 		shapeRenderer = new ShapeRenderer();
-		renderer = new GameScreenRenderer(game);	
-		
+		renderer = new GameScreenRenderer(game);
+
 	}
 
 	@Override
 	public void render(float delta) {
+
+	
+		//game.gameStage.resetTree();
+		/*
+		ArrayList<StageObject> returnObjects = new ArrayList<StageObject>();
+		for (StageObject currentActor : game.gameStage.allActors) {
+			returnObjects.clear();
+			returnObjects=game.gameStage.quadTree.retrieve(currentActor);
+			Rectangle2D.Float currentActorBounds = new Rectangle2D.Float(currentActor.getX(), currentActor.getY(), currentActor.getWidth(), currentActor.getHeight());
+			for (Actor possiblyColliding : returnObjects) {
+				Rectangle2D.Float possiblyCollidingBounds = new Rectangle2D.Float(possiblyColliding.getX(), possiblyColliding.getY(), possiblyColliding.getWidth(), possiblyColliding.getHeight());
+				if(possiblyCollidingBounds.intersects(currentActorBounds))
+					;//System.out.println("asd");
+			}
+		}*/
+		
+		//game.gameStage.resetTree();
+		int k=0;
+		for (int i =0; i<game.gameStage.allActors.size(); i++) {
+			for (int j=0; j<game.gameStage.allActors.size(); j++) {
+				if(game.gameStage.allActors.get(i).bounds.intersects(game.gameStage.allActors.get(j).bounds)){
+					//System.out.println("Sds"+k);
+					k++;
+				}
+			}
+		}
+		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
-		
-		game.batch.begin();	
-		
+
+		game.batch.begin();
+
 		renderer.renderBackground();
 		renderer.renderBuildings();
-		if(GameStateHolder.chosenBuilding!=GameStateHolder.ChosenBuilding.none)
-			renderer.renderSelectedBuilding();	
+		if (GameStateHolder.chosenBuilding != GameStateHolder.ChosenBuilding.none)
+			renderer.renderSelectedBuilding();
 		game.batch.end();
 		renderer.renderStage();
-		
+
 		gameScreenGUI.render(delta);
 		if (Settings.DEBUG)
 			renderDebug(delta);
-		
-		
+
 	}
 
 	@Override
@@ -98,9 +129,9 @@ public class GameScreen implements Screen {
 		camera.viewportHeight = Settings.VIEW_HEIGHT;
 		camera.viewportWidth = Settings.VIEW_WIDTH;
 		camera.update();
-		gameScreenGUI.stage.setViewport(Settings.VIEW_WIDTH ,
-				Settings.VIEW_HEIGHT , true);
-		
+		gameScreenGUI.stage.setViewport(Settings.VIEW_WIDTH,
+				Settings.VIEW_HEIGHT, true);
+
 		AssetsLoader.recreateAfterResize();
 	}
 

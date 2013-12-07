@@ -1,6 +1,5 @@
 package com.world.tower;
 
-import com.screen.GameStage;
 import com.world.ship.Ship;
 
 public class TestTower1 extends Tower{
@@ -37,14 +36,7 @@ public class TestTower1 extends Tower{
 	}
 
 	
-	@Override
-	public Ship findTarget() {
-		for (Ship ship : GameStage.ships) {
-			if(coordsFloat.dst2(ship.getX(), ship.getY()) <= range)
-				currentTarget=ship;
-		}	
-		return null;
-	}
+
 
 
 
@@ -66,6 +58,14 @@ public class TestTower1 extends Tower{
 
 	@Override
 	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void findTarget() {
 		// TODO Auto-generated method stub
 		
 	}

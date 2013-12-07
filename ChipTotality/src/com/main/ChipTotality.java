@@ -20,9 +20,10 @@ public class ChipTotality extends Game {
 	public Asteroid asteroid;
 	
 	public  MainMenuScreen mainMenuScreen;
+	public GameStage gameStage;
 	public  GameScreen gameScreen;
 	public  DiplomacyScreen diplomacyScreen;
-	public GameStage gameStage;
+	
 	
 	
 	private  InputMultiplexer inputMultiplexer;

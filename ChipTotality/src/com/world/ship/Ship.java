@@ -2,16 +2,18 @@ package com.world.ship;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.res.Loader.AssetsLoader;
+import com.screen.StageObject;
 
-public abstract class Ship extends Image{
+public abstract class Ship extends StageObject{
 	public int hitpoints;
-	public Texture texture;
+	private Texture texture;
 	
-	Ship(float x, float y, int hitpoints){
+	Ship(int x, int y, int width, int height, int hitpoints){
+		super(x, y, width, height);
 		this.hitpoints=hitpoints;
 		
 		addListener(new InputListener(){
@@ -39,6 +41,10 @@ public abstract class Ship extends Image{
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.draw(texture, getX(), getY());
 		
+	}
+	
+	public Rectangle getBounds(){
+		return new Rectangle(getX(), getY(), getWidth(), getHeight());
 	}
 	
 	

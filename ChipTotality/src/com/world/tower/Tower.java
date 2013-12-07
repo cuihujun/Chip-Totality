@@ -37,8 +37,16 @@ public abstract class Tower extends Building{
 	
 	public abstract boolean targetInRange();
 	public abstract void shoot(Ship target);
-	public abstract Ship findTarget();
-	
+	public abstract void findTarget(); //TODO do usuniecia
+	//TODO przerobic to na szukanie w drzewie
+	/*public Ship findTarget() {
+		for (Ship ship : GameStage.ships) {
+			if(coordsFloat.dst2(ship.getX(), ship.getY()) <= range)
+				currentTarget=ship;
+		}	
+		return null;
+	}
+	*/
 	
 	
 }
