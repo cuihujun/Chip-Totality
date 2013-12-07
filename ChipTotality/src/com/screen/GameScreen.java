@@ -75,8 +75,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-
-	
+		
+		game.cameraController.update(delta);	
 		//game.gameStage.resetTree();
 		/*
 		ArrayList<StageObject> returnObjects = new ArrayList<StageObject>();
@@ -103,7 +103,7 @@ public class GameScreen implements Screen {
 		}
 		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
+		camera.update();		
 		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();

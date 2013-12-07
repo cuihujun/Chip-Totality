@@ -59,7 +59,7 @@ public class ChipTotality extends Game {
 	
 	@Override
 	public void render(){
-		super.render();
+		super.render();		
 	}
 	
 }

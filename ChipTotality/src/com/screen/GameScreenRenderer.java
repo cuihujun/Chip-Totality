@@ -46,8 +46,8 @@ public class GameScreenRenderer {
 			}
 		}
 		
-		Texture meteorite = AssetsLoader.getTexture("Meteorite");
-		game.batch.draw(meteorite, 0, 0);
+		Texture meteorite = AssetsLoader.getTexture("Meteorite");		
+		game.batch.draw(meteorite, 0, 0);		
 		/*Particles.get("stars1").setPosition(meteorite.getWidth()/2,meteorite.getHeight()*0.35f);
 		Particles.get("stars1").update(delta);
 		Particles.get("stars1").draw(game.batch);*/			
