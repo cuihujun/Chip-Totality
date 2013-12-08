@@ -13,22 +13,22 @@ import com.badlogic.gdx.utils.Array;
  * 
  * @author Sri Harsha Chilakapati
  */
-public class QuadTree {
+public class QuadTree<T extends Actor> {
 
     // The MAX_OBJECTS and LEVEL constants
     private final int MAX_OBJECTS = 10;
     private final int level;
     
     // The objects list
-    private final ArrayList<Actor> objects;
+    private final ArrayList<T> objects;
     // The retrieve list
-    private ArrayList<Actor> retrieveList;
+    private ArrayList<T> retrieveList;
 
     // The bounds of this tree
     private final Rectangle bounds;
 
     // Branches of this tree a.k.a the quadrants
-    private final QuadTree[] nodes;
+    private final QuadTree<T>[] nodes;
 
     /**
      * Construct a QuadTree with default values. Set's for the whole screen
@@ -43,8 +43,8 @@ public class QuadTree {
     public QuadTree(int l, Rectangle rectangle) {
         level = l;
         bounds = rectangle;
-        objects = new ArrayList<Actor>();
-        retrieveList = new ArrayList<Actor>();
+        objects = new ArrayList<T>();
+        retrieveList = new ArrayList<T>();
         nodes = new QuadTree[4];
     }
     
@@ -83,10 +83,10 @@ public class QuadTree {
         int subHeight = (int) (bounds.getHeight() / 2);
         int x = (int) bounds.getX();
         int y = (int) bounds.getY();
-        nodes[0] = new QuadTree(level + 1, new Rectangle(x + subWidth, y, subWidth, subHeight));
-        nodes[1] = new QuadTree(level + 1, new Rectangle(x, y, subWidth, subHeight));
-        nodes[2] = new QuadTree(level + 1, new Rectangle(x, y + subHeight, subWidth, subHeight));
-        nodes[3] = new QuadTree(level + 1, new Rectangle(x + subWidth, y + subHeight, subWidth, subHeight));
+        nodes[0] = new QuadTree<T>(level + 1, new Rectangle(x + subWidth, y, subWidth, subHeight));
+        nodes[1] = new QuadTree<T>(level + 1, new Rectangle(x, y, subWidth, subHeight));
+        nodes[2] = new QuadTree<T>(level + 1, new Rectangle(x, y + subHeight, subWidth, subHeight));
+        nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + subWidth, y + subHeight, subWidth, subHeight));
     }
 
     // Get the index of an object
@@ -138,7 +138,7 @@ public class QuadTree {
     /**
      * Insert an object into this tree
      */
-    public void insert(Actor r){
+    public void insert(T r){
         if (nodes[0]!=null){
             int index = getIndex(r);
             if (index!=-1){
@@ -146,7 +146,7 @@ public class QuadTree {
                 return;
             }
         }
-        objects.add(r);
+        objects.add( r);
         if (objects.size() > MAX_OBJECTS){
             if (nodes[0]==null){
                 split();
@@ -163,7 +163,7 @@ public class QuadTree {
     /**
      * Insert an ArrayList of objects into this tree
      */
-    public void insert(Array<Actor> o){
+    public void insert(Array<T> o){
         for (int i=0; i<o.size; i++){
             insert(o.get(i));
         }
@@ -172,7 +172,7 @@ public class QuadTree {
     /**
      * Returns the collidable objects with the given object
      */
-    public ArrayList<Actor> retrieve(Actor r){
+    public ArrayList<T> retrieve(Actor r){
         retrieveList.clear();
         int index = getIndex(r);
         if (index != -1 && nodes[0] != null){
@@ -186,7 +186,7 @@ public class QuadTree {
     /**
      * Returns the collidable objects with the given rectangle
      */
-    public ArrayList<Actor> retrieve(Rectangle r){
+    public ArrayList<T> retrieve(Rectangle r){
         retrieveList.clear();
         int index = getIndex(r);
         if (index != -1 && nodes[0] != null){

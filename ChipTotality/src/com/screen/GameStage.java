@@ -10,23 +10,33 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.world.ShipManager;
 import com.world.building.Building;
 import com.world.ship.Ship;
 import com.world.ship.TestShip1;
+import com.world.tower.Bullet;
 //class for ships, bullets, and buildings
 
 public class GameStage extends Stage{
 	final ChipTotality game;
+<<<<<<< HEAD
 	QuadTree quadTree, bulletTreeTower, bulletTreeShip;	
 	public static Vector<Ship> ships;
+=======
+	QuadTree<Actor> quadTree; 
+	Vector<Ship> ships;
+	QuadTree<Bullet> bulletTreeTower, bulletTreeShip;	
+	ArrayList<Bullet> listOfBulletTower, listOfBulletShip;	// Bullets from towers, bullets from ships
+>>>>>>> Nowe nie dziala
 	
+	ShipManager shipMgr;
 	public GameStage(ChipTotality game) {
 		super(Settings.WIDTH, Settings.HEIGHT, true, game.batch);
 		this.game=game;
-		quadTree = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
-		bulletTreeTower = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
-		bulletTreeShip = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
-		
+		quadTree = new QuadTree<Actor>(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
+		bulletTreeTower = new QuadTree<Bullet>(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
+		bulletTreeShip = new QuadTree<Bullet>(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
+		shipMgr = new ShipManager(this);
 		//TODO do usuniecia kiedystam
 		TestShip1 ts1 = new TestShip1(300, 300);
 		addActor(ts1);
@@ -62,10 +72,82 @@ public class GameStage extends Stage{
 	}
 	
 	public void checkBulletCollisions(Vector<Building> buildings){
+		for(Building building : buildings)
+		{
+			ArrayList<Bullet> bulls = bulletTreeShip.retrieve((Actor)building);
+			for(Bullet b : bulls)
+			{
+				if((new Rectangle(b.getX(), b.getY(), b.getWidth(), b.getHeight())).overlaps(new Rectangle(building.getX(),  building.getY(),  building.getWidth(),  building.getHeight())))  
+				{
+					
+					//	building.health-=b.damage;
+					//TODO Jakas animacja wybuchu
+					bulls.remove(b);
+					b.remove();
+				}
+			}
+		}
+	}
+	public void checkBulletCollisionsShips(Vector<Ship> ships) {
+		for(Ship ship : ships)	{
+			ArrayList<Bullet> bulls = bulletTreeTower.retrieve((Actor)ship);
+			for(Bullet b : bulls)
+			{
+				if((new Rectangle(b.getX(), b.getY(), b.getWidth(), b.getHeight())).overlaps(new Rectangle(ship.getX(),  ship.getY(),  ship.getWidth(),  ship.getHeight())))  
+				{
+					
+					//	ship.health-=b.damage;
+					//TODO Jakas animacja wybuchu
+					bulls.remove(b);
+					b.remove();
+				}
+			}
+		}
+	}
+	public void Update()
+	{
+		bulletTreeTower.clear();
+		bulletTreeShip.clear();
+	
+		for(Bullet b : listOfBulletTower) {
+			bulletTreeTower.insert(b);
+		}
+			
+		for(Bullet b : listOfBulletShip) {
+			bulletTreeShip.insert(b);
+		}
+		final int licz = 0; // Liczni
+		
 		
 	}
+	public void AddBullet(Bullet  bull, boolean fromShip) {
+		if(fromShip)
+		{
+			listOfBulletShip.add(bull);
+		}
+		else
+		{
+			listOfBulletTower.add(bull);
+		}
+		addActor(bull);
+	}
+	
+<<<<<<< HEAD
 	
 	
-	
-	
+=======
+	public Building getRandBuilding() {
+		for(int x = 0; x < Settings.tilesVertical; x++)
+			for(int y = 0; y < Settings.tilesHorizontal; y++)
+				if(game.asteroid.worldGrid[x][y].building != null)
+				{
+					return game.asteroid.worldGrid[x][y].building;
+				}
+		return null;			
+	}
+	public Vector<Ship> getShip()
+	{
+		return ships;
+	}
+>>>>>>> Nowe nie dziala
 }
