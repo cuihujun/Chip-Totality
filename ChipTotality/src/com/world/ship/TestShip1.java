@@ -13,14 +13,6 @@ public class TestShip1 extends Ship {
 	
 	public TestShip1(int x, int y)  {
 		super(x, y, width, height, maxHitpoints);
-		//TODO do usuniecia
-		
-		
-		//action.setDuration(3);
-		//action.setPosition(1500, 1400);
-		
-		//addAction(action);
-
 	}
 	
 

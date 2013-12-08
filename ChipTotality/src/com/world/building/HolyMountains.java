@@ -8,9 +8,7 @@ public class HolyMountains extends Building implements Upgradeable{
 	private static int maxHitpoints=200;
 	private static int cost = 20;
 	
-	public HolyMountains(){
-		super(width, height);
-	}
+
 	
 	public HolyMountains(int x, int y) {
 		super(x, y, width, height, maxHitpoints);

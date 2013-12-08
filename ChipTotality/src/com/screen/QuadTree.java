@@ -1,7 +1,11 @@
 package com.screen;
 
-import java.awt.Rectangle;
+
 import java.util.ArrayList;
+
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * A QuadTree implementation to reduce collision checks. Every level contains
@@ -16,9 +20,9 @@ public class QuadTree {
     private final int level;
     
     // The objects list
-    private final ArrayList<StageObject> objects;
+    private final ArrayList<Actor> objects;
     // The retrieve list
-    private ArrayList<StageObject> retrieveList;
+    private ArrayList<Actor> retrieveList;
 
     // The bounds of this tree
     private final Rectangle bounds;
@@ -34,13 +38,13 @@ public class QuadTree {
     /**
      * Construct a QuadTree with custom values. Used to create sub trees or branches
      * @param l The level of this tree
-     * @param b The bounds of this tree
+     * @param rectangle The bounds of this tree
      */
-    public QuadTree(int l, Rectangle b) {
+    public QuadTree(int l, Rectangle rectangle) {
         level = l;
-        bounds = b;
-        objects = new ArrayList<StageObject>();
-        retrieveList = new ArrayList<StageObject>();
+        bounds = rectangle;
+        objects = new ArrayList<Actor>();
+        retrieveList = new ArrayList<Actor>();
         nodes = new QuadTree[4];
     }
     
@@ -86,7 +90,7 @@ public class QuadTree {
     }
 
     // Get the index of an object
-    private int getIndex(StageObject r){
+    private int getIndex(Actor r){
         int index = -1;
         double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
         double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
@@ -134,7 +138,7 @@ public class QuadTree {
     /**
      * Insert an object into this tree
      */
-    public void insert(StageObject r){
+    public void insert(Actor r){
         if (nodes[0]!=null){
             int index = getIndex(r);
             if (index!=-1){
@@ -159,8 +163,8 @@ public class QuadTree {
     /**
      * Insert an ArrayList of objects into this tree
      */
-    public void insert(ArrayList<StageObject> o){
-        for (int i=0; i<o.size(); i++){
+    public void insert(Array<Actor> o){
+        for (int i=0; i<o.size; i++){
             insert(o.get(i));
         }
     }
@@ -168,20 +172,21 @@ public class QuadTree {
     /**
      * Returns the collidable objects with the given object
      */
-    public ArrayList<StageObject> retrieve(StageObject r){
+    public ArrayList<Actor> retrieve(Actor r){
         retrieveList.clear();
         int index = getIndex(r);
         if (index != -1 && nodes[0] != null){
             retrieveList = nodes[index].retrieve(r);
         }
         retrieveList.addAll(objects);
+        retrieveList.remove(r);
         return retrieveList;
     }
     
     /**
      * Returns the collidable objects with the given rectangle
      */
-    public ArrayList<StageObject> retrieve(Rectangle r){
+    public ArrayList<Actor> retrieve(Rectangle r){
         retrieveList.clear();
         int index = getIndex(r);
         if (index != -1 && nodes[0] != null){

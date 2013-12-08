@@ -16,10 +16,6 @@ public class Base extends Building implements Upgradeable{
 	private Task addResources;
 
 	
-	public Base(){
-		super(width, height);
-	}
-	
 	public Base(int x, int y) {
 		super(x, y, width, height, maxHitpoints);		
 	}

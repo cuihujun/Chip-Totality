@@ -70,8 +70,7 @@ public class GameController extends InputAdapter {
 		
 		if(!buildingPossibleHere(building))
 			return;
-		
-		game.asteroid.buildings.add(building);
+		game.gameStage.addActor(building);
 		building.pay();
 		building.doTask();
 		// add reference to building for all tiles occupied by it
@@ -91,7 +90,7 @@ public class GameController extends InputAdapter {
 
 	
 	private void removeBuilding(Building building) {
-		game.asteroid.buildings.remove(building);
+		//game.asteroid.buildings.remove(building);
 		// remove references from tiles
 		building.dispose();
 		for (int i =  building.coords.x; i < building.coords.x + building.size.x; i++) {

@@ -9,8 +9,6 @@ import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
-import com.res.Particles;
-import com.world.building.Building;
 
 public class GameScreenRenderer {
 	final ChipTotality game;
@@ -54,11 +52,11 @@ public class GameScreenRenderer {
 
 	}
 	
-	public void renderBuildings(){
+	/*public void renderBuildings(){
 		for (Building building : game.asteroid.buildings) {
 			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
 		}
-	}
+	}*/
 	public void renderStage(){
 		game.gameStage.act();
 		game.gameStage.draw();

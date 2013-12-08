@@ -14,9 +14,7 @@ public class Rafinery extends Building{
 	
 	private Task process;
 	
-	public Rafinery(){
-		super(width, height);
-	}
+
 	
 	public Rafinery(int x, int y) {
 		super(x, y, width, height, maxHitpoints);	

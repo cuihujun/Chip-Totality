@@ -38,24 +38,24 @@ public final class GameStateHolder {
 
 	public enum ChosenBuilding {
 		none(null), 
-		AcodinMine(new AcodinMine()),
-		Base(new Base()),
-		HolyMountains(new HolyMountains()), 
-		Rafinery(new Rafinery()),
-		Temple(new Temple());
+		AcodinMine(new AcodinMine(0,0)),
+		Base(new Base(0,0)),
+		HolyMountains(new HolyMountains(0,0)), 
+		Rafinery(new Rafinery(0,0)),
+		Temple(new Temple(0,0));
 
-		Building building;
+		Building buildingSample;
 
 		ChosenBuilding(Building building) {
-			this.building = building;
+			this.buildingSample = building;
 		}
 
 		public int getBuildingWidth() {
-			return (int) building.size.x;
+			return (int) buildingSample.size.x;
 		}
 
 		public int getBuildingHeight() {
-			return (int) building.size.y;
+			return (int) buildingSample.size.y;
 		}
 		
 		public Texture getTexture() {

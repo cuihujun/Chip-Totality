@@ -14,10 +14,7 @@ public class Temple extends Building implements Upgradeable {
 
 	Task addResources;
 
-	public Temple(){
-		super(width, height);
-	}
-	
+
 	public Temple(int x, int y) {
 		super(x, y, width, height, maxHitpoints);
 	}

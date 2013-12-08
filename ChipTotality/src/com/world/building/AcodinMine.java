@@ -15,9 +15,7 @@ public class AcodinMine extends Building{
 	private Task addResources;
 	
 	
-	public AcodinMine(){
-		super(width, height);
-	}
+
 	
 	public AcodinMine(int x, int y) {
 		super(x, y, width, height, maxHitpoints);	
