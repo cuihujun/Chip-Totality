@@ -38,7 +38,8 @@ class CameraGestureListener implements GestureListener {
 
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {				
-		//simple the best;] but depends on screen resolution...
+		//simple the best;] but depends on screen resolution...		
+		//camera.direction
 		camera.translate(-deltaX*camera.zoom*2,deltaY*camera.zoom*2);				
 		camera.update();
 		return false;
