@@ -2,6 +2,7 @@ package com.screen;
 
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
@@ -9,18 +10,20 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.world.building.Building;
 import com.world.ship.TestShip1;
 //class for ships, bullets, and buildings
 
 public class GameStage extends Stage{
 	final ChipTotality game;
-	QuadTree quadTree;	
+	QuadTree quadTree, bulletTree;	
+	
 	
 	public GameStage(ChipTotality game) {
 		super(Settings.WIDTH, Settings.HEIGHT, true, game.batch);
 		this.game=game;
 		quadTree = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
-	
+		bulletTree = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
 		
 		
 		//TODO do usuniecia kiedystam
@@ -55,6 +58,10 @@ public class GameStage extends Stage{
 					Gdx.app.log("collision", "collision beetween"+currentActor.getClass().getSimpleName()+" and "+ possiblyColliding.getClass().getSimpleName());					
 			}
 		}
+	}
+	
+	public void checkBulletCollisions(Vector<Building> buildings){
+		
 	}
 	
 	

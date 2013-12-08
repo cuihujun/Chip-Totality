@@ -16,9 +16,7 @@ public class TestTower1 extends Tower{
 		super(x, y, width, height, maxHitpoints, range);
 	}
 	
-	
-	
-
+		
 
 	
 	@Override

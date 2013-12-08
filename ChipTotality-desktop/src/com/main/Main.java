@@ -15,8 +15,7 @@ public class Main {
 		cfg.height = Settings.HEIGHT;
 		cfg.resizable = true;
 		new LwjglApplication(new ChipTotality(), cfg);	
-		
-		
+				
 	}
 }
  
