@@ -75,36 +75,12 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-<<<<<<< HEAD
+
 		game.gameStage.checkCollisions();
-=======
+
 		
 		game.cameraController.update(delta);	
-		//game.gameStage.resetTree();
-		/*
-		ArrayList<StageObject> returnObjects = new ArrayList<StageObject>();
-		for (StageObject currentActor : game.gameStage.allActors) {
-			returnObjects.clear();
-			returnObjects=game.gameStage.quadTree.retrieve(currentActor);
-			Rectangle2D.Float currentActorBounds = new Rectangle2D.Float(currentActor.getX(), currentActor.getY(), currentActor.getWidth(), currentActor.getHeight());
-			for (Actor possiblyColliding : returnObjects) {
-				Rectangle2D.Float possiblyCollidingBounds = new Rectangle2D.Float(possiblyColliding.getX(), possiblyColliding.getY(), possiblyColliding.getWidth(), possiblyColliding.getHeight());
-				if(possiblyCollidingBounds.intersects(currentActorBounds))
-					;//System.out.println("asd");
-			}
-		}*/
-		
-		//game.gameStage.resetTree();
-		int k=0;
-		for (int i =0; i<game.gameStage.allActors.size(); i++) {
-			for (int j=0; j<game.gameStage.allActors.size(); j++) {
-				if(game.gameStage.allActors.get(i).bounds.intersects(game.gameStage.allActors.get(j).bounds)){
-					//System.out.println("Sds"+k);
-					k++;
-				}
-			}
-		}
->>>>>>> 8107e7a50559087f830adb937f5e38be8f4c6dc7
+
 		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();		
