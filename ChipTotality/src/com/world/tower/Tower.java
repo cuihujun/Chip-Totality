@@ -1,6 +1,7 @@
 package com.world.tower;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.world.building.Building;
@@ -30,7 +31,14 @@ public abstract class Tower extends Building {
 		Timer.schedule(shootTask, 1, 1);
 	}
 
-	public abstract boolean targetInRange();
+	
+	public boolean targetInRange() {
+		Vector2 coordsFloat = new Vector2(getX(), getY());
+		if(currentTarget!=null && coordsFloat.dst2(currentTarget.getX(), currentTarget.getY()) <=rangeRectangle.getWidth()){
+			return true;
+		}
+		return false;
+	}
 
 	public abstract void shoot(Ship target);
 

@@ -1,12 +1,9 @@
 package com.world;
 
-import java.util.Vector;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.main.Settings;
 import com.world.Tile.TileType;
-import com.world.building.Building;
 
 public class Asteroid {
 
@@ -15,10 +12,10 @@ public class Asteroid {
 										// |
 										// --->
 
-	public Vector<Building> buildings;	
+	//public Vector<Building> buildings;	
 	
 	public Asteroid() {
-		buildings = new Vector<Building>();		
+		//buildings = new Vector<Building>();		
 		
 		// load text file containing informations about tiles type
 		FileHandle file = Gdx.files.internal("world.txt");
