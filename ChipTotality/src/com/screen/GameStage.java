@@ -11,13 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.world.building.Building;
+import com.world.ship.Ship;
 import com.world.ship.TestShip1;
 //class for ships, bullets, and buildings
 
 public class GameStage extends Stage{
 	final ChipTotality game;
 	QuadTree quadTree, bulletTreeTower, bulletTreeShip;	
-	
+	public static Vector<Ship> ships;
 	
 	public GameStage(ChipTotality game) {
 		super(Settings.WIDTH, Settings.HEIGHT, true, game.batch);
@@ -63,6 +64,8 @@ public class GameStage extends Stage{
 	public void checkBulletCollisions(Vector<Building> buildings){
 		
 	}
+	
+	
 	
 	
 }

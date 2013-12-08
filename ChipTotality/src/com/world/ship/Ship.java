@@ -25,8 +25,6 @@ public abstract class Ship extends Actor{
 		});
 		
 		texture=getTexture();
-		//setWidth(getTexture().getWidth());
-		//setHeight( getTexture().getHeight());			
 	}
 	
 	
@@ -37,8 +35,8 @@ public abstract class Ship extends Actor{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.draw(texture, getX(), getY());
-		
 	}
+	
 	
 	
 }

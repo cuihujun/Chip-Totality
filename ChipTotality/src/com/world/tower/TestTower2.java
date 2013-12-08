@@ -2,60 +2,39 @@ package com.world.tower;
 
 import com.world.ship.Ship;
 
-public class TestTower1 extends Tower{
+public class TestTower2 extends Tower {
 	final static int width = 2;
 	final static int height = 2;
-	static int firepower=5;
 	static int maxHitpoints=150;
 	static int range=1150;
 	static float shootDelay=1;
 	
 	
-	
-	public TestTower1(int x, int y) {
+	TestTower2(int x, int y){
 		super(x, y, width, height, maxHitpoints, range);
 	}
 	
-		
-
 	@Override
-	public void shoot(Ship target) {
-		target.hitpoints-=firepower;
-		if(target.hitpoints<=0){
-			target.remove();
-			currentTarget=null;
-		}
+	void shoot(Ship target) {
+		// TODO Auto-generated method stub
+
 	}
 
-	
-
-
-
-
 	@Override
-	public void pay() {	
+	public void pay() {
+
 	}
-
-
 
 	@Override
 	public void doTask() {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
-
-
-
-	
 
 }

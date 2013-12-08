@@ -56,7 +56,7 @@ public abstract class Building extends Actor{
 	}
 
 	public void destroy() {
-		
+		remove();
 	}
 	
 	@Override

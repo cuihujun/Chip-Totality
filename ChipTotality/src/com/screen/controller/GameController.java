@@ -92,7 +92,7 @@ public class GameController extends InputAdapter {
 	private void removeBuilding(Building building) {
 		//game.asteroid.buildings.remove(building);
 		// remove references from tiles
-		building.dispose();
+		building.destroy();
 		for (int i =  building.coords.x; i < building.coords.x + building.size.x; i++) {
 			for (int j =  building.coords.y; j < building.coords.y + building.size.y; j++) {
 				game.asteroid.worldGrid[i][j].building = null;
