@@ -16,15 +16,15 @@ import com.world.ship.TestShip1;
 
 public class GameStage extends Stage{
 	final ChipTotality game;
-	QuadTree quadTree, bulletTree;	
+	QuadTree quadTree, bulletTreeTower, bulletTreeShip;	
 	
 	
 	public GameStage(ChipTotality game) {
 		super(Settings.WIDTH, Settings.HEIGHT, true, game.batch);
 		this.game=game;
 		quadTree = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
-		bulletTree = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
-		
+		bulletTreeTower = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
+		bulletTreeShip = new QuadTree(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
 		
 		//TODO do usuniecia kiedystam
 		TestShip1 ts1 = new TestShip1(300, 300);

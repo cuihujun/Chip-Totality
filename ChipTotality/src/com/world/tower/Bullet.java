@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.res.Loader.AssetsLoader;
 
 public abstract class Bullet extends Actor{
-
+	int typeBullet; // Wszystkie ponizej 100 naleza do wie¿ 
 	public Bullet(float x, float y, int width, int height){
 		setBounds(x, y, width, height);
 	}
@@ -17,7 +17,7 @@ public abstract class Bullet extends Actor{
 	
 	
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(SpriteBatch batch, float parentAlpha) {	// Co to parentalpha ?
 		batch.draw(getTexture(), getX(), getY());	
 	}
 	
