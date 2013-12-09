@@ -2,103 +2,64 @@ package com.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.gameInfo.GameStateHolder;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
 import com.screen.GUI.GameScreenGUI;
+import com.screen.controller.CameraController;
+import com.screen.controller.GameController;
+import com.world.Asteroid;
 
 public class GameScreen implements Screen {
 	final ChipTotality game;
 	public OrthographicCamera camera;
-	public final GameScreenGUI gameScreenGUI;
-	private final ShapeRenderer shapeRenderer;
+	public final GameScreenGUI gameScreenGUI;	
 	private final GameScreenRenderer renderer;
-
-	public void renderDebug(float delta) {
-		shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.begin(ShapeType.Line);
-
-		// grid
-		shapeRenderer.setColor(new Color(0, 0, 1, 1));
-		int size = Settings.tileSize;
-		for (int row = 0; row < Settings.tilesHorizontal; row++) {
-			for (int column = 0; column < Settings.tilesVertical; column++) {
-				shapeRenderer.setColor(new Color(0, 0, 1, 1));
-				shapeRenderer.line((row + 0) * size, (column + 0) * size,
-						(row + 1) * size, (column + 0) * size);
-				shapeRenderer.line((row + 0) * size, (column + 0) * size,
-						(row + 0) * size, (column + 1) * size);
-				shapeRenderer.line((row + 1) * size, (column + 0) * size,
-						(row + 1) * size, (column + 1) * size);
-				shapeRenderer.line((row + 1) * size, (column + 1) * size,
-						(row + 0) * size, (column + 1) * size);
-			}
-		}
-
-		// 2d axis
-		shapeRenderer.setColor(new Color(0, 1, 0, 1));
-		shapeRenderer.line(0, 0, 0, Settings.tilesHorizontal
-				* Settings.tileSize);
-		shapeRenderer.line(0, 0, Settings.tilesHorizontal * Settings.tileSize,
-				0);
-		shapeRenderer.line(0, 0, 0, -Settings.tilesHorizontal
-				* Settings.tileSize);
-		shapeRenderer.line(0, 0, -Settings.tilesHorizontal * Settings.tileSize,
-				0);
-
-		shapeRenderer.end();
-	}
+	public  GameStage gameStage;	
+	public  CameraController cameraController;
+	public  GameController gameController;
+	
 
 	public GameScreen(ChipTotality gam) {
 		Gdx.app.log("screen", "GameScreen set");
 		game = gam;
+		
+		game.asteroid = new Asteroid();
+		
+		game.diplomacyScreen= new DiplomacyScreen(game);		
+		gameScreenGUI = new GameScreenGUI(game);
+		cameraController = new CameraController(game.camera);
+		gameController=new GameController(game, this);
+		gameStage = new GameStage(game);				
+		
+		game.inputMultiplexer.clear();
+		game.inputMultiplexer.addProcessor(gameScreenGUI.stage);
+		game.inputMultiplexer.addProcessor(cameraController);
+		game.inputMultiplexer.addProcessor(gameController);
+		game.inputMultiplexer.addProcessor(gameStage);
+		Gdx.input.setInputProcessor(game.inputMultiplexer);		
+		
 
 		Settings.ASPECT_RATIO = (float) Gdx.graphics.getWidth()
 				/ (float) Gdx.graphics.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;
 
-		camera = new OrthographicCamera();
+		camera = game.camera;
 		camera.setToOrtho(false, Settings.VIEW_WIDTH, Settings.VIEW_HEIGHT);
 		camera.update();
 
-		gameScreenGUI = new GameScreenGUI(game);
-		shapeRenderer = new ShapeRenderer();
-		renderer = new GameScreenRenderer(game);
-
+		renderer = new GameScreenRenderer(game, this);		
 	}
 
 	@Override
 	public void render(float delta) {
 
-		game.gameStage.checkCollisions();
-
-		
-		game.cameraController.update(delta);	
-
-		
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();		
-		game.batch.setProjectionMatrix(camera.combined);
-
-		game.batch.begin();
-
-		renderer.renderBackground();
-		
-		if (GameStateHolder.chosenBuilding != GameStateHolder.ChosenBuilding.none)
-			renderer.renderSelectedBuilding();
-		game.batch.end();
-		renderer.renderStage();
-
+		gameStage.checkCollisions();			
+		cameraController.update(delta);	
+			
+		renderer.render(delta);		
 		gameScreenGUI.render(delta);
-		if (Settings.DEBUG)
-			renderDebug(delta);
-
 	}
 
 	@Override

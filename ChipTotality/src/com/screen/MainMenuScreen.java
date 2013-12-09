@@ -3,7 +3,7 @@ package com.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.main.ChipTotality;
 
 public class MainMenuScreen implements Screen{
@@ -30,13 +30,14 @@ public class MainMenuScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.batch.begin();
 		ticker.draw(game.batch, 0);
 		game.batch.end();
 		
 		if(Gdx.input.isTouched()){
+			game.gameScreen = new GameScreen(game);
 			game.setScreen(game.gameScreen);
 			dispose();
 		}

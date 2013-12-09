@@ -3,6 +3,7 @@ package com.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
@@ -12,12 +13,30 @@ import com.res.Loader.AssetsLoader;
 
 public class GameScreenRenderer {
 	final ChipTotality game;
+	final GameScreen gameScreen;
 	float delta;
 	
 	
 	
-	public GameScreenRenderer(final ChipTotality game){
+	public GameScreenRenderer(final ChipTotality game, final GameScreen screen){
 		this.game=game;
+		this.gameScreen = screen;
+	}
+	
+	public void render(float delta){
+		
+		game.camera.update();		
+		game.batch.setProjectionMatrix(game.camera.combined);
+		
+		game.batch.begin();
+		renderBackground();
+		game.batch.end();
+		renderStage();
+		game.batch.begin();
+		if (GameStateHolder.chosenBuilding != GameStateHolder.ChosenBuilding.none)
+			renderSelectedBuilding();		
+		if (Settings.DEBUG) renderDebug(delta);
+		game.batch.end();
 	}
 	
 	public void renderBackground(){
@@ -31,7 +50,7 @@ public class GameScreenRenderer {
 		//Texture stars = AssetsLoader.getTexture("starsSeamless");		
 				
 		
-		Vector3 postion = game.gameScreen.camera.position;
+		Vector3 postion = game.camera.position;
 		float x,y,w,h;
 		w = stars.getWidth();
 		h = stars.getHeight();
@@ -58,19 +77,19 @@ public class GameScreenRenderer {
 		}
 	}*/
 	public void renderStage(){
-		game.gameStage.act();
-		game.gameStage.draw();
+		gameScreen.gameStage.act();
+		gameScreen.gameStage.draw();
 	}
 
 
 	public void renderSelectedBuilding(){
 		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		game.gameScreen.camera.unproject(pos);
-		Coords tile = game.gameController.unprojectTile(pos.x, pos.y);
+		game.camera.unproject(pos);
+		Coords tile = gameScreen.gameController.unprojectTile(pos.x, pos.y);
 		
 		if(tile!=null){
 			//building not possbile - tint red
-			if(!game.gameController.buildingPossibleHere(tile.x, tile.y, GameStateHolder.chosenBuilding.getBuildingWidth(), GameStateHolder.chosenBuilding.getBuildingHeight()))
+			if(!gameScreen.gameController.buildingPossibleHere(tile.x, tile.y, GameStateHolder.chosenBuilding.getBuildingWidth(), GameStateHolder.chosenBuilding.getBuildingHeight()))
 				game.batch.setColor(1f, 0.1f, 0.1f, 0.7f);							
 			else	//else tint green
 				game.batch.setColor(0.1f, 1f, 0.1f, 0.7f);		
@@ -78,6 +97,42 @@ public class GameScreenRenderer {
 			game.batch.setColor(Color.WHITE);
 		}			
 	}
+	
+	public void renderDebug(float delta) {
+		game.shapeRenderer.setProjectionMatrix(game.camera.combined);
+		game.shapeRenderer.begin(ShapeType.Line);
+
+		// grid
+		game.shapeRenderer.setColor(new Color(0, 0, 1, 1));
+		int size = Settings.tileSize;
+		for (int row = 0; row < Settings.tilesHorizontal; row++) {
+			for (int column = 0; column < Settings.tilesVertical; column++) {
+				game.shapeRenderer.setColor(new Color(0, 0, 1, 1));
+				game.shapeRenderer.line((row + 0) * size, (column + 0) * size,
+						(row + 1) * size, (column + 0) * size);
+				game.shapeRenderer.line((row + 0) * size, (column + 0) * size,
+						(row + 0) * size, (column + 1) * size);
+				game.shapeRenderer.line((row + 1) * size, (column + 0) * size,
+						(row + 1) * size, (column + 1) * size);
+				game.shapeRenderer.line((row + 1) * size, (column + 1) * size,
+						(row + 0) * size, (column + 1) * size);
+			}
+		}
+
+		// 2d axis
+		game.shapeRenderer.setColor(new Color(0, 1, 0, 1));
+		game.shapeRenderer.line(0, 0, 0, Settings.tilesHorizontal
+				* Settings.tileSize);
+		game.shapeRenderer.line(0, 0, Settings.tilesHorizontal * Settings.tileSize,
+				0);
+		game.shapeRenderer.line(0, 0, 0, -Settings.tilesHorizontal
+				* Settings.tileSize);
+		game.shapeRenderer.line(0, 0, -Settings.tilesHorizontal * Settings.tileSize,
+				0);
+
+		game.shapeRenderer.end();
+	}
+	
 	
 }
 		

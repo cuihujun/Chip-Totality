@@ -10,14 +10,17 @@ import com.gameInfo.GameStateHolder.ChosenBuilding;
 import com.gameInfo.GameStateHolder.Mode;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.screen.GameScreen;
 import com.world.Tile.TileType;
 import com.world.building.Building;
 
 public class GameController extends InputAdapter {
 	final ChipTotality game;
+	final GameScreen gameScreen;
 
-	public GameController(final ChipTotality game) {
+	public GameController(final ChipTotality game, final GameScreen gameScreen) {
 		this.game = game;
+		this.gameScreen = gameScreen;
 	}
 
 	public Coords unprojectTile(float x, float y) {
@@ -70,7 +73,7 @@ public class GameController extends InputAdapter {
 		
 		if(!buildingPossibleHere(building))
 			return;
-		game.gameStage.addActor(building);
+		gameScreen.gameStage.addActor(building);
 		building.pay();
 		building.doTask();
 		// add reference to building for all tiles occupied by it

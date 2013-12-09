@@ -56,8 +56,7 @@ public class GameStage extends Stage{
 		addActor(tb1);
 		
 		///////////////////
-		setCamera(game.gameScreen.camera);
-		
+		setCamera(game.camera);		
 	}
 	
 	
@@ -65,9 +64,9 @@ public class GameStage extends Stage{
 		quadTree.clear();
 		quadTree.insert(getActors());
 		ArrayList<Actor> returnObjects = new ArrayList<Actor>();
-		for (Actor currentActor : game.gameStage.getActors()) {
+		for (Actor currentActor : getActors()) {
 			returnObjects.clear();
-			returnObjects=game.gameStage.quadTree.retrieve(currentActor);
+			returnObjects=quadTree.retrieve(currentActor);
 			for (Actor possiblyColliding : returnObjects) {
 				Rectangle currBounds = new Rectangle(currentActor.getX(), currentActor.getY(), currentActor.getWidth(), currentActor.getHeight());
 				Rectangle possBounds = new Rectangle(possiblyColliding.getX(), possiblyColliding.getY(), possiblyColliding.getWidth(), possiblyColliding.getHeight());
