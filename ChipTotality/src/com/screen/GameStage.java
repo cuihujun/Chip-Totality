@@ -52,8 +52,16 @@ public class GameStage extends Stage{
 		TestShip1 ts3 = new TestShip1(1500, 1400);
 		addActor(ts3);
 		
-		TestBullet1 tb1 = new TestBullet1(800, 330, ts1);	
+		TestBullet1 tb1 = new TestBullet1(1200, 230, ts1);
+		TestBullet1 tb2 = new TestBullet1(1000, 230, ts1);
+		TestBullet1 tb3 = new TestBullet1(800, 130, ts1);
+		TestBullet1 tb4 = new TestBullet1(-400, 530, ts1);
+		TestBullet1 tb5 = new TestBullet1(0, 0, ts1);
 		addActor(tb1);
+		addActor(tb2);
+		addActor(tb3);
+		addActor(tb4);
+		addActor(tb5);
 		
 		///////////////////
 		setCamera(game.camera);		
@@ -83,8 +91,7 @@ public class GameStage extends Stage{
 			for(Bullet b : bulls)
 			{
 				if((new Rectangle(b.getX(), b.getY(), b.getWidth(), b.getHeight())).overlaps(new Rectangle(building.getX(),  building.getY(),  building.getWidth(),  building.getHeight())))  
-				{
-					
+				{					
 					//	building.health-=b.damage;
 					//TODO Jakas animacja wybuchu
 					bulls.remove(b);

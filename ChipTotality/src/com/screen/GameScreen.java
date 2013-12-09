@@ -55,7 +55,8 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 
-		gameStage.checkCollisions();			
+		gameStage.act(delta);
+		gameStage.checkCollisions();		
 		cameraController.update(delta);	
 			
 		renderer.render(delta);		

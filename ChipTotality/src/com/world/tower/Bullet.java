@@ -11,14 +11,21 @@ import com.world.ship.Ship;
 
 public abstract class Bullet extends Actor{
 	protected Ship target;
-	private int speed;
-	public MoveToAction moveToAction;
+	private final float FRAMES_PER_SECOND=60f;
+	private final float SPEED_IN_WORLD_UNITS=200f;//per second
+	private final float speed = SPEED_IN_WORLD_UNITS/FRAMES_PER_SECOND;
+	//public MoveToAction moveToAction;
+	public MoveToAtConstSpeed moveToAction;
+	
+	
+	
 	
 	public Bullet(float x, float y, int width, int height, int speed, Ship target){
 		setBounds(x, y, width, height);
 		this.target=target;
-		moveToAction = new MoveToAction();
-		moveToAction.setInterpolation(Interpolation.pow2);
+		//moveToAction = new MoveToAction();
+		//moveToAction.setInterpolation(Interpolation.linear);
+		moveToAction = new MoveToAtConstSpeed(new Vector2(target.getX(),target.getY()),this.speed);
 		updateAction();
 		addAction(moveToAction);
 	}
@@ -36,10 +43,12 @@ public abstract class Bullet extends Actor{
 	public void updateAction(){
 		if(target==null)
 			return;
-		moveToAction.setPosition(target.getX(), target.getY());
-		Vector2 coords = new Vector2(getX(), getY());
+		moveToAction.setTarget(new Vector2(target.getX(), target.getY()));
+		//Vector2 coords = new Vector2(getX(), getY());
+		//moveToAction.setDuration(coords.dst(target.getX(), target.getY())/UNITS_PER_SECOND_FACTOR);
+		
 		//moveToAction.setDuration((coords.dst2(target.getX(), target.getY()))/speed);
-		moveToAction.setDuration(5);
+		//moveToAction.setDuration(5);
 		
 		
 	}
