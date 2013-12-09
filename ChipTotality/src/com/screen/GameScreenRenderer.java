@@ -15,6 +15,7 @@ public class GameScreenRenderer {
 	final ChipTotality game;
 	final GameScreen gameScreen;
 	float delta;
+	float stateTime;
 	
 	
 	
@@ -33,6 +34,10 @@ public class GameScreenRenderer {
 		game.batch.end();
 		renderStage();
 		game.batch.begin();
+		
+		stateTime+=delta;
+		game.batch.draw(AssetsLoader.getObjectAnimation("explosionTest").getKeyFrame(stateTime), 500, 500);//TODO test animacji do zmiany jakis pool z nimi i w miejscu wybuchow:)
+		
 		if (GameStateHolder.chosenBuilding != GameStateHolder.ChosenBuilding.none)
 			renderSelectedBuilding();		
 		if (Settings.DEBUG) renderDebug(delta);

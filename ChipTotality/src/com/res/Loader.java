@@ -11,13 +11,17 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.main.Settings;
@@ -27,8 +31,10 @@ public class Loader {
 	public static class AssetsLoader {
 		
 		public static AssetManager manager=new AssetManager();
-		public static TextureParameter textureParameter= new TextureParameter();		
+		public static TextureParameter textureParameter= new TextureParameter();
+		private static ArrayMap<String, Animation> objectsAnimations = new ArrayMap<String, Animation>();
 		private static HashMap<String, Sprite> sprites;
+		
 
 		public static TextureRegion getBuildingIcon(String name){			
 			TextureAtlas atlas = manager.get("IconsPack/iconsPack.atlas", TextureAtlas.class);			
@@ -38,7 +44,11 @@ public class Loader {
 		public static TextureRegion getBuilding(String name){			
 			TextureAtlas atlas = manager.get("BuildingsPack/buildingsPack.atlas", TextureAtlas.class);			
 			return atlas.findRegion(name);
-		}				
+		}		
+		
+		public static Animation getObjectAnimation(String name){
+			return objectsAnimations.get(name);
+		}			
 		
 		public static Sprite getSprite(String name){
 			return sprites.get(name);
@@ -111,7 +121,10 @@ public class Loader {
 			//ships
 			manager.load("TestShip1.png", Texture.class, textureParameter);
 			//buldings
-			manager.load("BuildingsPack/buildingsPack.atlas", TextureAtlas.class);										
+			manager.load("BuildingsPack/buildingsPack.atlas", TextureAtlas.class);
+			
+			//explosions
+			manager.load("ExplosionsPack/explosionsPack.atlas", TextureAtlas.class);
 	
 			//towers
 			manager.load("TestTower1.png", Texture.class, textureParameter);
@@ -195,6 +208,28 @@ public class Loader {
 			actionPanel.setSize(Settings.VIEW_WIDTH, Settings.HEIGHT*0.12f);
 			actionPanel.setPosition(-200, -200);			
 			sprites.put("actionPanel", actionPanel);
+			
+			//niekoniecznie tu wsumei wystarczy pewnie raz;]
+			if (manager.isLoaded("ExplosionsPack/explosionsPack.atlas")){
+				TextureAtlas locationObjectsAnimetedAtals = manager.get("ExplosionsPack/explosionsPack.atlas", TextureAtlas.class);
+				
+				Array<AtlasRegion> foundRegions;
+				Array<AtlasRegion> regions = locationObjectsAnimetedAtals.getRegions();
+				float frameTime = 0;
+				String objName = "explosionTest"; 
+					
+				foundRegions = new Array<AtlasRegion>();																		
+				for (int i = 0, n = regions.size; i < n; i++) {
+					AtlasRegion region = regions.get(i);
+					if (region.name.contains(objName)) foundRegions.add(new AtlasRegion(region));
+				}															
+															
+				if (foundRegions.size > 0){
+					frameTime = 1.0f/foundRegions.size;
+					objectsAnimations.put(objName, new Animation(frameTime, foundRegions,Animation.LOOP));//TODO do zmainy z loop na jednorazowe i po usuniecie 
+				}
+			}				
+			
 			
 		}
 		

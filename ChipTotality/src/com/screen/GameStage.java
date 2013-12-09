@@ -30,6 +30,7 @@ public class GameStage extends Stage{
 	QuadTree<Actor> quadTree; 
 	QuadTree<Bullet> bulletTreeTower, bulletTreeShip;	
 	ArrayList<Bullet> listOfBulletTower, listOfBulletShip;	// Bullets from towers, bullets from ships
+	//ArrayList<Explosion> listOfExplossions;	
 
 	
 	ShipManager shipMgr;
