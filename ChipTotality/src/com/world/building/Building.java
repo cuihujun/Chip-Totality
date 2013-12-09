@@ -2,6 +2,7 @@ package com.world.building;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Coords;
@@ -19,11 +20,10 @@ public abstract class Building extends Actor{
 	public abstract void pay();
 	public abstract void doTask();
 	public abstract void dispose();
-	
-	public Texture getTexture() {
-		return AssetsLoader.getTexture(this.getClass().getSimpleName());
-	}
-	
+		
+	public TextureRegion getTextureRegion() {
+		return AssetsLoader.getBuilding(this.getClass().getSimpleName());
+	}	
 	
 	public Building(int x, int y, int width, int height, int maxHP) {
 		//rectangle bounds
@@ -61,6 +61,6 @@ public abstract class Building extends Actor{
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.draw(getTexture(), getX(), getY());
+		batch.draw(getTextureRegion(), getX(), getY());
 	}
 }

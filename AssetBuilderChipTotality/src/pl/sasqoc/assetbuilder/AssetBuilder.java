@@ -44,9 +44,17 @@ public class AssetBuilder {
     	String externalPatchContent = "../Content/";
     	
       	
-    	log.info("Start przygotowania Assetów dla ChipTotality");    	    	        		    	        
+    	log.info("Start przygotowania Assetów dla ChipTotality");
+    	
+		log.info("Przygotowanie budynków");	    
+		TexturePacker2.process(set, externalPatchContent + "Buildings/", externalPatchContent + "BuildingsPack/" , "buildingsPack");
+	    
 		log.info("Przygotowanie ikonek");	    
-		TexturePacker2.process(set, externalPatchContent + "Icons/", externalPatchContent + "IconsPack/" , "iconsPack");	    	    
+		TexturePacker2.process(set, externalPatchContent + "Icons/", externalPatchContent + "IconsPack/" , "iconsPack");
+
+		log.info("Przygotowanie wybuchów");	    
+		TexturePacker2.process(set, externalPatchContent + "Explosions/", externalPatchContent + "ExplosionsPack/" , "explosionsPack");
+		
     	log.info("Zakoñczono przygotowania Assetów dla ChipTotality");     	
     	
     	//Runtime.getRuntime().exec("cmd /c start " + "../Content/copyAssets.bat");

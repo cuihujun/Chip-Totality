@@ -17,6 +17,20 @@ Base
   orig: 72, 72
   offset: 0, 0
   index: -1
+VioletGun
+  rotate: false
+  xy: 75, 1
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+YellowGun
+  rotate: false
+  xy: 75, 1
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
 HolyMountains
   rotate: false
   xy: 149, 1

@@ -29,12 +29,16 @@ public class Loader {
 		public static AssetManager manager=new AssetManager();
 		public static TextureParameter textureParameter= new TextureParameter();		
 		private static HashMap<String, Sprite> sprites;
-		
 
 		public static TextureRegion getBuildingIcon(String name){			
 			TextureAtlas atlas = manager.get("IconsPack/iconsPack.atlas", TextureAtlas.class);			
 			return atlas.findRegion(name);
-		}		
+		}
+		
+		public static TextureRegion getBuilding(String name){			
+			TextureAtlas atlas = manager.get("BuildingsPack/buildingsPack.atlas", TextureAtlas.class);			
+			return atlas.findRegion(name);
+		}				
 		
 		public static Sprite getSprite(String name){
 			return sprites.get(name);
@@ -107,11 +111,8 @@ public class Loader {
 			//ships
 			manager.load("TestShip1.png", Texture.class, textureParameter);
 			//buldings
-			manager.load("AcodinMine.png", Texture.class, textureParameter);
-			manager.load("Base.png", Texture.class, textureParameter);
-			manager.load("HolyMountains.png", Texture.class, textureParameter);
-			manager.load("Rafinery.png", Texture.class, textureParameter);
-			manager.load("Temple.png", Texture.class, textureParameter);
+			manager.load("BuildingsPack/buildingsPack.atlas", TextureAtlas.class);										
+	
 			//towers
 			manager.load("TestTower1.png", Texture.class, textureParameter);
 			
@@ -120,17 +121,7 @@ public class Loader {
 			
 			//skin do menu
 			manager.load("uiSkin/uiskin.json",Skin.class);
-					
-			//loading mapy
-			/*TmxMapLoader.Parameters para = new TmxMapLoader.Parameters();
-			para.generateMipMaps = true;		
-			para.textureMagFilter = Texture.TextureFilter.Nearest;
-			para.textureMinFilter = Texture.TextureFilter.Nearest;
-			TmxMapLoader tmxLoader = new TmxMapLoader(new InternalFileHandleResolver());	
-			manager.setLoader(TiledMap.class, tmxLoader);
-			manager.load("MapData/test_ortho2.tmx", TiledMap.class, para);
-			manager.load("MapData/tree2-final.png", Texture.class, textureParameter);*/
-								
+													
 			loadSounds();
 			loadMusics();
 			loadParticleEffects();

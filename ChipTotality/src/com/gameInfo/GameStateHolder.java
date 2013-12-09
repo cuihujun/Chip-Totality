@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.res.Loader.AssetsLoader;
 import com.world.building.AcodinMine;
 import com.world.building.Base;
@@ -11,6 +12,9 @@ import com.world.building.Building;
 import com.world.building.HolyMountains;
 import com.world.building.Rafinery;
 import com.world.building.Temple;
+import com.world.tower.YellowGun;
+import com.world.tower.VioletGun;
+
 
 /**
  * @author arap This class contains variables regarding current game state.
@@ -42,7 +46,9 @@ public final class GameStateHolder {
 		Base(new Base(0,0)),
 		HolyMountains(new HolyMountains(0,0)), 
 		Rafinery(new Rafinery(0,0)),
-		Temple(new Temple(0,0));
+		Temple(new Temple(0,0)),
+		YellowGun(new YellowGun(0,0)),
+		VioletGun(new VioletGun(0,0));
 
 		Building buildingSample;
 
@@ -58,19 +64,20 @@ public final class GameStateHolder {
 			return (int) buildingSample.size.y;
 		}
 		
-		public Texture getTexture() {
-			return AssetsLoader.getTexture(this.toString());
+		public TextureRegion getTextureRegion() {
+			return AssetsLoader.getBuilding(this.toString());
 		}
 		
 		public Building getChosenBuilding(int x, int y){
 			
 			
 			Class newBuildingClass = null;
-			try {
+			newBuildingClass = buildingSample.getClass();
+			/*try {								
 				newBuildingClass = Class.forName("com.world.building."+GameStateHolder.chosenBuilding.toString());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-			}
+			}*/
 					
 			
 			Constructor con = null;

@@ -2,6 +2,7 @@ package com.screen;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.res.Sounds;
 import com.world.ShipManager;
 import com.world.building.Building;
 import com.world.ship.Ship;
@@ -72,16 +74,37 @@ public class GameStage extends Stage{
 		quadTree.clear();
 		quadTree.insert(getActors());
 		ArrayList<Actor> returnObjects = new ArrayList<Actor>();
-		for (Actor currentActor : getActors()) {
+		
+		Iterator<Actor> i = getActors().iterator();
+		while (i.hasNext()) {
+			Actor currentActor = i.next(); 
 			returnObjects.clear();
 			returnObjects=quadTree.retrieve(currentActor);
 			for (Actor possiblyColliding : returnObjects) {
 				Rectangle currBounds = new Rectangle(currentActor.getX(), currentActor.getY(), currentActor.getWidth(), currentActor.getHeight());
 				Rectangle possBounds = new Rectangle(possiblyColliding.getX(), possiblyColliding.getY(), possiblyColliding.getWidth(), possiblyColliding.getHeight());
-				if(currBounds.overlaps(possBounds))
-					Gdx.app.log("collision", "collision beetween"+currentActor.getClass().getSimpleName()+" and "+ possiblyColliding.getClass().getSimpleName());					
-			}
+				if(currBounds.overlaps(possBounds)){								
+					Gdx.app.log("collision", "collision beetween"+currentActor.getClass().getSimpleName()+" and "+ possiblyColliding.getClass().getSimpleName());
+					if (currentActor instanceof  Bullet ){								
+						Gdx.app.log("collision", "Deleting bullet");
+						Sounds.play("BoxCrash");
+						currentActor.remove();
+						//i.remove();
+					}
+				}
+				
+			}		   		   
 		}
+		/*for (Actor currentActor : getActors()) {
+			returnObjects.clear();
+			returnObjects=quadTree.retrieve(currentActor);
+			for (Actor possiblyColliding : returnObjects) {
+				Rectangle currBounds = new Rectangle(currentActor.getX(), currentActor.getY(), currentActor.getWidth(), currentActor.getHeight());
+				Rectangle possBounds = new Rectangle(possiblyColliding.getX(), possiblyColliding.getY(), possiblyColliding.getWidth(), possiblyColliding.getHeight());
+				if(currBounds.overlaps(possBounds))								
+					Gdx.app.log("collision", "collision beetween"+currentActor.getClass().getSimpleName()+" and "+ possiblyColliding.getClass().getSimpleName());													
+			}
+		}*/
 	}
 	
 	public void checkBulletCollisions(Vector<Building> buildings){
@@ -121,7 +144,7 @@ public class GameStage extends Stage{
 		bulletTreeTower.clear();
 		bulletTreeShip.clear();
 	
-		for(Bullet b : listOfBulletTower) {
+		for(Bullet b : listOfBulletTower) {			
 			bulletTreeTower.insert(b);
 		}
 			

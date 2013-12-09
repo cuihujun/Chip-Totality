@@ -36,11 +36,11 @@ public abstract class Tower extends Building {
 	
 	private void findTarget(){
 		
-			for (Ship ship : GameStage.ships) {
+			/*for (Ship ship : GameStage.ships) {
 				Vector2 coords = new Vector2(getX(), getY());
 				if(coords.dst2(ship.getX(), ship.getY()) <=rangeRectangle.getWidth())
 					currentTarget=ship;					
-			}
+			}*/
 			
 	}
 		

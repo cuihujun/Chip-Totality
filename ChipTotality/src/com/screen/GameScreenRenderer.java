@@ -92,7 +92,7 @@ public class GameScreenRenderer {
 				game.batch.setColor(1f, 0.1f, 0.1f, 0.7f);							
 			else	//else tint green
 				game.batch.setColor(0.1f, 1f, 0.1f, 0.7f);		
-			game.batch.draw(GameStateHolder.chosenBuilding.getTexture(), tile.x*Settings.tileSize, tile.y*Settings.tileSize);
+			game.batch.draw(GameStateHolder.chosenBuilding.getTextureRegion(), tile.x*Settings.tileSize, tile.y*Settings.tileSize);
 			game.batch.setColor(Color.WHITE);
 		}			
 	}

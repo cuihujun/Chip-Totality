@@ -49,8 +49,6 @@ public abstract class Bullet extends Actor{
 		
 		//moveToAction.setDuration((coords.dst2(target.getX(), target.getY()))/speed);
 		//moveToAction.setDuration(5);
-		
-		
 	}
 	
 	public void setTarget(Ship target){

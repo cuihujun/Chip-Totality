@@ -1,0 +1,33 @@
+
+explosionsPack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+explosionTest01
+  rotate: false
+  xy: 1, 1
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+explosionTest02
+  rotate: false
+  xy: 23, 1
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+explosionTest03
+  rotate: false
+  xy: 45, 1
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+explosionTest04
+  rotate: false
+  xy: 67, 1
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1

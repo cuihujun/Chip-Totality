@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.GameStateHolder.ChosenBuilding;
 import com.gameInfo.GameStateHolder.Mode;
@@ -81,29 +82,30 @@ public class GameScreenGUI {
 		});		
 		towersTable.add(buildingsButton).top().fill();
 		
-		for(ChosenBuilding buildingType: ChosenBuilding.values() ){
-			if (buildingType!=ChosenBuilding.none){
-				final String buildingTypeString = buildingType.toString();
-				
-				TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
-	    		ImageButtonStyle imageStyle = new ImageButtonStyle(skin.get(ButtonStyle.class));   	
-	    		imageStyle.imageUp = new TextureRegionDrawable(region);
-	    		imageStyle.imageDown = new TextureRegionDrawable(region);
-	    		ImageButton iconButton = new ImageButton(imageStyle);
-	    			    		
-	    			    	
-	    		iconButton.addListener(new ChangeListener() {
-	    			@Override
-	    			public void changed(ChangeEvent event, Actor actor) {
-	    				GameStateHolder.mode = Mode.BUILDING;
-	    				GameStateHolder.chosenBuilding = ChosenBuilding.valueOf(buildingTypeString);	    				
-	    			}
-	    		});
-	    			    		
-	    		Label buildingNameLabel = new Label(buildingTypeString, skin);	    		
-	    		iconButton.add(buildingNameLabel).bottom();
-	    		towersTable.add(iconButton).top();
-			}
+		Array<String> towerNames = new Array<String>();
+		towerNames.add("VioletGun");
+		towerNames.add("YellowGun");
+		
+		for (String towerName : towerNames) {
+			final String buildingTypeString = towerName;
+
+			TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
+			ImageButtonStyle imageStyle = new ImageButtonStyle(skin.get(ButtonStyle.class));
+			imageStyle.imageUp = new TextureRegionDrawable(region);
+			imageStyle.imageDown = new TextureRegionDrawable(region);
+			ImageButton iconButton = new ImageButton(imageStyle);
+
+			iconButton.addListener(new ChangeListener() {
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					GameStateHolder.mode = Mode.BUILDING;
+					GameStateHolder.chosenBuilding = ChosenBuilding.valueOf(buildingTypeString);
+				}
+			});
+
+			Label buildingNameLabel = new Label(buildingTypeString, skin);
+			iconButton.add(buildingNameLabel).bottom();
+			towersTable.add(iconButton).top();
 		}
 		
 		towersTable.pack();
