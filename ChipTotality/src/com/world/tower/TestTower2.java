@@ -16,7 +16,7 @@ public class TestTower2 extends Tower {
 	
 	@Override
 	void shoot(Ship target) {
-		// TODO Auto-generated method stub
+		
 
 	}
 

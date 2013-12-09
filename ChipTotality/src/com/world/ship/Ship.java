@@ -9,7 +9,6 @@ import com.res.Loader.AssetsLoader;
 
 public abstract class Ship extends Actor{
 	public int hitpoints;
-	private Texture texture;
 	
 	Ship(int x, int y, int width, int height, int hitpoints){
 		setBounds(x, y, width, height);
@@ -23,8 +22,7 @@ public abstract class Ship extends Actor{
                 return true;
         }
 		});
-		
-		texture=getTexture();
+
 	}
 	
 	
@@ -34,7 +32,7 @@ public abstract class Ship extends Actor{
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.draw(texture, getX(), getY());
+		batch.draw(getTexture(), getX(), getY());
 	}
 	
 	
