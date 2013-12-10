@@ -30,10 +30,18 @@ public abstract class Ship extends Actor{
 		return AssetsLoader.getTexture(this.getClass().getSimpleName());
 	}
 	
+	public void destroy(){
+		//TODO jakas eksplozja
+		remove();
+	}
+	
+	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.draw(getTexture(), getX(), getY());
 	}
+	
+	
 	
 	
 	

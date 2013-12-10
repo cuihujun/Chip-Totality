@@ -56,7 +56,9 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 
 		gameStage.act(delta);
-		gameStage.checkCollisions();		
+		gameStage.checkBulletCollisionsWithBuildings();
+		gameStage.checkBulletCollisionsWithShips();
+		//gameStage.checkCollisions();		
 		cameraController.update(delta);	
 			
 		renderer.render(delta);		

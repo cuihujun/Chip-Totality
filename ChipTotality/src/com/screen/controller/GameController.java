@@ -11,6 +11,7 @@ import com.gameInfo.GameStateHolder.Mode;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.screen.GameScreen;
+import com.screen.GameStage;
 import com.world.Tile.TileType;
 import com.world.building.Building;
 
@@ -73,6 +74,7 @@ public class GameController extends InputAdapter {
 		
 		if(!buildingPossibleHere(building))
 			return;
+		GameStage.buildings.add(building);
 		gameScreen.gameStage.addActor(building);
 		building.pay();
 		building.doTask();
@@ -92,10 +94,9 @@ public class GameController extends InputAdapter {
 	}
 
 	
-	private void removeBuilding(Building building) {
-		//game.asteroid.buildings.remove(building);
-		// remove references from tiles
+	private void removeBuilding(Building building) {		
 		building.destroy();
+		// remove references from tiles
 		for (int i =  building.coords.x; i < building.coords.x + building.size.x; i++) {
 			for (int j =  building.coords.y; j < building.coords.y + building.size.y; j++) {
 				game.asteroid.worldGrid[i][j].building = null;

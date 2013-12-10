@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 
 public class MoveToAtConstSpeed extends Action{
-	private float speed;
+	private final float speed;
 	private final float FRAMES_PER_SECOND=60;
 	private final float UPDATE_TIME=1/FRAMES_PER_SECOND;
 	private float acc;	
@@ -16,6 +16,7 @@ public class MoveToAtConstSpeed extends Action{
 		this.speed = speed;
 		this.target = target;
 	}
+	
 	@Override
 	public boolean act(float delta) {
 		boolean completed = false;
@@ -29,6 +30,7 @@ public class MoveToAtConstSpeed extends Action{
 			getActor().setY(getActor().getY()+direction.y*speed);
 			if (target.dst(new Vector2(getActor().getX(),getActor().getY()))<(speed+0.1)) completed = true;
 		}
+		
 		return completed;
 	}
 	

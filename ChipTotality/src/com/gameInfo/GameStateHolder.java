@@ -3,7 +3,6 @@ package com.gameInfo;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.res.Loader.AssetsLoader;
 import com.world.building.AcodinMine;
@@ -12,8 +11,8 @@ import com.world.building.Building;
 import com.world.building.HolyMountains;
 import com.world.building.Rafinery;
 import com.world.building.Temple;
-import com.world.tower.YellowGun;
 import com.world.tower.VioletGun;
+import com.world.tower.YellowGun;
 
 
 /**
@@ -54,6 +53,7 @@ public final class GameStateHolder {
 
 		ChosenBuilding(Building building) {
 			this.buildingSample = building;
+			
 		}
 
 		public int getBuildingWidth() {
