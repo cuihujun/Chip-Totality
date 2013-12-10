@@ -17,43 +17,46 @@ public class GameScreenRenderer {
 	final GameScreen gameScreen;
 	float delta;
 	float stateTime;
+	Texture meteorite;
 	
 	
 	
 	public GameScreenRenderer(final ChipTotality game, final GameScreen screen){
 		this.game=game;
 		this.gameScreen = screen;
+		this.meteorite = AssetsLoader.getTexture("Meteorite");
 	}
 	
 	public void render(float delta){
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f );
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
 		
-		game.camera.update();		
+		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
 		game.batch.begin();
 		renderBackground(delta);
 		game.batch.end();
 		renderStage();
-		game.batch.begin();
-		
-		stateTime+=delta;
-		game.batch.draw(AssetsLoader.getObjectAnimation("explosionTest").getKeyFrame(stateTime), 500, 500);//TODO test animacji do zmiany jakis pool z nimi i w miejscu wybuchow:)
-		
-		if (GameStateHolder.chosenBuilding != GameStateHolder.ChosenBuilding.none)
-			renderSelectedBuilding();		
-		if (Settings.DEBUG) renderDebug(delta);
-		game.batch.end();
+			
+		//stateTime+=delta;
+		//game.batch.draw(AssetsLoader.getObjectAnimation("explosionTest").getKeyFrame(stateTime), 500, 500);//TODO test animacji do zmiany jakis pool z nimi i w miejscu wybuchow:)		
+		if (GameStateHolder.chosenBuilding != GameStateHolder.ChosenBuilding.none){
+			game.batch.begin();
+			renderSelectedBuilding();
+			game.batch.end();
+		}
+
+		if (Settings.DEBUG) renderDebug(delta);		
 	}
 	
 	public void renderBackground(float delta){
 
 		//game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
-		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);		
+		game.batch.draw(meteorite, 0, 0);
 		
 		//Texture stars = AssetsLoader.getTexture("blackDreams");
-		Texture stars = AssetsLoader.getTexture("starSpaceTile");
+		//Texture stars = AssetsLoader.getTexture("starSpaceTile");
 		//Texture stars = AssetsLoader.getTexture("starsSeamless");		
 				
 		

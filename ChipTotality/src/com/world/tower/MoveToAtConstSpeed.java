@@ -7,7 +7,7 @@ public class MoveToAtConstSpeed extends Action{
 	private final float speed;
 	private final float FRAMES_PER_SECOND=60;
 	private final float UPDATE_TIME=1/FRAMES_PER_SECOND;
-	private final float UPDATE_DIRECTION_TIME=UPDATE_TIME*(FRAMES_PER_SECOND/4);
+	private final float UPDATE_DIRECTION_TIME=UPDATE_TIME*(FRAMES_PER_SECOND/3);
 	private float acc;
 	private float accDirection;
 	private Vector2 target;
@@ -26,10 +26,7 @@ public class MoveToAtConstSpeed extends Action{
 		acc+=delta;
 		accDirection+=delta;
 		if(accDirection>UPDATE_DIRECTION_TIME){
-			accDirection-=UPDATE_DIRECTION_TIME;
-			direction.x = target.x-getActor().getX();
-			direction.y = target.y-getActor().getY();			
-			direction.nor();			
+			updateDirection();			
 		}
 		
 		while (acc>UPDATE_TIME) {

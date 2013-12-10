@@ -29,9 +29,9 @@ public class GameStage extends Stage{
 	final ChipTotality game;
 
 	//statki moga zderzac sie z pociskami wyslanymi przez wiezyczke
-	public static Vector<Ship> ships = new Vector<Ship>();
+	public static Array<Ship> ships = new Array<Ship>();
 	//pociski wyslane rpzez staki moga zderzac sie z budynkami
-	public static Vector<Building> buildings= new Vector<Building>();
+	public static Array<Building> buildings= new Array<Building>();
 
 	public QuadTree<Actor> quadTree; 
 	public static QuadTree<Bullet> bulletsFromTowersTree, bulletsFromShipsTree;	
@@ -94,7 +94,7 @@ public class GameStage extends Stage{
 	
 	
 	public void checkCollisions(){
-		quadTree.clear();
+		/*quadTree.clear();
 		quadTree.insert(getActors());
 		ArrayList<Actor> returnObjects = new ArrayList<Actor>();
 		
@@ -117,11 +117,11 @@ public class GameStage extends Stage{
 				}
 				
 			}		   		   
-		}
+		}*/
 	}
 	
 	public void checkBulletCollisionsWithBuildings(){
-		bulletsFromShipsTree.clear();
+		/*bulletsFromShipsTree.clear();
 		bulletsFromShipsTree.insert(bulletsFromShips);
 		ArrayList<Bullet> returnObjects = new ArrayList<Bullet>();
 		
@@ -137,12 +137,12 @@ public class GameStage extends Stage{
 					bulletsFromShips.removeValue(possiblyColliding, true);
 				}
 			}
-		}
+		}*/
 	}
 	
 	
 	public void checkBulletCollisionsWithShips() {
-		bulletsFromTowersTree.clear();
+		/*bulletsFromTowersTree.clear();
 		bulletsFromTowersTree.insert(bulletsFromTowers);
 		ArrayList<Bullet> returnObjects = new ArrayList<Bullet>();
 		
@@ -158,10 +158,60 @@ public class GameStage extends Stage{
 					bulletsFromTowers.removeValue(possiblyColliding, true);
 				}
 			}
+		}*/
+		
+		
+		//TODO that is faster than quads? probably scale badly...
+		/*for (Ship ship : ships) {
+			shipRec.setPosition(ship.getX(), ship.getY());
+			shipRec.setSize(ship.getWidth(), ship.getHeight());			
+			for(Bullet bulet: bulletsFromTowers){
+				bulletRec.setPosition(bulet.getX(), bulet.getY());
+				bulletRec.setSize(bulet.getWidth(), bulet.getHeight());
+				if (shipRec.overlaps(bulletRec)){					
+					bulet.remove();
+					bulletsFromTowers.removeValue(bulet, true);
+					break;
+				}
+			}		
+		}*/
+		
+		//TODO that is even faster than last one
+		Rectangle shipRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
+		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 			
+		Iterator<Bullet> i = bulletsFromTowers.iterator();
+				
+		while (i.hasNext()) {
+			Bullet b = i.next();
+			bulletRec.setPosition(b.getX(), b.getY());
+			bulletRec.setSize(b.getWidth(), b.getHeight());
+			for (Ship s : ships) {
+				shipRec.setPosition(s.getX(), s.getY());
+				shipRec.setSize(s.getWidth(), s.getHeight());
+				if (shipRec.overlaps(bulletRec)){
+					b.remove();
+					i.remove();
+					break;
+				}			
+			}			
 		}
+
+		
+		//TODO shuld be faster but to many methods caled;] get get get so slow;] 
+		/*Iterator<Bullet> i = bulletsFromTowers.iterator();		
+		while (i.hasNext()) {
+			Bullet b = i.next();			
+			for (Ship s : ships) {
+				if(b.getX() < s.getX() + s.getWidth() && b.getX() + b.getWidth() > s.getX() && b.getY() < s.getY() + s.getHeight() && b.getY() + b.getHeight() > s.getY()){
+					b.remove();
+					i.remove();
+					break;
+				}			
+			}			
+		}*/
+		
 	}
-	
-	
+
 
 	public Building getRandBuilding() {
 		for(int x = 0; x < Settings.tilesVertical; x++)
@@ -172,7 +222,7 @@ public class GameStage extends Stage{
 				}
 		return null;			
 	}
-	public Vector<Ship> getShip()
+	public Array<Ship> getShips()
 	{
 		return ships;
 	}

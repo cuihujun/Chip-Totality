@@ -10,6 +10,7 @@ import com.res.Loader.AssetsLoader;
 
 public abstract class Ship extends Actor{
 	public int hitpoints;
+	private Sprite sprite;
 	
 	Ship(int x, int y, int width, int height, int hitpoints){
 		setBounds(x, y, width, height);
@@ -23,7 +24,8 @@ public abstract class Ship extends Actor{
                 return true;
         }
 		});
-
+		
+		sprite = new Sprite(getTexture());				
 	}
 	
 	
@@ -38,16 +40,10 @@ public abstract class Ship extends Actor{
 	
 	
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		Sprite spr = new Sprite(getTexture());	// Moze by warto wsadzic go na sta³e do klasy niz generowac co funkcje
-		spr.setPosition(getX(),getY());
-		spr.setRotation(getRotation());
-		spr.draw(batch);
-		//batch.draw(getTexture(), getX(), getY());
+	public void draw(SpriteBatch batch, float parentAlpha) {		
+		sprite.setPosition(getX(),getY());
+		sprite.setRotation(getRotation());
+		sprite.draw(batch);
 	}
-	
-	
-	
-	
 	
 }

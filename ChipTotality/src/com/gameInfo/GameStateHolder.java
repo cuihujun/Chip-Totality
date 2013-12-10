@@ -23,7 +23,6 @@ import com.world.tower.YellowGun;
  *            flag useful to check if player wants to build something
  * @param chosenBuilding
  *            building chosen by player. Includes none
- * 
  */
 
 public final class GameStateHolder {
@@ -52,9 +51,11 @@ public final class GameStateHolder {
 		VioletGun(new VioletGun(0,0));
 
 		Building buildingSample;
+		TextureRegion region;
 
 		ChosenBuilding(Building building) {
 			this.buildingSample = building;
+			region = AssetsLoader.getBuilding(this.toString());
 		}
 
 		public int getBuildingWidth() {
@@ -66,7 +67,7 @@ public final class GameStateHolder {
 		}
 		
 		public TextureRegion getTextureRegion() {
-			return AssetsLoader.getBuilding(this.toString());
+			return region;			
 		}
 		
 		public Building getChosenBuilding(int x, int y){

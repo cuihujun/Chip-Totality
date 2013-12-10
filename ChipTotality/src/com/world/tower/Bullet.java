@@ -14,6 +14,7 @@ public abstract class Bullet extends Actor{
 	private final float speed;
 
 	public MoveToAtConstSpeed moveToAction;
+	private Texture bulletTexture;
 	
 	
 	public Bullet(float x, float y, int width, int height, float speed, Ship target){
@@ -25,14 +26,12 @@ public abstract class Bullet extends Actor{
 		updateAction();
 		addAction(moveToAction);
 		moveToAction.updateDirection();
+		bulletTexture = AssetsLoader.getTexture(this.getClass().getSimpleName());
 	}
 	
 	public Texture getTexture() {
-		return AssetsLoader.getTexture(this.getClass().getSimpleName());
+		return bulletTexture;
 	}
-	
-	
-
 	
 	public void updateAction(){
 		if(target==null)

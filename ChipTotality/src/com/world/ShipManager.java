@@ -43,13 +43,12 @@ public class ShipManager {
 	{
 		stage = actStage;
 		timGen.scheduleTask(new GenTask(), 1,1);
-		timUpd.scheduleTask(new UpdTask(), 0.05f,0.05f);
-	
+		timUpd.scheduleTask(new UpdTask(), 0.05f,0.05f);	
 	}
 	
 	public void GenerateShips()
 	{
-		if(stage.getShip().size() < MAXSHIPS) {
+		if(stage.getShips().size < MAXSHIPS) {
 			Random gen = new Random();
 			
 			TestShip1 ship = new  TestShip1(gen.nextInt(1000),2000);
@@ -70,7 +69,7 @@ public class ShipManager {
 
 			
 			stage.addActor(ship);
-			stage.getShip().add(ship);
+			stage.getShips().add(ship);
 		}
 	}
 	public void Update() {
@@ -79,12 +78,12 @@ public class ShipManager {
 	public void removeLostShips()	// Moze byc uruchamiane co jakie 100 ms lub nawet sekunde, odpowiada za usuwanei statkow ze sceny, jesli wyjda poza ekran gry
 	{
 
-		for(Ship ship : stage.getShip())
+		for(Ship ship : stage.getShips())//TODO not safe iterating and removing form list(use iterator and remove)
 		{
 			if(ship.getX()+ship.getWidth() < -20 || ship.getY()+ship.getHeight() <  -20 || ship.getX() > 3000|| ship.getY() > 3000)
 			{
 				ship.remove();
-				stage.getShip().remove(ship);
+				stage.getShips().removeValue(ship, true);
 				break;
 			}
 			if(ship.getActions().size == 0)
