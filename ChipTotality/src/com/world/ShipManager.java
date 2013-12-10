@@ -55,8 +55,11 @@ public class ShipManager {
 			//action.setDuration(20);
 			Building building = stage.getRandBuilding();
 			Vector2 targ = null;
-			if(building != null)
+			if(building != null){
+			
 				targ = new Vector2(building.getX(), building.getY());
+			}
+				
 			else
 				targ = new Vector2(ship.getX(),-1000);
 			MoveToAtConstSpeed action = new MoveToAtConstSpeed(targ, 5);
@@ -66,7 +69,7 @@ public class ShipManager {
 
 			float degree = (float)(Math.atan2(dy, dx) * (float)(180/3.14))-90;
 			ship.setRotation(degree);
-
+			
 			
 			stage.addActor(ship);
 			stage.getShips().add(ship);

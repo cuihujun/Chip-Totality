@@ -3,6 +3,7 @@ package com.screen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
@@ -214,12 +215,15 @@ public class GameStage extends Stage{
 
 
 	public Building getRandBuilding() {
-		for(int x = 0; x < Settings.tilesVertical; x++)
+		/*for(int x = 0; x < Settings.tilesVertical; x++)
 			for(int y = 0; y < Settings.tilesHorizontal; y++)
 				if(game.asteroid.worldGrid[x][y].building != null)
 				{
 					return game.asteroid.worldGrid[x][y].building;
-				}
+				}*/
+		Random gen = new Random();
+		if(buildings.size != 0)
+			return buildings.get(gen.nextInt(buildings.size));
 		return null;			
 	}
 	public Array<Ship> getShips()
