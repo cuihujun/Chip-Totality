@@ -1,6 +1,7 @@
 package com.world.ship;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -38,7 +39,11 @@ public abstract class Ship extends Actor{
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.draw(getTexture(), getX(), getY());
+		Sprite spr = new Sprite(getTexture());	// Moze by warto wsadzic go na sta³e do klasy niz generowac co funkcje
+		spr.setPosition(getX(),getY());
+		spr.setRotation(getRotation());
+		spr.draw(batch);
+		//batch.draw(getTexture(), getX(), getY());
 	}
 	
 	

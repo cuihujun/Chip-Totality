@@ -37,7 +37,7 @@ public class GameStage extends Stage{
 	public static QuadTree<Bullet> bulletsFromTowersTree, bulletsFromShipsTree;	
 	public static Array<Bullet> bulletsFromTowers, bulletsFromShips;	// Bullets from towers, bullets from ships
 	//ArrayList<Explosion> listOfExplossions;	
-
+	
 	
 	ShipManager shipManager;
 	public GameStage(ChipTotality game) {
