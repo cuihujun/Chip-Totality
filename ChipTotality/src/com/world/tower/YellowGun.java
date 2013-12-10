@@ -1,13 +1,13 @@
 package com.world.tower;
 
 
-public class YellowGun extends Tower{
+public class YellowGun extends RocketTower{
 	final static int width = 1;
 	final static int height = 1;
 	static int firepower=5;
 	static int maxHitpoints=150;
-	static int range=200;
-	static float shootDelay=1;
+	static int range=300;
+	static float shootDelay=0.5f;
 
 	
 	public YellowGun(int x, int y) {

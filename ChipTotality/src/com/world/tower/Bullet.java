@@ -24,6 +24,7 @@ public abstract class Bullet extends Actor{
 		moveToAction = new MoveToAtConstSpeed(new Vector2(target.getX(),target.getY()),this.speed);
 		updateAction();
 		addAction(moveToAction);
+		moveToAction.updateDirection();
 	}
 	
 	public Texture getTexture() {

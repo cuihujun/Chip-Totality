@@ -2,6 +2,7 @@ package com.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
@@ -25,12 +26,14 @@ public class GameScreenRenderer {
 	}
 	
 	public void render(float delta){
+		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f );
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
 		
 		game.camera.update();		
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
 		game.batch.begin();
-		renderBackground();
+		renderBackground(delta);
 		game.batch.end();
 		renderStage();
 		game.batch.begin();
@@ -44,18 +47,17 @@ public class GameScreenRenderer {
 		game.batch.end();
 	}
 	
-	public void renderBackground(){
+	public void renderBackground(float delta){
 
 		//game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
-		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);
-		delta = Gdx.graphics.getDeltaTime();//TODO z render metod z GameScreen przekazac jakos do renderera		
+		game.batch.draw(AssetsLoader.getTexture("Meteorite"), 0, 0);		
 		
 		//Texture stars = AssetsLoader.getTexture("blackDreams");
 		Texture stars = AssetsLoader.getTexture("starSpaceTile");
 		//Texture stars = AssetsLoader.getTexture("starsSeamless");		
 				
 		
-		Vector3 postion = game.camera.position;
+		/*Vector3 postion = game.camera.position;
 		float x,y,w,h;
 		w = stars.getWidth();
 		h = stars.getHeight();
@@ -66,7 +68,7 @@ public class GameScreenRenderer {
 			for(int column = -(repeatCount); column<repeatCount; column++){
 				game.batch.draw(stars, x + row*stars.getWidth(), y + column*stars.getHeight());
 			}
-		}
+		}*/
 		
 		Texture meteorite = AssetsLoader.getTexture("Meteorite");		
 		game.batch.draw(meteorite, 0, 0);		

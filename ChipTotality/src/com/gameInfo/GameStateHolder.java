@@ -11,6 +11,8 @@ import com.world.building.Building;
 import com.world.building.HolyMountains;
 import com.world.building.Rafinery;
 import com.world.building.Temple;
+import com.world.tower.Bullet;
+import com.world.tower.Tower;
 import com.world.tower.VioletGun;
 import com.world.tower.YellowGun;
 
@@ -53,7 +55,6 @@ public final class GameStateHolder {
 
 		ChosenBuilding(Building building) {
 			this.buildingSample = building;
-			
 		}
 
 		public int getBuildingWidth() {

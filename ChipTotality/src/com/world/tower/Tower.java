@@ -10,24 +10,27 @@ import com.world.ship.Ship;
 //class for towers, which shoot immediately
 public abstract class Tower extends Building {
 	protected int hitpoints;
-	Ship currentTarget;
-	private final Task shootTask;
+	Ship currentTarget;	
 	private final int range;
 	private int firePower;
+	private float shootDelay;
+	private float lastShoot;
 	
 	public Tower(int x, int y, int width, int height, int maxHitpoints, int range, float shootDelay) {
 		super(x, y, width, height, maxHitpoints);
 		this.range=range;
-		shootTask = new Task() {
-			@Override
-			public void run() {
-				if (targetInRange())
-					shoot();
-				else
-					findTarget();
-			}
-		};
-		Timer.schedule(shootTask, shootDelay, shootDelay);
+		this.shootDelay = shootDelay;
+	}	
+	
+	public void act(float delta){
+		lastShoot+=delta;
+		if(lastShoot>shootDelay){
+			lastShoot-=shootDelay;
+			if (targetInRange())
+				shoot();
+			else
+				findTarget();			
+		}
 	}
 
 	public void shoot(){
