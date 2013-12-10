@@ -22,6 +22,11 @@ import com.gameInfo.GameStateHolder.Mode;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
+import com.world.building.AcodinMine;
+import com.world.building.Base;
+import com.world.building.HolyMountains;
+import com.world.building.Rafinery;
+import com.world.building.Temple;
 
 public class GameScreenGUI {
 	final ChipTotality game;	
@@ -189,30 +194,36 @@ public class GameScreenGUI {
 		});		
 		mainBuildingsTable.add(towersButton).top().fill();		
 		
-		for(ChosenBuilding buildingType: ChosenBuilding.values() ){
-			if (buildingType!=ChosenBuilding.none){
-				final String buildingTypeString = buildingType.toString();
-				
-				TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
-	    		ImageButtonStyle imageStyle = new ImageButtonStyle(skin.get(ButtonStyle.class));    	
-	    		imageStyle.imageUp = new TextureRegionDrawable(region);
-	    		imageStyle.imageDown = new TextureRegionDrawable(region);
-	    		ImageButton iconButton = new ImageButton(imageStyle);
-	    			    		
-	    			    	
-	    		iconButton.addListener(new ChangeListener() {
-	    			@Override
-	    			public void changed(ChangeEvent event, Actor actor) {
-	    				GameStateHolder.mode = Mode.BUILDING;
-	    				GameStateHolder.chosenBuilding = ChosenBuilding.valueOf(buildingTypeString);	    				
-	    			}
-	    		});
-	    			    		
-	    		Label buildingNameLabel = new Label(buildingTypeString, skin);	    		
-	    		iconButton.add(buildingNameLabel).bottom();
-	    		mainBuildingsTable.add(iconButton).top();
-			}
-			
+		//TODO skad lista budynków mo¿e ustalone wed³ug lvl-a? fali albo cus;] moze byc w pliku zewnetrznym xml i ladowane tutaj
+		Array<String> towerNames = new Array<String>();
+		towerNames.add("AcodinMine");
+		towerNames.add("Base");
+		towerNames.add("HolyMountains");
+		towerNames.add("Rafinery");
+		towerNames.add("Temple");		
+		
+		for (String towerName : towerNames) {
+			final String buildingTypeString = towerName;
+
+			TextureRegion region = AssetsLoader.getBuildingIcon(buildingTypeString);
+			ImageButtonStyle imageStyle = new ImageButtonStyle(skin.get(ButtonStyle.class));
+			imageStyle.imageUp = new TextureRegionDrawable(region);
+			imageStyle.imageDown = new TextureRegionDrawable(region);
+			ImageButton iconButton = new ImageButton(imageStyle);
+
+			iconButton.addListener(new ChangeListener() {
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					GameStateHolder.mode = Mode.BUILDING;
+					GameStateHolder.chosenBuilding = ChosenBuilding
+							.valueOf(buildingTypeString);
+				}
+			});
+
+			Label buildingNameLabel = new Label(buildingTypeString, skin);
+			iconButton.add(buildingNameLabel).bottom();
+			mainBuildingsTable.add(iconButton).top();
+
 		}
 		
 		mainBuildingsTable.pack();

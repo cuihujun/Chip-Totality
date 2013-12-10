@@ -14,7 +14,7 @@ import com.world.Asteroid;
 public class GameScreen implements Screen {
 	final ChipTotality game;
 	public OrthographicCamera camera;
-	public final GameScreenGUI gameScreenGUI;	
+	public final GameScreenGUI gameScreenGUI;
 	private final GameScreenRenderer renderer;
 	public  GameStage gameStage;	
 	public  CameraController cameraController;

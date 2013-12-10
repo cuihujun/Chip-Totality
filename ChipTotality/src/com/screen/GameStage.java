@@ -52,7 +52,7 @@ public class GameStage extends Stage{
 		
 		
 		//TODO usunac po testach
-		TestShip1 ts1 = new TestShip1(300, 300);
+		/*TestShip1 ts1 = new TestShip1(300, 300);
 		addActor(ts1);
 		MoveToAction action = new MoveToAction();
 		action.setDuration(10);
@@ -85,7 +85,7 @@ public class GameStage extends Stage{
 		addActor(tb2);
 		addActor(tb3);
 		addActor(tb4);
-		addActor(tb5);
+		addActor(tb5);*/
 		
 		
 		///////////////////
