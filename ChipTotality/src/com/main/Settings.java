@@ -1,8 +1,8 @@
 package com.main;
 
 public class Settings {
-	public static final int WIDTH = 854;
-	public static final int HEIGHT = 480;
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
 	public static float ASPECT_RATIO = 0;//WIDTH/HEIGHT;
 	public static final int VIEW_HEIGHT = 720;
 	public static float VIEW_WIDTH = 0;//ASPECT_RATIO * VIEW_HEIGHT;

@@ -206,7 +206,7 @@ public class GameStage extends Stage{
 					b.remove();
 					i.remove();
 					break;
-				}			
+				}
 			}			
 		}*/
 		

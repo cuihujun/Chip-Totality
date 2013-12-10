@@ -14,7 +14,7 @@ public abstract class Bullet extends Actor{
 	private final float speed;
 
 	public MoveToAtConstSpeed moveToAction;
-	private Texture bulletTexture;
+	Texture bulletTexture;
 	
 	
 	public Bullet(float x, float y, int width, int height, float speed, Ship target){

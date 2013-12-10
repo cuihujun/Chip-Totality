@@ -1,5 +1,7 @@
 package com.world.tower;
 
+import com.screen.GameStage;
+
 
 public class VioletGun extends RocketTower{
 	final static int width = 1;
@@ -13,8 +15,13 @@ public class VioletGun extends RocketTower{
 		super(x, y, width, height, maxHitpoints, range, shootDelay);
 	}
 	
-		
-
+	@Override
+	public void shoot() {
+		Bullet newBullet =  new TestBullet2(getX()+this.getWidth()/3, getY()+this.getHeight()/3, currentTarget); //TODO typ pocisku zalezny od wiezy
+		getParent().addActor(newBullet);
+		GameStage.bulletsFromTowers.add(newBullet);
+	}	
+			
 	@Override
 	public void pay() {	
 	}

@@ -14,7 +14,7 @@ public class CameraController  extends GestureDetector{
 	final Vector3 last = new Vector3(-1, -1, -1);
 	final Vector3 delta = new Vector3();	
 	
-	final static public float MAX_ZOOM_OUT = 1.5f;
+	final static public float MAX_ZOOM_OUT = 1.6f;
 	final static public float MIN_ZOOM = 0.67f;
 			
 	static Map<Integer, Boolean> keys = new HashMap<Integer, Boolean>();

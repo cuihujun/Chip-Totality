@@ -107,17 +107,16 @@ public class Loader {
 			
 			//manager.load("background.png", Texture.class, textureParameter);
 			manager.load("starsSeamless.png", Texture.class, textureParameter);
-			manager.load("starSpaceTile.png", Texture.class, textureParameter);
-			manager.load("blackDreams.png", Texture.class, textureParameter);			
+			//manager.load("starSpaceTile.png", Texture.class, textureParameter);
+			//manager.load("blackDreams.png", Texture.class, textureParameter);
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
-			manager.load("ashtar_button_128.png", Texture.class, textureParameter);
-			manager.load("tabBackground.png", Texture.class, textureParameter);
 			
 			
 			manager.load("Meteorite.png", Texture.class, textureParameter);
 
 			//bullets
 			manager.load("TestBullet1.png", Texture.class, textureParameter);
+			manager.load("TestBullet2.png", Texture.class, textureParameter);
 			//ships
 			manager.load("TestShip1.png", Texture.class, textureParameter);
 			//buldings
@@ -130,7 +129,7 @@ public class Loader {
 			manager.load("TestTower1.png", Texture.class, textureParameter);
 			
 			//icons
-			manager.load("IconsPack/iconsPack.atlas", TextureAtlas.class);			
+			manager.load("IconsPack/iconsPack.atlas", TextureAtlas.class);		
 			
 			//skin do menu
 			manager.load("uiSkin/uiskin.json",Skin.class);
@@ -195,21 +194,10 @@ public class Loader {
 			recreateAfterResize();	
 		}
 		
-		public static void recreateAfterResize(){
-			Texture backTab = manager.get("tabBackground.png", Texture.class);			
-			sprites = new HashMap<String, Sprite>();
+		public static void recreateAfterResize(){					
+			sprites = new HashMap<String, Sprite>();				
 			
-			Sprite infoPanel = new Sprite(backTab);
-			infoPanel.setSize(Settings.VIEW_WIDTH, Settings.HEIGHT*0.05f);
-			infoPanel.setPosition(-200, -300);
-			sprites.put("infoPanel", infoPanel);			
-			
-			Sprite actionPanel = new Sprite(backTab);
-			actionPanel.setSize(Settings.VIEW_WIDTH, Settings.HEIGHT*0.12f);
-			actionPanel.setPosition(-200, -200);			
-			sprites.put("actionPanel", actionPanel);
-			
-			//niekoniecznie tu wsumei wystarczy pewnie raz;]
+			//niekoniecznie tu w sumie wystarczy pewnie raz;]
 			if (manager.isLoaded("ExplosionsPack/explosionsPack.atlas")){
 				TextureAtlas locationObjectsAnimetedAtals = manager.get("ExplosionsPack/explosionsPack.atlas", TextureAtlas.class);
 				
@@ -234,8 +222,12 @@ public class Loader {
 		}
 		
 		private AssetsLoader() {
+			//textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
+			//textureParameter.minFilter = Texture.TextureFilter.MipMapNearestNearest;
+			textureParameter.genMipMaps = true;
 			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
-			textureParameter.minFilter = Texture.TextureFilter.MipMapNearestNearest;				
+			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
+			
 		}
 
 	}

@@ -18,13 +18,14 @@ public class GameScreenRenderer {
 	float delta;
 	float stateTime;
 	Texture meteorite;
+	Texture stars;
 	
-	
-	
+		
 	public GameScreenRenderer(final ChipTotality game, final GameScreen screen){
 		this.game=game;
 		this.gameScreen = screen;
 		this.meteorite = AssetsLoader.getTexture("Meteorite");
+		this.stars = AssetsLoader.getTexture("starsSeamless");
 	}
 	
 	public void render(float delta){
@@ -52,44 +53,29 @@ public class GameScreenRenderer {
 	
 	public void renderBackground(float delta){
 
-		//game.batch.draw(AssetsLoader.getTexture("background"), 0, 0);
+
 		game.batch.draw(meteorite, 0, 0);
-		
-		//Texture stars = AssetsLoader.getTexture("blackDreams");
-		//Texture stars = AssetsLoader.getTexture("starSpaceTile");
-		//Texture stars = AssetsLoader.getTexture("starsSeamless");		
-				
-		
-		/*Vector3 postion = game.camera.position;
+								
+		Vector3 postion = game.camera.position;
 		float x,y,w,h;
 		w = stars.getWidth();
 		h = stars.getHeight();
 		x = (postion.x - (postion.x % w)); 
 		y = (postion.y - (postion.y % h));
 		int repeatCount = 3;
-		for(int row = -(repeatCount+1); row<repeatCount+1; row++){
+		for(int row = -(repeatCount); row<repeatCount; row++){
 			for(int column = -(repeatCount); column<repeatCount; column++){
 				game.batch.draw(stars, x + row*stars.getWidth(), y + column*stars.getHeight());
 			}
-		}*/
+		}
 		
 		Texture meteorite = AssetsLoader.getTexture("Meteorite");		
-		game.batch.draw(meteorite, 0, 0);		
-		/*Particles.get("stars1").setPosition(meteorite.getWidth()/2,meteorite.getHeight()*0.35f);
-		Particles.get("stars1").update(delta);
-		Particles.get("stars1").draw(game.batch);*/			
-
+		game.batch.draw(meteorite, 0, 0);					
 	}
 	
-	/*public void renderBuildings(){
-		for (Building building : game.asteroid.buildings) {
-			game.batch.draw(building.getTexture(), building.coords.x*Settings.tileSize, building.coords.y*Settings.tileSize);
-		}
-	}*/
 	public void renderStage(){		
 		gameScreen.gameStage.draw();
 	}
-
 
 	public void renderSelectedBuilding(){
 		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -141,9 +127,5 @@ public class GameScreenRenderer {
 
 		game.shapeRenderer.end();
 	}
-	
-	
-}
 		
-	
-
+}		
