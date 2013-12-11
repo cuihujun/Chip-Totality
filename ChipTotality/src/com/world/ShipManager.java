@@ -7,6 +7,8 @@ import java.util.Random;
 
 
 
+
+import com.action.FollowAction;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -19,7 +21,6 @@ import com.screen.GameStage;
 import com.world.building.Building;
 import com.world.ship.Ship;
 import com.world.ship.TestShip1;
-import com.world.tower.MoveToAtConstSpeed;
 
 public class ShipManager {
 	private static int MAXSHIPS = 50;
@@ -62,7 +63,7 @@ public class ShipManager {
 				
 			else
 				targ = new Vector2(ship.getX(),-1000);
-			MoveToAtConstSpeed action = new MoveToAtConstSpeed(targ, 5);
+			FollowAction action = new FollowAction(targ, 5);
 			ship.addAction(action);
 			float dy  = targ.y- ship.getY();
 			float dx = targ.x - ship.getX();
@@ -91,7 +92,7 @@ public class ShipManager {
 			}
 			if(ship.getActions().size == 0)
 			{
-				MoveToAtConstSpeed action = new MoveToAtConstSpeed(new Vector2(Settings.WIDTH/2,4000), 5);
+				FollowAction action = new FollowAction(new Vector2(Settings.WIDTH/2,4000), 5);
 				//action.
 				//action.setInterpolation(Interpolation.exp10);
 				//action.setTarget(n);

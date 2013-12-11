@@ -16,15 +16,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.main.Settings;
 
 public class Loader {
 			
@@ -116,7 +115,7 @@ public class Loader {
 
 			//bullets
 			manager.load("TestBullet1.png", Texture.class, textureParameter);
-			manager.load("TestBullet2.png", Texture.class, textureParameter);
+			manager.load("TestRocket1.png", Texture.class, textureParameter);
 			//ships
 			manager.load("TestShip1.png", Texture.class, textureParameter);
 			//buldings

@@ -1,28 +1,22 @@
 package com.screen;
 
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Vector;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
+import com.action.MoveTowardsAction;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
 import com.main.ChipTotality;
 import com.main.Settings;
-import com.res.Sounds;
 import com.world.ShipManager;
 import com.world.building.Building;
 import com.world.ship.Ship;
-import com.world.ship.TestShip1;
 import com.world.tower.Bullet;
-import com.world.tower.MoveToAtConstSpeed;
+import com.world.tower.Rocket;
 import com.world.tower.TestBullet1;
 //class for ships, bullets, and buildings
 
@@ -36,7 +30,7 @@ public class GameStage extends Stage{
 
 	public QuadTree<Actor> quadTree; 
 	public static QuadTree<Bullet> bulletsFromTowersTree, bulletsFromShipsTree;	
-	public static Array<Bullet> bulletsFromTowers, bulletsFromShips;	// Bullets from towers, bullets from ships
+	public static Array<Rocket> bulletsFromTowers, bulletsFromShips;	// Bullets from towers, bullets from ships
 	//ArrayList<Explosion> listOfExplossions;	
 	
 	
@@ -47,10 +41,15 @@ public class GameStage extends Stage{
 		quadTree = new QuadTree<Actor>(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
 		bulletsFromShipsTree = new QuadTree<Bullet>(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
 		bulletsFromTowersTree = new QuadTree<Bullet>(0, new Rectangle(0,0, Settings.tilesHorizontal*Settings.tileSize, Settings.tilesVertical*Settings.tileSize));
-		bulletsFromShips = new Array<Bullet>();
-		bulletsFromTowers = new Array<Bullet>();
+		bulletsFromShips = new Array<Rocket>();
+		bulletsFromTowers = new Array<Rocket>();
 		shipManager = new ShipManager(this);
 		
+		
+		TestBullet1 tb1 = new TestBullet1(600, 600);
+		
+		tb1.addAction(new MoveTowardsAction(new Vector2(700, 700), 0.1f, 3));
+		addActor(tb1);
 		
 		//TODO usunac po testach
 		/*TestShip1 ts1 = new TestShip1(300, 300);
@@ -180,10 +179,10 @@ public class GameStage extends Stage{
 		//TODO that is even faster than last one
 		Rectangle shipRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
 		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 			
-		Iterator<Bullet> i = bulletsFromTowers.iterator();
+		Iterator<Rocket> i = bulletsFromTowers.iterator();
 				
 		while (i.hasNext()) {
-			Bullet b = i.next();
+			Rocket b = i.next();
 			bulletRec.setPosition(b.getX(), b.getY());
 			bulletRec.setSize(b.getWidth(), b.getHeight());
 			for (Ship s : ships) {

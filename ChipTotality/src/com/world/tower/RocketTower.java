@@ -13,7 +13,7 @@ public class RocketTower extends Tower {
 
 	@Override
 	public void shoot() {
-		Bullet newBullet =  new TestBullet1(getX()+this.getWidth()/3, getY()+this.getHeight()/3, currentTarget); //TODO typ pocisku zalezny od wiezy
+		Rocket newBullet =  new TestRocket1(getX()+this.getWidth()/3, getY()+this.getHeight()/3, currentTarget); //TODO typ pocisku zalezny od wiezy
 		getParent().addActor(newBullet);
 		GameStage.bulletsFromTowers.add(newBullet);
 	}
