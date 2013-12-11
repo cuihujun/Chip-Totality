@@ -6,7 +6,7 @@ import com.main.Settings;
 
 public class FollowAction extends Action{
 	private final float speed;
-	private final float UPDATE_TIME=1/Settings.FRAMES_PER_SECOND;
+	private final float UPDATE_TIME=1.0f/Settings.FRAMES_PER_SECOND;
 	private final float UPDATE_DIRECTION_TIME=UPDATE_TIME*(Settings.FRAMES_PER_SECOND/3);
 	private float acc;
 	private float accDirection;
