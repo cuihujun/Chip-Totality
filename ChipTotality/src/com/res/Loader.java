@@ -224,6 +224,7 @@ public class Loader {
 		private AssetsLoader() {
 			//textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
 			//textureParameter.minFilter = Texture.TextureFilter.MipMapNearestNearest;
+			Texture.setAssetManager(manager);
 			textureParameter.genMipMaps = true;
 			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
 			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
