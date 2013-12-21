@@ -2,31 +2,23 @@ package com.world;
 
 import java.util.Random;
 
-
-
-
-
-
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
+import com.action.FollowAction;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.main.Settings;
 import com.screen.GameStage;
 import com.world.building.Building;
-import com.world.ship.Ship;
 import com.world.ship.TestShip1;
-import com.world.tower.MoveToAtConstSpeed;
 
 public class ShipManager {
 	private static int MAXSHIPS = 50;
 	private final GameStage stage;
-	private Timer timGen = new Timer();
-	private Timer timUpd = new Timer();
+	private final Timer timGen = new Timer();
+	private final Timer timUpd = new Timer();
 	class GenTask extends Task {
+		@Override
 		public void run()
 		{
 			GenerateShips();
@@ -34,6 +26,7 @@ public class ShipManager {
 		}
 	}
 	class UpdTask extends Task {
+		@Override
 		public void run()
 		{
 			Update();
@@ -48,7 +41,7 @@ public class ShipManager {
 	
 	public void GenerateShips()
 	{
-		if(stage.getShips().size < MAXSHIPS) {
+		if(GameStage.shipsGroup.getChildren().size < MAXSHIPS) {
 			Random gen = new Random();
 			
 			TestShip1 ship = new  TestShip1(gen.nextInt(1000),2000);
@@ -62,7 +55,7 @@ public class ShipManager {
 				
 			else
 				targ = new Vector2(ship.getX(),-1000);
-			MoveToAtConstSpeed action = new MoveToAtConstSpeed(targ, 5);
+			FollowAction action = new FollowAction(targ, 5);
 			ship.addAction(action);
 			float dy  = targ.y- ship.getY();
 			float dx = targ.x - ship.getX();
@@ -71,8 +64,8 @@ public class ShipManager {
 			ship.setRotation(degree);
 			
 			
-			stage.addActor(ship);
-			stage.getShips().add(ship);
+			stage.shipsGroup.addActor(ship);
+			//stage.getShips().add(ship);
 		}
 	}
 	public void Update() {
@@ -81,17 +74,17 @@ public class ShipManager {
 	public void removeLostShips()	// Moze byc uruchamiane co jakie 100 ms lub nawet sekunde, odpowiada za usuwanei statkow ze sceny, jesli wyjda poza ekran gry
 	{
 
-		for(Ship ship : stage.getShips())//TODO not safe iterating and removing form list(use iterator and remove)
+		for(Actor ship : GameStage.shipsGroup.getChildren())//TODO not safe iterating and removing form list(use iterator and remove)
 		{
 			if(ship.getX()+ship.getWidth() < -20 || ship.getY()+ship.getHeight() <  -20 || ship.getX() > 3000|| ship.getY() > 3000)
 			{
 				ship.remove();
-				stage.getShips().removeValue(ship, true);
+				//stage.getShips().removeValue(ship, true);
 				break;
 			}
 			if(ship.getActions().size == 0)
 			{
-				MoveToAtConstSpeed action = new MoveToAtConstSpeed(new Vector2(Settings.WIDTH/2,4000), 5);
+				FollowAction action = new FollowAction(new Vector2(Settings.WIDTH/2,4000), 5);
 				//action.
 				//action.setInterpolation(Interpolation.exp10);
 				//action.setTarget(n);

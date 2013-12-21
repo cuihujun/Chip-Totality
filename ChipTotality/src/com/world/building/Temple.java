@@ -21,7 +21,6 @@ public class Temple extends Building implements Upgradeable {
 
 	@Override
 	public void destroy() {
-		super.destroy();
 	}
 
 	@Override
@@ -43,10 +42,5 @@ public class Temple extends Building implements Upgradeable {
 	}
 
 
-	@Override
-	public void dispose() {
-		addResources.cancel();
-		
-	}
 
 }

@@ -17,7 +17,6 @@ public class HolyMountains extends Building implements Upgradeable{
 	
 	@Override
 	public void destroy(){
-		super.destroy();
 	}
 
 	@Override
@@ -33,11 +32,6 @@ public class HolyMountains extends Building implements Upgradeable{
 	}
 
 
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 }

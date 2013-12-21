@@ -22,7 +22,6 @@ public class Rafinery extends Building{
 	
 	@Override
 	public void destroy(){
-		super.destroy();
 		process.cancel();
 	}
 
@@ -48,9 +47,5 @@ public class Rafinery extends Building{
 	}
 
 
-	@Override
-	public void dispose() {
-		process.cancel();		
-	}
 	
 }

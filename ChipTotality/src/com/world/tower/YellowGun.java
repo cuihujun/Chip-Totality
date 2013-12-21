@@ -1,7 +1,11 @@
 package com.world.tower;
 
+import com.action.FollowShipAction;
+import com.res.Loader.AssetsLoader;
+import com.screen.GameStage;
 
-public class YellowGun extends RocketTower{
+
+public class YellowGun extends Tower{
 	final static int width = 1;
 	final static int height = 1;
 	static int firepower=5;
@@ -30,7 +34,16 @@ public class YellowGun extends RocketTower{
 
 
 	@Override
-	public void dispose() {
+	public void shoot() {
+		Bullet newBullet = new Bullet(getX(), getY(), 10, 10, AssetsLoader.getTexture("TestBullet1"), firepower);
+		newBullet.addAction(new FollowShipAction(currentTarget, 2f, 3f, true));
+		GameStage.bulletsFromTowersGroup.addActor(newBullet);
+		
+	}
+
+
+	@Override
+	public void destroy() {
 		// TODO Auto-generated method stub
 		
 	}

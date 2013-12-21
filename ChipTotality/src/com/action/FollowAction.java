@@ -1,19 +1,19 @@
-package com.world.tower;
+package com.action;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.main.Settings;
 
-public class MoveToAtConstSpeed extends Action{
+public class FollowAction extends Action{
 	private final float speed;
-	private final float FRAMES_PER_SECOND=60;
-	private final float UPDATE_TIME=1/FRAMES_PER_SECOND;
-	private final float UPDATE_DIRECTION_TIME=UPDATE_TIME*(FRAMES_PER_SECOND/3);
+	private final float UPDATE_TIME=1.0f/Settings.FRAMES_PER_SECOND;
+	private final float UPDATE_DIRECTION_TIME=UPDATE_TIME*(Settings.FRAMES_PER_SECOND/3);
 	private float acc;
 	private float accDirection;
 	private Vector2 target;
 	private Vector2 direction;
 
-	public MoveToAtConstSpeed(Vector2 target, float speed){
+	public FollowAction(Vector2 target, float speed){
 		super();		
 		this.speed = speed;
 		this.target = target;

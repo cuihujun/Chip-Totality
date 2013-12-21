@@ -23,7 +23,6 @@ public class AcodinMine extends Building{
 	
 	@Override
 	public void destroy(){
-		super.destroy();
 		addResources.cancel();
 	}
 
@@ -46,9 +45,4 @@ public class AcodinMine extends Building{
 	}
 
 
-	@Override
-	public void dispose() {
-		addResources.cancel();
-		
-	}
 }

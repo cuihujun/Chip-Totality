@@ -23,7 +23,6 @@ public class Base extends Building implements Upgradeable{
 
 	@Override
 	public void destroy(){
-		super.destroy();
 		addResources.cancel();
 	}
 
@@ -45,17 +44,6 @@ public class Base extends Building implements Upgradeable{
 		Timer.schedule(addResources, resourceDeliveryTime, resourceDeliveryTime);
 		
 	}
-
-
-
-	@Override
-	public void dispose() {
-		addResources.cancel();
-		
-	}
-	
-
-		
 	
 	
 }
