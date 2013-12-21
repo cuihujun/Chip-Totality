@@ -74,8 +74,8 @@ public class GameController extends InputAdapter {
 		
 		if(!buildingPossibleHere(building))
 			return;
-		GameStage.buildings.add(building);
-		gameScreen.gameStage.addActor(building);
+		GameStage.buildingsGroup.addActor(building);
+		//gameScreen.gameStage.addActor(building);
 		building.pay();
 		building.doTask();
 		// add reference to building for all tiles occupied by it
@@ -96,6 +96,7 @@ public class GameController extends InputAdapter {
 	
 	private void removeBuilding(Building building) {		
 		building.destroy();
+		building.remove();
 		// remove references from tiles
 		for (int i =  building.coords.x; i < building.coords.x + building.size.x; i++) {
 			for (int j =  building.coords.y; j < building.coords.y + building.size.y; j++) {

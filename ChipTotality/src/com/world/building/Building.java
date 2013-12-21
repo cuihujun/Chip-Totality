@@ -18,7 +18,7 @@ public abstract class Building extends Actor{
 	
 	public abstract void pay();
 	public abstract void doTask();
-	public abstract void dispose();
+	public abstract void destroy(); // things to do apart from removing it from the logical world (e.g. animations)
 		
 	public TextureRegion getTextureRegion() {
 		return AssetsLoader.getBuilding(this.getClass().getSimpleName());
@@ -54,9 +54,6 @@ public abstract class Building extends Actor{
 		Upgrade.scheduleResearch(upgrade, this);
 	}
 
-	public void destroy() {
-		remove();
-	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {

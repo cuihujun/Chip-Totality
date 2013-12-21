@@ -1,19 +1,15 @@
 package com.world.tower;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.screen.GameStage;
 import com.world.building.Building;
 import com.world.ship.Ship;
 
-//class for towers, which shoot immediately
 public abstract class Tower extends Building {
-	protected int hitpoints;
 	Ship currentTarget;	
 	private final int range;
-	private int firePower;
-	private float shootDelay;
+	private final float shootDelay;
 	private float lastShoot;
 	
 	public Tower(int x, int y, int width, int height, int maxHitpoints, int range, float shootDelay) {
@@ -22,6 +18,9 @@ public abstract class Tower extends Building {
 		this.shootDelay = shootDelay;
 	}	
 	
+	public abstract void shoot();
+	
+	@Override
 	public void act(float delta){
 		lastShoot+=delta;
 		if(lastShoot>shootDelay){
@@ -29,29 +28,30 @@ public abstract class Tower extends Building {
 			if (targetInRange())
 				shoot();
 			else
-				findTarget();			
+				findTarget();	
+			//findTarget();
+			//if(currentTarget!=null)
+			//	shoot();
+			
 		}
 	}
-
-	public void shoot(){
-		//TODO jakis dzwiek und wystrzal
-		currentTarget.hitpoints-=firePower;
-		if(currentTarget.hitpoints<=0)
-			currentTarget.destroy();
-			currentTarget=null;
-	}
+	
 	
 	private void findTarget(){
-			for (Ship ship : GameStage.ships) {
-				Vector2 coords = new Vector2(getX(), getY());	
-				if(coords.dst(ship.getX(), ship.getY()) <=range)
-					currentTarget=ship;			
-			}		
+		for (Actor ship : GameStage.shipsGroup.getChildren()) {
+			Vector2 coords = new Vector2(getX(), getY());	
+			if(coords.dst(ship.getX(), ship.getY()) <=range){
+				currentTarget=(Ship)ship;
+				return;
+			}
+		}
+		currentTarget=null;
 	}
 		
 	private boolean targetInRange() {
 		Vector2 coordsFloat = new Vector2(getX(), getY());
-		return (currentTarget!=null && coordsFloat.dst(currentTarget.getX(), currentTarget.getY()) <=range);
+		//target ship has no parent - he formally doesn't exist in the world
+		return (currentTarget!=null &&currentTarget.hasParent() && coordsFloat.dst(currentTarget.getX(), currentTarget.getY()) <=range);
 	}
 	
 	

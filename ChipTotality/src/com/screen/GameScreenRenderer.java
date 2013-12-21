@@ -36,10 +36,10 @@ public class GameScreenRenderer {
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
 		game.batch.begin();
+		//renderStage();
 		renderBackground(delta);
 		game.batch.end();
 		renderStage();
-			
 		//stateTime+=delta;
 		//game.batch.draw(AssetsLoader.getObjectAnimation("explosionTest").getKeyFrame(stateTime), 500, 500);//TODO test animacji do zmiany jakis pool z nimi i w miejscu wybuchow:)		
 		if (GameStateHolder.chosenBuilding != GameStateHolder.ChosenBuilding.none){
@@ -75,6 +75,11 @@ public class GameScreenRenderer {
 	
 	public void renderStage(){		
 		gameScreen.gameStage.draw();
+		//game.batch.begin();
+		//GameStage.buildingsGroup.draw(game.batch, 1);
+		//GameStage.shipsGroup.draw(game.batch, 1);
+		//GameStage.bulletsFromShipsGroup.draw(game.batch, 1);
+		//GameStage.bulletsFromTowersGroup.draw(game.batch, 1);
 	}
 
 	public void renderSelectedBuilding(){

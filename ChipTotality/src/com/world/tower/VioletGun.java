@@ -1,9 +1,12 @@
 package com.world.tower;
 
+import com.action.MoveTowardsAction;
+import com.badlogic.gdx.math.Vector2;
+import com.res.Loader.AssetsLoader;
 import com.screen.GameStage;
 
 
-public class VioletGun extends RocketTower{
+public class VioletGun extends Tower{
 	final static int width = 1;
 	final static int height = 1;
 	static int firepower=1;
@@ -17,13 +20,14 @@ public class VioletGun extends RocketTower{
 	
 	@Override
 	public void shoot() {
-		Rocket newBullet =  new TestRocket1(getX()+this.getWidth()/3, getY()+this.getHeight()/3, currentTarget); //TODO typ pocisku zalezny od wiezy
-		getParent().addActor(newBullet);
-		GameStage.bulletsFromTowers.add(newBullet);
+		Bullet newBullet = new Bullet(getX(), getY(), 10, 10, AssetsLoader.getTexture("TestBullet1"), firepower);
+		newBullet.addAction(new MoveTowardsAction(new Vector2(currentTarget.getX()-getX(), currentTarget.getY()-getY()), 0.02f, 3, true));
+		GameStage.bulletsFromTowersGroup.addActor(newBullet);
 	}	
 			
 	@Override
 	public void pay() {	
+		
 	}
 
 	@Override
@@ -33,10 +37,12 @@ public class VioletGun extends RocketTower{
 	}
 
 	@Override
-	public void dispose() {
+	public void destroy() {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 
 }
