@@ -1,15 +1,19 @@
 package com.gameInfo;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.res.Loader.AssetsLoader;
+import com.world.tower.Bullet;
+
 public class Stats {
 	public static enum Buildings{
 		//cost, maxHP, width, height
-		AcodinMine(100, 200, 2, 2),
+		AcodinMine(100, 300, 2, 2),
 		Base(100, 200, 1, 1),
 		HolyMountains(200, 200, 3, 3),
 		Rafinery(200, 500, 3,3),
 		Temple(200, 200, 2, 2),
-		VioletGun(100, 100, 1, 1),
-		YellowGun(100, 100, 1, 1);
+		VioletGun(100, 250, 1, 1),
+		YellowGun(100, 205, 1, 1);
 		
 		
 		Buildings(int cost, int maxHitpoints, int width, int height){
@@ -26,8 +30,8 @@ public class Stats {
 		
 	}
 	public static enum Towers{
-		VioletGun(300f, 0.5f),
-		YellowGun(500f, 0.3f);
+		VioletGun(300f, 1.5f),
+		YellowGun(500f, 3.0f);
 		
 		Towers(float range, float shootDelay){
 			this.range=range;
@@ -40,7 +44,7 @@ public class Stats {
 	
 	public static enum Ships{
 		//maxHP, speed, width, height, range, shootDelay
-		TestShip1(100, 20, 20, 20, 300, 0.8f);
+		TestShip1(14, 2, 20, 20, 300, 1.8f);
 		
 		Ships(int maxHitpoints, float speed, int width, int height, float range, float shootDelay){
 			this.maxHitpoints=maxHitpoints;
@@ -60,7 +64,28 @@ public class Stats {
 		public float shootDelay;
 	}
 	
-	public static enum Bullets{
+	public static enum Bullets{	
+		//width, height, firepower, speed, action, texture
+		simpleBullet(10, 10, 5, 3, AssetsLoader.getTexture("TestBullet1"))
+				;
+		
+		public float speed;
+		public int width, height;
+		public int firePower;
+		public Texture texture;
+		
+		Bullets(int width, int height, int firePower, float speed, Texture texture){
+			this.width=width;
+			this.height=height;
+			this.firePower=firePower;
+			this.speed=speed;
+			this.texture=texture;
+		}
+		
+		public Bullet spawnBullet(float x, float y){
+			return new Bullet(x, y, width, height, texture, firePower);
+		}
+		
 		
 	}
 }

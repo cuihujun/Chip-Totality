@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.main.Settings;
 import com.screen.GameStage;
 import com.world.building.Building;
 import com.world.ship.TestShip1;
@@ -17,6 +16,9 @@ public class ShipManager {
 	private final GameStage stage;
 	private final Timer timGen = new Timer();
 	private final Timer timUpd = new Timer();
+		
+	
+	
 	class GenTask extends Task {
 		@Override
 		public void run()
@@ -56,7 +58,7 @@ public class ShipManager {
 			else
 				targ = new Vector2(ship.getX(),-1000);
 			FollowAction action = new FollowAction(targ, 5);
-			ship.addAction(action);
+			//ship.addAction(action);
 			float dy  = targ.y- ship.getY();
 			float dx = targ.x - ship.getX();
 
@@ -79,26 +81,11 @@ public class ShipManager {
 			if(ship.getX()+ship.getWidth() < -20 || ship.getY()+ship.getHeight() <  -20 || ship.getX() > 3000|| ship.getY() > 3000)
 			{
 				ship.remove();
-				//stage.getShips().removeValue(ship, true);
 				break;
 			}
-			if(ship.getActions().size == 0)
-			{
-				FollowAction action = new FollowAction(new Vector2(Settings.WIDTH/2,4000), 5);
-				//action.
-				//action.setInterpolation(Interpolation.exp10);
-				//action.setTarget(n);
-				
-				float dy  =  4000- ship.getY();
-				float dx = Settings.WIDTH/2 - ship.getX();
-
-				float degree = (float)(Math.atan2(dy, dx) * (float)(180/3.14))-90;
-				ship.setRotation(degree);
-
-				ship.addAction(action);
-			
-			
-			}
+}
 		}
 	}
-}
+	
+	
+

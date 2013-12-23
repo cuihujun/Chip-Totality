@@ -12,6 +12,7 @@ import com.main.ChipTotality;
 import com.main.Settings;
 import com.screen.GameScreen;
 import com.screen.GameStage;
+import com.world.Asteroid;
 import com.world.Tile.TileType;
 import com.world.building.Building;
 
@@ -43,8 +44,8 @@ public class GameController extends InputAdapter {
 					j>=Settings.tilesVertical ||
 					i<0 ||
 					j<0 ||
-					game.asteroid.worldGrid[i][j].tileType != TileType.free ||
-					game.asteroid.worldGrid[i][j].building != null)
+					Asteroid.worldGrid[i][j].tileType != TileType.free ||
+					Asteroid.worldGrid[i][j].building != null)
 						return false;
 			}
 		}
@@ -60,8 +61,8 @@ public class GameController extends InputAdapter {
 					j>=Settings.tilesVertical ||
 					i<0 ||
 					j<0 ||
-					game.asteroid.worldGrid[i][j].tileType != TileType.free ||
-					game.asteroid.worldGrid[i][j].building != null)
+					Asteroid.worldGrid[i][j].tileType != TileType.free ||
+					Asteroid.worldGrid[i][j].building != null)
 						return false;
 			}
 		}
@@ -83,7 +84,7 @@ public class GameController extends InputAdapter {
 				+ building.getStats().width; i++) {
 			for (int j =  building.coords.y; j < building.coords.y
 					+ building.getStats().height; j++) {
-				game.asteroid.worldGrid[i][j].building = building;
+				Asteroid.worldGrid[i][j].building = building;
 			}
 		}
 		Gdx.app.log("building", building.toString() + " added at "
@@ -94,13 +95,12 @@ public class GameController extends InputAdapter {
 	}
 
 	
-	private void removeBuilding(Building building) {		
-		building.destroy();
+	public static void removeBuilding(Building building) {		
 		building.remove();
 		// remove references from tiles
 		for (int i =  building.coords.x; i < building.coords.x + building.getStats().width; i++) {
 			for (int j =  building.coords.y; j < building.coords.y + building.getStats().height; j++) {
-				game.asteroid.worldGrid[i][j].building = null;
+				Asteroid.worldGrid[i][j].building = null;
 			}
 		}
 	}

@@ -75,11 +75,6 @@ public class GameScreenRenderer {
 	
 	public void renderStage(){		
 		gameScreen.gameStage.draw();
-		//game.batch.begin();
-		//GameStage.buildingsGroup.draw(game.batch, 1);
-		//GameStage.shipsGroup.draw(game.batch, 1);
-		//GameStage.bulletsFromShipsGroup.draw(game.batch, 1);
-		//GameStage.bulletsFromTowersGroup.draw(game.batch, 1);
 	}
 
 	public void renderSelectedBuilding(){
