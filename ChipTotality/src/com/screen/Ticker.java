@@ -42,7 +42,6 @@ public class Ticker extends Widget {
 		}
 	}
 	
-	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		font.draw(batch, info, x, y);
 		x -= Gdx.graphics.getDeltaTime() * speed;

@@ -1,6 +1,6 @@
 package com.world.building;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Coords;
@@ -37,9 +37,9 @@ public abstract class Building extends Actor{
 	public void pay(){
 		GameStateHolder.beings-=getStats().cost;
 	}
-	
+
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(getTextureRegion(), getX(), getY());
 	}
 	

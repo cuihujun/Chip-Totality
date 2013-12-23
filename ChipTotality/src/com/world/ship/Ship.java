@@ -1,7 +1,8 @@
 package com.world.ship;
 
+
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -38,9 +39,8 @@ public abstract class Ship extends Actor{
 		remove();
 	}
 	
-	
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {		
+	public void draw(Batch batch, float parentAlpha) {		
 		sprite.setPosition(getX(),getY());
 		sprite.setRotation(getRotation());
 		sprite.draw(batch);

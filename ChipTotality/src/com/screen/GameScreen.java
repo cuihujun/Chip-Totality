@@ -47,6 +47,8 @@ public class GameScreen implements Screen {
 
 		camera = game.camera;
 		camera.setToOrtho(false, Settings.VIEW_WIDTH, Settings.VIEW_HEIGHT);
+		game.backGroundCamera.setToOrtho(false, Settings.VIEW_WIDTH, Settings.VIEW_HEIGHT);
+		game.backGroundCamera.update();
 		camera.update();
 
 		renderer = new GameScreenRenderer(game, this);		
@@ -73,10 +75,17 @@ public class GameScreen implements Screen {
 		camera.viewportHeight = Settings.VIEW_HEIGHT;
 		camera.viewportWidth = Settings.VIEW_WIDTH;
 		camera.update();
+		game.backGroundCamera.viewportHeight = Settings.VIEW_HEIGHT;
+		game.backGroundCamera.viewportWidth = Settings.VIEW_WIDTH;
+		game.backGroundCamera.position.x = 0;
+		game.backGroundCamera.position.y = 0;
+		game.backGroundCamera.position.z = 0;
+		game.backGroundCamera.update();				
+		
 		gameScreenGUI.stage.setViewport(Settings.VIEW_WIDTH,
 				Settings.VIEW_HEIGHT, true);
 
-		AssetsLoader.recreateAfterResize();
+		AssetsLoader.recreateAfterResize(Settings.VIEW_WIDTH, Settings.VIEW_HEIGHT);
 	}
 
 	@Override
