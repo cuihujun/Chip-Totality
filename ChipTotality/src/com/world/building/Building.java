@@ -2,21 +2,18 @@ package com.world.building;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Coords;
+import com.gameInfo.GameStateHolder;
+import com.gameInfo.Stats;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
 
 public abstract class Building extends Actor{
 	public final Coords coords;	
-	public final Vector2 size;
-	
 	protected int hitpoints;
-	public Boolean researchReady;
+
 	
-	
-	public abstract void pay();
 	public abstract void doTask();
 	public abstract void destroy(); // things to do apart from removing it from the logical world (e.g. animations)
 		
@@ -24,39 +21,28 @@ public abstract class Building extends Actor{
 		return AssetsLoader.getBuilding(this.getClass().getSimpleName());
 	}	
 	
-	public Building(int x, int y, int width, int height, int maxHP) {
+	public Building(int x, int y) {
 		//rectangle bounds
-		setBounds(x*Settings.tileSize, y*Settings.tileSize, width*Settings.tileSize, height*Settings.tileSize);
+		setBounds(x*Settings.tileSize, y*Settings.tileSize, getStats().width*Settings.tileSize, getStats().height*Settings.tileSize);
 		//tile coords
 		coords = new Coords(x, y);
-		
-		size = new Vector2(width, height);
-		hitpoints=maxHP;
-		setResearchingFlag(this);
+		//size = new Vector2(width, height);
+		hitpoints=getStats().maxHitpoints;
 	}
 
-	void setResearchingFlag(Building building){
-		if(building instanceof Upgradeable)
-			researchReady=true;
-		else 
-			researchReady=false;			
-		
+	public Stats.Buildings getStats(){
+		return Stats.Buildings.valueOf(this.getClass().getSimpleName());
 	}
 	
-	
-	/**
-	 * Conducts research. Note that you have to make sure, whether the exact upgrade
-	 * is available for the building, for your own.
-	 * 
-	 * 
-	 */
-	public void research(Upgrade upgrade) {
-		Upgrade.scheduleResearch(upgrade, this);
+	public void pay(){
+		GameStateHolder.beings-=getStats().cost;
 	}
-
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.draw(getTextureRegion(), getX(), getY());
 	}
+	
+	
+
 }

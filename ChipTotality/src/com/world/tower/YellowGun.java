@@ -6,16 +6,11 @@ import com.screen.GameStage;
 
 
 public class YellowGun extends Tower{
-	final static int width = 1;
-	final static int height = 1;
 	static int firepower=5;
-	static int maxHitpoints=150;
-	static int range=300;
-	static float shootDelay=0.5f;
 
 	
 	public YellowGun(int x, int y) {
-		super(x, y, width, height, maxHitpoints, range, shootDelay);
+		super(x, y);
 	}
 	
 

@@ -26,7 +26,7 @@ public class FollowShipAction extends Action{
 	public boolean act(float delta) {
 		timeElapsed+=delta;
 		lastUpdateTime+=delta;
-		if(timeElapsed>=lifeTime || !target.hasParent()){
+		if(timeElapsed>=lifeTime){
 			if(remove)
 				getActor().remove();
 			return true;	

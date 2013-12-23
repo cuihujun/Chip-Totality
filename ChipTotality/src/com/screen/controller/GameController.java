@@ -37,8 +37,8 @@ public class GameController extends InputAdapter {
 	
 	public boolean buildingPossibleHere(Building building){
 		//check if building may be built on selected tiles
-		for (int i =  building.coords.x; i <  building.coords.x+ building.size.x; i++) {
-			for (int j =  building.coords.y; j < building.coords.y+ building.size.y; j++) {
+		for (int i =  building.coords.x; i <  building.coords.x+ building.getStats().width; i++) {
+			for (int j =  building.coords.y; j < building.coords.y+ building.getStats().height; j++) {
 				if (i>=Settings.tilesHorizontal || 
 					j>=Settings.tilesVertical ||
 					i<0 ||
@@ -75,14 +75,14 @@ public class GameController extends InputAdapter {
 		if(!buildingPossibleHere(building))
 			return;
 		GameStage.buildingsGroup.addActor(building);
-		//gameScreen.gameStage.addActor(building);
 		building.pay();
 		building.doTask();
+		
 		// add reference to building for all tiles occupied by it
 		for (int i =  building.coords.x; i < building.coords.x
-				+ building.size.x; i++) {
+				+ building.getStats().width; i++) {
 			for (int j =  building.coords.y; j < building.coords.y
-					+ building.size.y; j++) {
+					+ building.getStats().height; j++) {
 				game.asteroid.worldGrid[i][j].building = building;
 			}
 		}
@@ -98,8 +98,8 @@ public class GameController extends InputAdapter {
 		building.destroy();
 		building.remove();
 		// remove references from tiles
-		for (int i =  building.coords.x; i < building.coords.x + building.size.x; i++) {
-			for (int j =  building.coords.y; j < building.coords.y + building.size.y; j++) {
+		for (int i =  building.coords.x; i < building.coords.x + building.getStats().width; i++) {
+			for (int j =  building.coords.y; j < building.coords.y + building.getStats().height; j++) {
 				game.asteroid.worldGrid[i][j].building = null;
 			}
 		}
@@ -117,61 +117,12 @@ public class GameController extends InputAdapter {
 		return true;
 	}
 
-	@Override
-	public boolean keyDown(int keycode) {
-		switch (GameStateHolder.mode) {
-		case BUILDING:
-			switch (keycode) {
-			
-			case Keys.F1:
-				GameStateHolder.chosenBuilding = ChosenBuilding.Base;
-				break;
-
-			case Keys.ESCAPE:
-				GameStateHolder.chosenBuilding = GameStateHolder.ChosenBuilding.none;
-				GameStateHolder.mode = GameStateHolder.Mode.NONE;
-				Gdx.app.log("buildingMode", "building mode:"
-						+ GameStateHolder.mode.toString());
-				break;
-
-			default:
-				break;
-			}
-
-			Gdx.app.log("building", "building chosen:"
-					+ GameStateHolder.chosenBuilding.toString());
-
-		case DIPLOMACY:
-			break;
-
-		case NONE:
-			switch (keycode) {
-
-			case Keys.B:
-				GameStateHolder.mode = GameStateHolder.Mode.BUILDING;
-				break;
-			case Keys.D:
-				GameStateHolder.mode = GameStateHolder.Mode.DIPLOMACY;
-				game.setScreen(game.diplomacyScreen);
-				break;
-			}
-
-			break;
-
-		default:
-			Gdx.app.log("Default", "action");
-		}
-
-		return false;
-	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		Vector3 pos = new Vector3(screenX, screenY, 0);
 		game.gameScreen.camera.unproject(pos);
-		
-
-		
+				
 		
 		Coords tileClicked=unprojectTile(pos.x, pos.y);
 		if (tileClicked!=null){

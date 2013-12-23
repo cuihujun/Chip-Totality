@@ -36,7 +36,7 @@ public class GameStage extends Stage{
 		shipManager = new ShipManager(this);
 
 		setCamera(game.camera);		
-
+		
 	}
 	
 	

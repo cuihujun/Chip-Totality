@@ -1,9 +1,9 @@
 package com.world.building;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
+import com.gameInfo.Stats;
 
 public enum Upgrade {
 	ptaahsClemency(4, 120), //base
@@ -25,15 +25,15 @@ public enum Upgrade {
 	
 	
 	static void scheduleResearch(final Upgrade upgrade, final Building building) {
-		if(!(building instanceof Upgradeable))
-			throw new RuntimeException("this building cannot conduct research");
+		//if(!(building instanceof Upgradeable))
+			//throw new RuntimeException("this building cannot conduct research");
 			
-		if (upgrade.isBeingResearched || upgrade.isAlreadyResearched || GameStateHolder.beings<upgrade.cost || building.researchReady==false) {
-			Gdx.app.log("upgrade", "already is being or already researched/not enough beings/building is already researching something");
-			return;
-		}
+		//if (upgrade.isBeingResearched || upgrade.isAlreadyResearched || GameStateHolder.beings<upgrade.cost || building.researchReady==false) {
+		//	Gdx.app.log("upgrade", "already is being or already researched/not enough beings/building is already researching something");
+		//	return;
+		//}
 		upgrade.isBeingResearched=true;
-		building.researchReady=false;
+		//building.researchReady=false;
 		GameStateHolder.beings -= upgrade.cost;
 		Timer.schedule(new Task() {
 
@@ -53,7 +53,7 @@ public enum Upgrade {
 			Base.resourceDeliveryAmount += 10;
 			break;
 		case ptaahsClemency:		
-			Base.maxHitpoints += 100;
+			Stats.Buildings.Base.maxHitpoints += 100;
 			break;
 		case gorlojsWarmth:
 			Rafinery.efficiency++;
@@ -63,7 +63,7 @@ public enum Upgrade {
 		}
 		upgrade.isBeingResearched = false;
 		upgrade.isAlreadyResearched = false;
-		building.researchReady=true;
+		//building.researchReady=true;
 		
 	}
 	

@@ -5,10 +5,6 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
 
 public class Rafinery extends Building{
-	final static int width=3;
-	final static int height=3;
-	private static int maxHitpoints=500;
-	private static int cost = 100;
 	private static int resourceDeliveryTime = 5;
 	static int efficiency=2;
 	
@@ -17,7 +13,7 @@ public class Rafinery extends Building{
 
 	
 	public Rafinery(int x, int y) {
-		super(x, y, width, height, maxHitpoints);	
+		super(x, y);	
 	}
 	
 	@Override
@@ -25,11 +21,6 @@ public class Rafinery extends Building{
 		process.cancel();
 	}
 
-	@Override
-	public void pay() {
-		GameStateHolder.beings -= cost;
-		
-	}
 
 	@Override
 	public void doTask() {

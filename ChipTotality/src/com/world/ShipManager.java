@@ -64,7 +64,7 @@ public class ShipManager {
 			ship.setRotation(degree);
 			
 			
-			stage.shipsGroup.addActor(ship);
+		GameStage.shipsGroup.addActor(ship);
 			//stage.getShips().add(ship);
 		}
 	}
