@@ -6,27 +6,31 @@ import com.main.Settings;
 import com.world.ship.Ship;
 
 public class FollowShipAction extends Action{
-	private final boolean remove;	//remove from stage, when action is completed
-	private final float speed;
-	private final Ship target;
-	private final Vector2 direction;
-	private final float lifeTime;
+	private boolean remove;	//remove from stage, when action is completed
+	private float speed;
+	private Ship target;
+	private final Vector2 direction = new Vector2();
+	private float lifeTime;
 	private float timeElapsed;
 	private float lastUpdateTime;
 	
-	public FollowShipAction(Ship target, float speed, float lifeTime, boolean remove) {
+	
+	public FollowShipAction(Ship target, float speed, float lifeTime, boolean remove){
+		setParams(target, speed, lifeTime, remove);
+	}
+	
+	public void setParams(Ship target, float speed, float lifeTime, boolean remove) {
 		this.target=target;
 		this.remove=remove;
 		this.speed=speed;
-		this.lifeTime=lifeTime;
-		direction=new Vector2();
+		this.lifeTime=lifeTime;		
 	}
 	
 	@Override
 	public boolean act(float delta) {
 		timeElapsed+=delta;
 		lastUpdateTime+=delta;
-		if(timeElapsed>=lifeTime || !target.hasParent()){
+		if(timeElapsed>=lifeTime){
 			if(remove)
 				getActor().remove();
 			return true;	

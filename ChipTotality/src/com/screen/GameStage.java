@@ -36,7 +36,7 @@ public class GameStage extends Stage{
 		shipManager = new ShipManager(this);
 
 		setCamera(game.camera);		
-
+		
 	}
 	
 	
@@ -45,7 +45,21 @@ public class GameStage extends Stage{
 	}
 	
 	public void checkBulletCollisionsWithBuildings(){
-
+		Rectangle buildingRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
+		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 	
+		for (Actor bullet : bulletsFromShipsGroup.getChildren()) {
+			bulletRec.setPosition(bullet.getX(), bullet.getY());
+			bulletRec.setSize(bullet.getWidth(), bullet.getHeight());
+			for(Actor building : buildingsGroup.getChildren()){
+				buildingRec.setPosition(building.getX(), building.getY());
+				buildingRec.setSize(building.getWidth(), building.getHeight());
+				if (buildingRec.overlaps(bulletRec)){
+					((Bullet)bullet).explode((Building)building);
+					bullet.remove();
+					break;
+				}			
+			}
+		}
 	}
 	
 	

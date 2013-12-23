@@ -7,7 +7,7 @@ import com.world.Tile.TileType;
 
 public class Asteroid {
 
-	public final Tile[][] worldGrid; // worldGrind axis orientation:
+	public static Tile[][] worldGrid; // worldGrind axis orientation:
 										// ^
 										// |
 										// --->

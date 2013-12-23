@@ -1,6 +1,7 @@
 package com.screen;
 
 import com.badlogic.gdx.Gdx;
+//import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,23 +26,21 @@ public class GameScreenRenderer {
 		this.game=game;
 		this.gameScreen = screen;
 		this.meteorite = AssetsLoader.getTexture("Meteorite");
-		this.stars = AssetsLoader.getTexture("starsSeamless");
+		this.stars = AssetsLoader.getTextureJPG("strangeSpace");
 	}
 	
 	public void render(float delta){
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f );
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
 		
-		game.camera.update();
-		game.batch.setProjectionMatrix(game.camera.combined);
-		
-		game.batch.begin();
-		//renderStage();
-		renderBackground(delta);
+		renderBackground(delta);							
+		//AssetsLoader.animatedSprite.draw(game.batch);
 		game.batch.end();
+		
 		renderStage();
 		//stateTime+=delta;
 		//game.batch.draw(AssetsLoader.getObjectAnimation("explosionTest").getKeyFrame(stateTime), 500, 500);//TODO test animacji do zmiany jakis pool z nimi i w miejscu wybuchow:)		
+		
 		if (GameStateHolder.chosenBuilding != GameStateHolder.ChosenBuilding.none){
 			game.batch.begin();
 			renderSelectedBuilding();
@@ -54,32 +53,28 @@ public class GameScreenRenderer {
 	public void renderBackground(float delta){
 
 
-		game.batch.draw(meteorite, 0, 0);
-								
-		Vector3 postion = game.camera.position;
-		float x,y,w,h;
-		w = stars.getWidth();
-		h = stars.getHeight();
-		x = (postion.x - (postion.x % w)); 
-		y = (postion.y - (postion.y % h));
-		int repeatCount = 3;
-		for(int row = -(repeatCount); row<repeatCount; row++){
-			for(int column = -(repeatCount); column<repeatCount; column++){
-				game.batch.draw(stars, x + row*stars.getWidth(), y + column*stars.getHeight());
-			}
-		}
+		game.camera.update();
+		game.backGroundCamera.update();
 		
-		Texture meteorite = AssetsLoader.getTexture("Meteorite");		
-		game.batch.draw(meteorite, 0, 0);					
+				
+
+		game.batch.setProjectionMatrix(game.backGroundCamera.combined);		
+		//float x,y,w,h;
+		//w = stars.getWidth();
+		//h = stars.getHeight();
+		//x = (-w/2); 
+		//y = (-h/2);
+		game.batch.begin();
+		AssetsLoader.backgroundSprite.draw(game.batch);		
+		game.batch.end();
+		
+		game.batch.setProjectionMatrix(game.camera.combined);		
+		game.batch.begin();
+		game.batch.draw(meteorite, 0, 0);		
 	}
 	
 	public void renderStage(){		
 		gameScreen.gameStage.draw();
-		//game.batch.begin();
-		//GameStage.buildingsGroup.draw(game.batch, 1);
-		//GameStage.shipsGroup.draw(game.batch, 1);
-		//GameStage.bulletsFromShipsGroup.draw(game.batch, 1);
-		//GameStage.bulletsFromTowersGroup.draw(game.batch, 1);
 	}
 
 	public void renderSelectedBuilding(){

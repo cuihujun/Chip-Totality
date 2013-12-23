@@ -4,11 +4,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.gameInfo.GameStateHolder;
 
-public class Base extends Building implements Upgradeable{
-	final static int width=1;
-	final static int height=1;
-	static int maxHitpoints=500;
-	private static int cost = 121;
+public class Base extends Building{
 	static int resourceDeliveryAmount = 7;
 	static int resourceDeliveryTime = 5;
 	
@@ -17,21 +13,9 @@ public class Base extends Building implements Upgradeable{
 
 	
 	public Base(int x, int y) {
-		super(x, y, width, height, maxHitpoints);		
+		super(x, y);		
 	}
 	
-
-	@Override
-	public void destroy(){
-		addResources.cancel();
-	}
-
-
-	@Override
-	public void pay() {
-		GameStateHolder.beings -= cost;	
-	}
-
 
 	@Override
 	public void doTask() {
@@ -44,6 +28,7 @@ public class Base extends Building implements Upgradeable{
 		Timer.schedule(addResources, resourceDeliveryTime, resourceDeliveryTime);
 		
 	}
+
 	
 	
 }

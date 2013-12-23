@@ -1,8 +1,5 @@
 package com.gameInfo;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.res.Loader.AssetsLoader;
 import com.world.building.AcodinMine;
@@ -11,8 +8,6 @@ import com.world.building.Building;
 import com.world.building.HolyMountains;
 import com.world.building.Rafinery;
 import com.world.building.Temple;
-import com.world.tower.Bullet;
-import com.world.tower.Tower;
 import com.world.tower.VioletGun;
 import com.world.tower.YellowGun;
 
@@ -41,29 +36,28 @@ public final class GameStateHolder {
 	public static ChosenBuilding chosenBuilding = ChosenBuilding.none;
 
 	public enum ChosenBuilding {
-		none(null), 
-		AcodinMine(new AcodinMine(0,0)),
-		Base(new Base(0,0)),
-		HolyMountains(new HolyMountains(0,0)), 
-		Rafinery(new Rafinery(0,0)),
-		Temple(new Temple(0,0)),
-		YellowGun(new YellowGun(0,0)),
-		VioletGun(new VioletGun(0,0));
+		none(), 
+		AcodinMine(),
+		Base(),
+		HolyMountains(), 
+		Rafinery(),
+		Temple(),
+		YellowGun(),
+		VioletGun();
 
 		Building buildingSample;
 		TextureRegion region;
 
-		ChosenBuilding(Building building) {
-			this.buildingSample = building;
+		ChosenBuilding() {
+			//this.buildingSample = building;
 			region = AssetsLoader.getBuilding(this.toString());
 		}
-
-		public int getBuildingWidth() {
-			return (int) buildingSample.size.x;
+		
+		public int getBuildingWidth(){
+			return Stats.Buildings.valueOf(this.name()).width;
 		}
-
-		public int getBuildingHeight() {
-			return (int) buildingSample.size.y;
+		public int getBuildingHeight(){
+			return Stats.Buildings.valueOf(this.name()).height;
 		}
 		
 		public TextureRegion getTextureRegion() {
@@ -72,14 +66,28 @@ public final class GameStateHolder {
 		
 		public Building getChosenBuilding(int x, int y){
 			
+			switch(this){
+			case AcodinMine:
+				return new AcodinMine(x, y);
+			case Base: 
+				return new Base(x, y);
+			case HolyMountains:
+				return new HolyMountains(x, y);
+			case Rafinery:
+				return new Rafinery(x, y);
+			case Temple:
+				return new Temple(x, y);
+			case YellowGun:
+				return new YellowGun(x, y);
+			case VioletGun:
+				return new VioletGun(x, y);
+			default:
+				return null;
+			}
 			
-			Class newBuildingClass = null;
+			
+			/*Class newBuildingClass = null;
 			newBuildingClass = buildingSample.getClass();
-			/*try {								
-				newBuildingClass = Class.forName("com.world.building."+GameStateHolder.chosenBuilding.toString());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}*/
 					
 			
 			Constructor con = null;
@@ -106,6 +114,7 @@ public final class GameStateHolder {
 				e.printStackTrace();
 			}
 			return (Building)newBuildingObject;
+			*/
 		}
 		
 

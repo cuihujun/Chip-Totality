@@ -35,6 +35,8 @@ public class LoadingScreen implements Screen {
 				/ (float) Gdx.graphics.getHeight();
 		Settings.VIEW_WIDTH = Settings.VIEW_HEIGHT * Settings.ASPECT_RATIO;		
 		camera.setToOrtho(false, Settings.VIEW_WIDTH, Settings.VIEW_HEIGHT);
+		game.backGroundCamera.setToOrtho(false, Settings.VIEW_WIDTH, Settings.VIEW_HEIGHT);
+		game.backGroundCamera.update();
 		camera.update();
 		
 		splashTex = new Texture("Textures/loadingScreen.png");
