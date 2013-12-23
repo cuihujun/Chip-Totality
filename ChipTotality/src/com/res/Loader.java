@@ -3,6 +3,8 @@ package com.res;
 import java.io.IOException;
 import java.util.HashMap;
 
+//import net.dermetfan.utils.libgdx.graphics.AnimatedSprite;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
@@ -33,6 +35,9 @@ public class Loader {
 		public static TextureParameter textureParameter= new TextureParameter();
 		private static ArrayMap<String, Animation> objectsAnimations = new ArrayMap<String, Animation>();
 		private static HashMap<String, Sprite> sprites;
+		//public static AnimatedSprite animatedSprite;
+		public static Sprite backgroundSprite;
+		
 		
 
 		public static TextureRegion getBuildingIcon(String name){			
@@ -56,6 +61,10 @@ public class Loader {
 		public static Texture getTexture(String name){								
 			return manager.get(name + ".png", Texture.class);
 		}
+		
+		public static Texture getTextureJPG(String name){								
+			return manager.get(name + ".jpg", Texture.class);
+		}		
 		
 		public static TiledMap getTileMap(){
 			return manager.get("MapData/test_ortho2.tmx");
@@ -105,10 +114,12 @@ public class Loader {
 		public static void loadAssets() {
 			
 			//manager.load("background.png", Texture.class, textureParameter);
-			manager.load("starsSeamless.png", Texture.class, textureParameter);
+			//manager.load("starsSeamless.png", Texture.class, textureParameter);
+							  
 			//manager.load("starSpaceTile.png", Texture.class, textureParameter);
 			//manager.load("blackDreams.png", Texture.class, textureParameter);
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
+			manager.load("strangeSpace.jpg", Texture.class, textureParameter);		
 			
 			
 			manager.load("Meteorite.png", Texture.class, textureParameter);
@@ -190,11 +201,13 @@ public class Loader {
 		public static void createResourcesAfterLoad(){
 			getFont().getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			
-			recreateAfterResize();	
+			backgroundSprite = new Sprite(getTextureJPG("strangeSpace"));					
+			recreateAfterResize(1280,720);	
 		}
 		
-		public static void recreateAfterResize(){					
-			sprites = new HashMap<String, Sprite>();				
+		public static void recreateAfterResize(float w, float h){
+			backgroundSprite.setSize(w, w*backgroundSprite.getRegionHeight()/backgroundSprite.getRegionWidth());
+			backgroundSprite.setPosition(-backgroundSprite.getWidth()/2, -backgroundSprite.getHeight()/2);
 			
 			//niekoniecznie tu w sumie wystarczy pewnie raz;]
 			if (manager.isLoaded("ExplosionsPack/explosionsPack.atlas")){
@@ -216,6 +229,8 @@ public class Loader {
 					objectsAnimations.put(objName, new Animation(frameTime, foundRegions,Animation.LOOP));//TODO do zmainy z loop na jednorazowe i po usuniecie 
 				}
 			}				
+			
+			//animatedSprite = new AnimatedSprite(objectsAnimations.get("explosionTest"));
 			
 			
 		}

@@ -23,7 +23,8 @@ public class ChipTotality extends Game {
 	public  DiplomacyScreen diplomacyScreen;
 	public  GameScreen gameScreen;
 	public  LoadingScreen loadingScreen;
-	public  OrthographicCamera camera;	
+	public  OrthographicCamera camera;
+	public  OrthographicCamera backGroundCamera;
 		
 	public  InputMultiplexer inputMultiplexer;	
 
@@ -33,6 +34,7 @@ public class ChipTotality extends Game {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();		
 		camera = new OrthographicCamera();
+		backGroundCamera = new OrthographicCamera();
 				
 		loadingScreen = new LoadingScreen(this);									
 			

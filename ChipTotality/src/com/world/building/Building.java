@@ -1,6 +1,6 @@
 package com.world.building;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -54,9 +54,8 @@ public abstract class Building extends Actor{
 		Upgrade.scheduleResearch(upgrade, this);
 	}
 
-	
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(getTextureRegion(), getX(), getY());
 	}
 }
