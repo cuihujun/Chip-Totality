@@ -18,14 +18,6 @@ public class Base extends Building{
 	
 
 	@Override
-	public void destroy(){
-		addResources.cancel();
-	}
-
-
-
-
-	@Override
 	public void doTask() {
 		addResources = new Task() {
 			@Override

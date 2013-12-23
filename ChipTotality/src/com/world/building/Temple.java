@@ -15,10 +15,6 @@ public class Temple extends Building  {
 		super(x, y);
 	}
 
-	@Override
-	public void destroy() {
-	}
-
 
 	@Override
 	public void doTask() {

@@ -8,15 +8,19 @@ import com.gameInfo.GameStateHolder;
 import com.gameInfo.Stats;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
+import com.screen.controller.GameController;
 
 public abstract class Building extends Actor{
 	public final Coords coords;	
-	protected int hitpoints;
+	public int hitpoints;
 
 	
 	public abstract void doTask();
-	public abstract void destroy(); // things to do apart from removing it from the logical world (e.g. animations)
-		
+	
+	public  void destroy(){
+		GameController.removeBuilding(this);
+	}
+	
 	public TextureRegion getTextureRegion() {
 		return AssetsLoader.getBuilding(this.getClass().getSimpleName());
 	}	

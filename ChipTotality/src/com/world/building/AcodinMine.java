@@ -17,11 +17,6 @@ public class AcodinMine extends Building{
 		super(x, y);	
 	}
 	
-	@Override
-	public void destroy(){
-		addResources.cancel();
-	}
-
 
 	@Override
 	public void doTask() {

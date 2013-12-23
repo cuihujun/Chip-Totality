@@ -16,10 +16,6 @@ public class Rafinery extends Building{
 		super(x, y);	
 	}
 	
-	@Override
-	public void destroy(){
-		process.cancel();
-	}
 
 
 	@Override

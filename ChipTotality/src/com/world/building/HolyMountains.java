@@ -8,10 +8,7 @@ public class HolyMountains extends Building {
 		super(x, y);
 		
 	}
-	
-	@Override
-	public void destroy(){
-	}
+
 
 
 	@Override
