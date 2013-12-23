@@ -8,11 +8,13 @@ import com.world.building.Building;
 import com.world.ship.Ship;
 
 public abstract class Tower extends Building {
-	Ship currentTarget;	
-	private float lastShoot;
+	protected Ship currentTarget;	
+	protected float lastShoot;
+	protected Stats.Bullets bulletType;
 	
 	public Tower(int x, int y) {
 		super(x, y);
+		bulletType=Stats.Bullets.simpleBullet;
 	}	
 	
 	public abstract void shoot();
