@@ -22,11 +22,6 @@ import com.gameInfo.GameStateHolder.Mode;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
-import com.world.building.AcodinMine;
-import com.world.building.Base;
-import com.world.building.HolyMountains;
-import com.world.building.Rafinery;
-import com.world.building.Temple;
 
 public class GameScreenGUI {
 	final ChipTotality game;	

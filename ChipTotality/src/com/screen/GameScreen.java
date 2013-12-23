@@ -56,11 +56,11 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-
+		
+		gameStage.shipManager.act(delta);
 		gameStage.act(delta);
 		gameStage.checkBulletCollisionsWithBuildings();
 		gameStage.checkBulletCollisionsWithShips();
-		//gameStage.checkCollisions();		
 		cameraController.update(delta);	
 			
 		renderer.render(delta);		

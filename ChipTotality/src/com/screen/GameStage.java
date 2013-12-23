@@ -33,7 +33,7 @@ public class GameStage extends Stage{
 		addActor(shipsGroup);
 		addActor(bulletsFromShipsGroup);
 		addActor(bulletsFromTowersGroup);
-		shipManager = new ShipManager(this);
+		shipManager = new ShipManager();
 
 		setCamera(game.camera);		
 		
