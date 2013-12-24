@@ -2,6 +2,7 @@ package com.gameInfo;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.res.Loader.AssetsLoader;
+import com.screen.GameStage;
 import com.world.tower.Bullet;
 
 public class Stats {
@@ -83,7 +84,9 @@ public class Stats {
 		}
 		
 		public Bullet spawnBullet(float x, float y){
-			return new Bullet(x, y, width, height, texture, firePower);
+	        Bullet newBullet = GameStage.bulletPool.obtain();
+	        newBullet.init(x, y, width, height, texture, firePower);
+			return newBullet;
 		}
 		
 		

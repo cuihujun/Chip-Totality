@@ -6,20 +6,11 @@ import com.world.ship.TestShip1;
 
 public class ShipManager {
 	private float waveNumber = 1;
-	private float maxShips = 100;//TODO for testing;]
+	private final float maxShips = 10;//TODO for testing;]
 	private float currentNumberOfships = 0;
 	private float lastWaveTime;
 	private final float waveInterval=30;
 	
-	
-	
-	public void act(float delta){
-		lastWaveTime+=delta;
-		if(lastWaveTime>waveInterval){
-			generateWave();
-		}
-		
-	}
 	
 	public void generateWave(){
 		currentNumberOfships = GameStage.shipsGroup.getChildren().size;

@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
 		
 		game.asteroid = new Asteroid();
 		
-		game.diplomacyScreen= new DiplomacyScreen(game);				
+		
 		cameraController = new CameraController(game.camera);
 		gameController=new GameController(game, this);
 		gameStage = new GameStage(game);
@@ -56,13 +56,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		
-		gameStage.shipManager.act(delta);
 		gameStage.act(delta);
-		gameStage.checkBulletCollisionsWithBuildings();
-		gameStage.checkBulletCollisionsWithShips();
 		cameraController.update(delta);	
-			
+		
 		renderer.render(delta);		
 		gameScreenGUI.render(delta);
 	}
