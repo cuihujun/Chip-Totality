@@ -7,6 +7,7 @@ import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.Stats;
 import com.main.Settings;
+import com.particles.ParticleEffectActor;
 import com.res.Loader.AssetsLoader;
 import com.screen.controller.GameController;
 
@@ -18,6 +19,7 @@ public abstract class Building extends Actor{
 	public abstract void doTask();
 	
 	public  void destroy(){
+		this.getStage().addActor(new ParticleEffectActor(AssetsLoader.getParticle("explosionMed"), getX()+getWidth()/2, getY()+getHeight()/2));//TODO zaleznie od typu inny wybuch?;p
 		GameController.removeBuilding(this);
 	}
 	

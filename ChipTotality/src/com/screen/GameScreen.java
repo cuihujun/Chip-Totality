@@ -27,11 +27,11 @@ public class GameScreen implements Screen {
 		
 		game.asteroid = new Asteroid();
 		
-		game.diplomacyScreen= new DiplomacyScreen(game);		
-		gameScreenGUI = new GameScreenGUI(game);
+		game.diplomacyScreen= new DiplomacyScreen(game);				
 		cameraController = new CameraController(game.camera);
 		gameController=new GameController(game, this);
-		gameStage = new GameStage(game);				
+		gameStage = new GameStage(game);
+		gameScreenGUI = new GameScreenGUI(game,gameStage);
 		
 		game.inputMultiplexer.clear();
 		game.inputMultiplexer.addProcessor(gameScreenGUI.stage);

@@ -5,4 +5,6 @@
 	<effect name="gas"></effect>
 	<effect name="pulsing"></effect>	
 	<effect name="stars1"></effect>	
+	<effect name="explosion"></effect>
+	<effect name="explosionMed"></effect>
 </Effects>

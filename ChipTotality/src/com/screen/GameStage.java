@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.particles.ParticleEffectActor;
+import com.res.Loader.AssetsLoader;
 import com.world.ShipManager;
 import com.world.building.Building;
 import com.world.ship.Ship;
@@ -34,9 +36,16 @@ public class GameStage extends Stage{
 		addActor(bulletsFromShipsGroup);
 		addActor(bulletsFromTowersGroup);
 		shipManager = new ShipManager();
+		shipManager.generateWave();
 
 		setCamera(game.camera);		
 		
+	}
+	
+	@Override
+	public void act(float delta){
+		super.act(delta);
+		shipManager.update(delta);
 	}
 	
 	
@@ -55,7 +64,8 @@ public class GameStage extends Stage{
 				buildingRec.setSize(building.getWidth(), building.getHeight());
 				if (buildingRec.overlaps(bulletRec)){
 					((Bullet)bullet).explode((Building)building);
-					bullet.remove();
+					bullet.remove();					
+					addActor(new ParticleEffectActor(AssetsLoader.getParticle("explosion"), bullet.getX(), bullet.getY()));
 					break;
 				}			
 			}
@@ -75,6 +85,7 @@ public class GameStage extends Stage{
 				shipRec.setSize(s.getWidth(), s.getHeight());
 				if (shipRec.overlaps(bulletRec)){
 					((Bullet)b).explode((Ship)s);
+					addActor(new ParticleEffectActor(AssetsLoader.getParticle("explosion"), b.getX(), b.getY()));
 					b.remove();
 					break;
 				}			
