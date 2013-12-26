@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 //import net.dermetfan.utils.libgdx.graphics.AnimatedSprite;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -37,6 +39,10 @@ public class Loader {
 		private static HashMap<String, Sprite> sprites;
 		//public static AnimatedSprite animatedSprite;
 		public static Sprite backgroundSprite;
+		public static ParticleEffectPool particlePoolExplosion;
+		public static ParticleEffectPool particlePoolExplosionMed;
+		
+		//pool = new ParticleEffectPool(particleEffect, 1 , 2);
 		
 		
 
@@ -85,7 +91,7 @@ public class Loader {
 		public static ParticleEffect getParticle(String name){			
 			String fullName = "ParticleEffects/"+name+".p";
 			if (manager.isLoaded(fullName)){
-				ParticleEffect effectNew = new ParticleEffect(manager.get(fullName, ParticleEffect.class));
+				ParticleEffect effectNew = new ParticleEffect(manager.get(fullName, ParticleEffect.class));				
 				return effectNew;
 			}
 			return null;				
@@ -202,7 +208,9 @@ public class Loader {
 		public static void createResourcesAfterLoad(){
 			getFont().getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			
-			backgroundSprite = new Sprite(getTextureJPG("strangeSpace"));					
+			backgroundSprite = new Sprite(getTextureJPG("strangeSpace"));
+			particlePoolExplosion = new ParticleEffectPool(getParticle("explosion"), 200 , 500);			
+			particlePoolExplosionMed = new ParticleEffectPool(getParticle("explosionMed"), 100 , 300);
 			recreateAfterResize(1280,720);	
 		}
 		
@@ -242,8 +250,7 @@ public class Loader {
 			Texture.setAssetManager(manager);
 			textureParameter.genMipMaps = true;
 			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
-			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
-			
+			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;			
 		}
 
 	}

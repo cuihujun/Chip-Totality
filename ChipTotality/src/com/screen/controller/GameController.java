@@ -90,8 +90,11 @@ public class GameController extends InputAdapter {
 		Gdx.app.log("building", building.toString() + " added at "
 				+  building.coords.x + ", " +  building.coords.y);
 		
-		GameStateHolder.mode = Mode.NONE;
-		GameStateHolder.chosenBuilding = GameStateHolder.ChosenBuilding.none;		
+		if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+			GameStateHolder.mode = Mode.NONE;
+			GameStateHolder.chosenBuilding = GameStateHolder.ChosenBuilding.none;
+		}
+				
 	}
 
 	

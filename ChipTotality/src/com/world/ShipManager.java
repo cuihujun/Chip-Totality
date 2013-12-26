@@ -6,16 +6,16 @@ import com.world.ship.TestShip1;
 
 public class ShipManager {
 	private float waveNumber = 1;
-	private final float maxShips = 10;//TODO for testing;]
+	private final float maxShips = 300;//TODO for testing;]
 	private float currentNumberOfships = 0;
 	private float lastWaveTime;
-	private final float waveInterval=30;
+	private final float waveInterval=5;
 	
 	
 	public void generateWave(){
 		currentNumberOfships = GameStage.shipsGroup.getChildren().size;
 		for(int i=0; i<waveNumber*3+5; i++){
-			if(currentNumberOfships<=maxShips){
+			if(currentNumberOfships<maxShips){
 				GameStage.shipsGroup.addActor(new TestShip1(100+(150*i), Settings.tilesVertical*Settings.tileSize));
 				currentNumberOfships++;
 			}

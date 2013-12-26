@@ -21,8 +21,8 @@ public class Bullet extends Actor implements Poolable{
 		this.texture=texture;
 	}
 	
-	public void explode(Ship target, GameStage stage){
-		stage.addActor(new ParticleEffectActor(AssetsLoader.getParticle("explosion"), getX(), getY()));
+	public void explode(Ship target, GameStage stage){		
+		stage.addActor(new ParticleEffectActor(AssetsLoader.particlePoolExplosion.obtain(), getX(), getY()));
 		target.hitpoints-=firePower;
 		if(target.hitpoints<=0)
 			target.destroy();
@@ -30,7 +30,7 @@ public class Bullet extends Actor implements Poolable{
 		
 	}
 	public void explode(Building target, GameStage stage){
-		stage.addActor(new ParticleEffectActor(AssetsLoader.getParticle("explosion"), getX(), getY()));
+		stage.addActor(new ParticleEffectActor(AssetsLoader.particlePoolExplosion.obtain(), getX(), getY()));
 		target.hitpoints-=firePower;
 		if(target.hitpoints<=0)
 			target.destroy();

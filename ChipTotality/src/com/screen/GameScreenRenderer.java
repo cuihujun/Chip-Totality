@@ -20,6 +20,7 @@ public class GameScreenRenderer {
 	float stateTime;
 	Texture meteorite;
 	Texture stars;
+	Vector3 buidlingPosition = new Vector3(0,0,0);
 	
 		
 	public GameScreenRenderer(final ChipTotality game, final GameScreen screen){
@@ -30,8 +31,8 @@ public class GameScreenRenderer {
 	}
 	
 	public void render(float delta){
-		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f );
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
+		//Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f );
+		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
 		
 		renderBackground(delta);							
 		//AssetsLoader.animatedSprite.draw(game.batch);
@@ -78,9 +79,9 @@ public class GameScreenRenderer {
 	}
 
 	public void renderSelectedBuilding(){
-		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		game.camera.unproject(pos);
-		Coords tile = gameScreen.gameController.unprojectTile(pos.x, pos.y);
+		buidlingPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+		game.camera.unproject(buidlingPosition);
+		Coords tile = gameScreen.gameController.unprojectTile(buidlingPosition.x, buidlingPosition.y);
 		
 		if(tile!=null){
 			//building not possbile - tint red
@@ -98,11 +99,10 @@ public class GameScreenRenderer {
 		game.shapeRenderer.begin(ShapeType.Line);
 
 		// grid
-		game.shapeRenderer.setColor(new Color(0, 0, 1, 1));
+		game.shapeRenderer.setColor(Color.BLUE);
 		int size = Settings.tileSize;
 		for (int row = 0; row < Settings.tilesHorizontal; row++) {
-			for (int column = 0; column < Settings.tilesVertical; column++) {
-				game.shapeRenderer.setColor(new Color(0, 0, 1, 1));
+			for (int column = 0; column < Settings.tilesVertical; column++) {				
 				game.shapeRenderer.line((row + 0) * size, (column + 0) * size,
 						(row + 1) * size, (column + 0) * size);
 				game.shapeRenderer.line((row + 0) * size, (column + 0) * size,
@@ -115,7 +115,7 @@ public class GameScreenRenderer {
 		}
 
 		// 2d axis
-		game.shapeRenderer.setColor(new Color(0, 1, 0, 1));
+		game.shapeRenderer.setColor(Color.GREEN);
 		game.shapeRenderer.line(0, 0, 0, Settings.tilesHorizontal
 				* Settings.tileSize);
 		game.shapeRenderer.line(0, 0, Settings.tilesHorizontal * Settings.tileSize,

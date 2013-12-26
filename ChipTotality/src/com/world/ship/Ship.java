@@ -122,7 +122,7 @@ public abstract class Ship extends Actor{
 	}
 	
 	public void destroy(){
-		this.getStage().addActor(new ParticleEffectActor(AssetsLoader.getParticle("explosionMed"), getX()+getWidth()/2, getY()+getHeight()/2));//TODO zaleznie od typu inny wybuch?;p
+		//this.getStage().addActor(new ParticleEffectActor(AssetsLoader.particlePoolExplosionMed.obtain(), getX()+getWidth()/2, getY()+getHeight()/2));//TODO zaleznie od typu inny wybuch?;p
 		remove();
 	}
 	
