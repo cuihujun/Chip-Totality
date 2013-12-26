@@ -82,13 +82,14 @@ public class Loader {
 			return manager.get("uiSkin/uiskin.json", Skin.class);		
 		}	
 		
-		static ParticleEffect getParticle(String name){			
+		public static ParticleEffect getParticle(String name){			
 			String fullName = "ParticleEffects/"+name+".p";
 			if (manager.isLoaded(fullName)){
-				return manager.get(fullName, ParticleEffect.class);
+				ParticleEffect effectNew = new ParticleEffect(manager.get(fullName, ParticleEffect.class));
+				return effectNew;
 			}
 			return null;				
-		}		
+		}	
 		
 		public static Music getMusic(String name){
 			String fullName = "Musics/"+name+".mp3";

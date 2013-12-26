@@ -22,21 +22,21 @@ import com.gameInfo.GameStateHolder.Mode;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
-import com.world.building.AcodinMine;
-import com.world.building.Base;
-import com.world.building.HolyMountains;
-import com.world.building.Rafinery;
-import com.world.building.Temple;
+import com.screen.GameStage;
 
 public class GameScreenGUI {
 	final ChipTotality game;	
 	public Stage stage;
+	public GameStage gameStage;
 	
 	private Label acodinLabel;
 	private Label dirtyAcodinLabel;
 	private Label beingsLabel;
 	private Label fpsLabel;
 	private Label buildingInfoLabel;
+	
+	private Label shipsLabel;
+	
 	
 	private float acc=0;
 	private final float ONE_SECOND = 1.0f;
@@ -48,8 +48,9 @@ public class GameScreenGUI {
 	
 	
 
-	public GameScreenGUI(final ChipTotality game) {
+	public GameScreenGUI(final ChipTotality game, final GameStage gameStage) {
 		this.game = game;
+		this.gameStage = gameStage;
 		stage = new Stage(Settings.VIEW_WIDTH , Settings.VIEW_HEIGHT , true);
 				
 		//TODO background tabelek
@@ -157,16 +158,19 @@ public class GameScreenGUI {
 		fpsLabel.setStyle(style);		
 		fpsLabel.setAlignment(Align.top | Align.left);
 		
-		
+		shipsLabel = new Label("Ships Number:", skin);
+		shipsLabel.setStyle(style);		
+		shipsLabel.setAlignment(Align.top | Align.left);		
+					
 		buildingInfoLabel= new Label("ds", skin);
 		buildingInfoLabel.setStyle(style);			
 		buildingInfoLabel.setAlignment(Align.top | Align.left);
-		
-		infoTable.add(buildingInfoLabel).top().left();
-		infoTable.add(fpsLabel).left();
+				
+		infoTable.add(fpsLabel).left();		
+		infoTable.add(shipsLabel).left();
 		infoTable.add(acodinLabel).top().right();
 		infoTable.add(beingsLabel).top().right();
-		infoTable.add(dirtyAcodinLabel).top().right();		
+		infoTable.add(dirtyAcodinLabel).top().right();
 		
 		
 		infoTable.pack();		
@@ -237,10 +241,12 @@ public class GameScreenGUI {
 		acc+=delta;
 		if (acc>ONE_SECOND){
 			acc-=ONE_SECOND;
+
 			acodinLabel.setText("Acodin: " + GameStateHolder.acodin + " ");
 			beingsLabel.setText("Beings: " + GameStateHolder.beings + " ");
 			dirtyAcodinLabel.setText("Dirty Acodin: " + GameStateHolder.dirtyAcodin + " ");
 			fpsLabel.setText("Fps : " + Gdx.graphics.getFramesPerSecond() + "         ");
+			shipsLabel.setText("Ships number: " + gameStage.shipsGroup.getChildren().size + "       ");
 		}
 	}
 	

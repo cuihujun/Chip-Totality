@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Pool;
 import com.main.ChipTotality;
 import com.main.Settings;
 import com.world.ShipManager;
@@ -17,13 +18,23 @@ import com.world.tower.Bullet;
 
 public class GameStage extends Stage{
 	final ChipTotality game;
+	ShipManager shipManager;
+	
 	
 	public static Group shipsGroup = new Group();
 	public static Group buildingsGroup = new Group();
 	public static Group bulletsFromTowersGroup = new Group();
 	public static Group bulletsFromShipsGroup = new Group();
+	
+    public static final Pool<Bullet> bulletPool = new Pool<Bullet>() {
+	@Override
+	protected Bullet newObject() {
+		return new Bullet();
+	}
+    };
+	
 
-	ShipManager shipManager;
+
 	
 	
 	public GameStage(ChipTotality game) {
@@ -33,18 +44,23 @@ public class GameStage extends Stage{
 		addActor(shipsGroup);
 		addActor(bulletsFromShipsGroup);
 		addActor(bulletsFromTowersGroup);
-		shipManager = new ShipManager(this);
+		shipManager = new ShipManager();
+		shipManager.generateWave();
 
 		setCamera(game.camera);		
 		
 	}
 	
-	
-	public void checkCollisions(){
-
+	@Override
+	public void act(float delta){
+		super.act(delta);
+		checkBulletCollisionsWithBuildings();
+		checkBulletCollisionsWithShips();
+		shipManager.update(delta);
 	}
 	
-	public void checkBulletCollisionsWithBuildings(){
+	
+	private void checkBulletCollisionsWithBuildings(){
 		Rectangle buildingRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
 		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 	
 		for (Actor bullet : bulletsFromShipsGroup.getChildren()) {
@@ -54,8 +70,7 @@ public class GameStage extends Stage{
 				buildingRec.setPosition(building.getX(), building.getY());
 				buildingRec.setSize(building.getWidth(), building.getHeight());
 				if (buildingRec.overlaps(bulletRec)){
-					((Bullet)bullet).explode((Building)building);
-					bullet.remove();
+					((Bullet)bullet).explode((Building)building, this);	
 					break;
 				}			
 			}
@@ -63,7 +78,7 @@ public class GameStage extends Stage{
 	}
 	
 	
-	public void checkBulletCollisionsWithShips() {
+	private void checkBulletCollisionsWithShips() {
 		
 		Rectangle shipRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
 		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 	
@@ -74,8 +89,7 @@ public class GameStage extends Stage{
 				shipRec.setPosition(s.getX(), s.getY());
 				shipRec.setSize(s.getWidth(), s.getHeight());
 				if (shipRec.overlaps(bulletRec)){
-					((Bullet)b).explode((Ship)s);
-					b.remove();
+					((Bullet)b).explode((Ship)s, this);
 					break;
 				}			
 			}

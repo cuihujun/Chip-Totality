@@ -27,11 +27,11 @@ public class GameScreen implements Screen {
 		
 		game.asteroid = new Asteroid();
 		
-		game.diplomacyScreen= new DiplomacyScreen(game);		
-		gameScreenGUI = new GameScreenGUI(game);
+		
 		cameraController = new CameraController(game.camera);
 		gameController=new GameController(game, this);
-		gameStage = new GameStage(game);				
+		gameStage = new GameStage(game);
+		gameScreenGUI = new GameScreenGUI(game,gameStage);
 		
 		game.inputMultiplexer.clear();
 		game.inputMultiplexer.addProcessor(gameScreenGUI.stage);
@@ -56,13 +56,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-
 		gameStage.act(delta);
-		gameStage.checkBulletCollisionsWithBuildings();
-		gameStage.checkBulletCollisionsWithShips();
-		//gameStage.checkCollisions();		
 		cameraController.update(delta);	
-			
+		
 		renderer.render(delta);		
 		gameScreenGUI.render(delta);
 	}
