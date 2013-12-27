@@ -29,7 +29,7 @@ public class ChipTotality extends Game {
 
 	@Override
 	public void create() {		
-		batch = new SpriteBatch();
+		batch = new SpriteBatch(2000);
 		shapeRenderer = new ShapeRenderer();		
 		camera = new OrthographicCamera();
 		backGroundCamera = new OrthographicCamera();

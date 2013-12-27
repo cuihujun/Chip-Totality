@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Stats;
 import com.particles.ParticleEffectActor;
+import com.particles.EffecteManagerHolder.EffectTypes;
+import com.particles.EffecteManagerHolder.EffectsManager;
 import com.res.Loader.AssetsLoader;
 import com.screen.GameStage;
 import com.world.building.Building;
@@ -122,7 +124,7 @@ public abstract class Ship extends Actor{
 	}
 	
 	public void destroy(){
-		//this.getStage().addActor(new ParticleEffectActor(AssetsLoader.particlePoolExplosionMed.obtain(), getX()+getWidth()/2, getY()+getHeight()/2));//TODO zaleznie od typu inny wybuch?;p
+		this.getStage().addActor(EffectsManager.getActor(EffectTypes.explosionMed, getX(), getY()));//TODO zaleznie od typu inny wybuch?;p wysordkowanie wynuchu?
 		remove();
 	}
 	

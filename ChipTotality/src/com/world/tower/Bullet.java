@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.particles.ParticleEffectActor;
-import com.res.Loader.AssetsLoader;
+import com.particles.EffecteManagerHolder.EffectTypes;
+import com.particles.EffecteManagerHolder.EffectsManager;
 import com.screen.GameStage;
 import com.world.building.Building;
 import com.world.ship.Ship;
@@ -22,7 +22,7 @@ public class Bullet extends Actor implements Poolable{
 	}
 	
 	public void explode(Ship target, GameStage stage){		
-		stage.addActor(new ParticleEffectActor(AssetsLoader.particlePoolExplosion.obtain(), getX(), getY()));
+		stage.addActor(EffectsManager.getActor(EffectTypes.explosion, getX(), getY()));
 		target.hitpoints-=firePower;
 		if(target.hitpoints<=0)
 			target.destroy();
@@ -30,7 +30,7 @@ public class Bullet extends Actor implements Poolable{
 		
 	}
 	public void explode(Building target, GameStage stage){
-		stage.addActor(new ParticleEffectActor(AssetsLoader.particlePoolExplosion.obtain(), getX(), getY()));
+		stage.addActor(EffectsManager.getActor(EffectTypes.explosion, getX(), getY()));
 		target.hitpoints-=firePower;
 		if(target.hitpoints<=0)
 			target.destroy();

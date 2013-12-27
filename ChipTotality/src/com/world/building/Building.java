@@ -8,6 +8,8 @@ import com.gameInfo.GameStateHolder;
 import com.gameInfo.Stats;
 import com.main.Settings;
 import com.particles.ParticleEffectActor;
+import com.particles.EffecteManagerHolder.EffectTypes;
+import com.particles.EffecteManagerHolder.EffectsManager;
 import com.res.Loader.AssetsLoader;
 import com.screen.controller.GameController;
 
@@ -19,7 +21,7 @@ public abstract class Building extends Actor{
 	public abstract void doTask();
 	
 	public  void destroy(){
-		//this.getStage().addActor(new ParticleEffectActor(AssetsLoader.particlePoolExplosionMed.obtain(), getX()+getWidth()/2, getY()+getHeight()/2));//TODO zaleznie od typu inny wybuch?;p
+		this.getStage().addActor(EffectsManager.getActor(EffectTypes.explosionMed, getX(), getY()));//TODO zaleznie od typu inny wybuch?;p wysordkowanie wynuchu?
 		GameController.removeBuilding(this);
 	}
 	

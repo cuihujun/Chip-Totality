@@ -1,11 +1,7 @@
 package com.res;
 
 import java.io.IOException;
-import java.util.HashMap;
-
 //import net.dermetfan.utils.libgdx.graphics.AnimatedSprite;
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
@@ -17,17 +13,16 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import com.particles.EffecteManagerHolder.EffectsManager;
 
 public class Loader {
 			
@@ -36,14 +31,8 @@ public class Loader {
 		public static AssetManager manager=new AssetManager();
 		public static TextureParameter textureParameter= new TextureParameter();
 		private static ArrayMap<String, Animation> objectsAnimations = new ArrayMap<String, Animation>();
-		private static HashMap<String, Sprite> sprites;
 		//public static AnimatedSprite animatedSprite;
 		public static Sprite backgroundSprite;
-		public static ParticleEffectPool particlePoolExplosion;
-		public static ParticleEffectPool particlePoolExplosionMed;
-		
-		//pool = new ParticleEffectPool(particleEffect, 1 , 2);
-		
 		
 
 		public static TextureRegion getBuildingIcon(String name){			
@@ -58,11 +47,7 @@ public class Loader {
 		
 		public static Animation getObjectAnimation(String name){
 			return objectsAnimations.get(name);
-		}			
-		
-		public static Sprite getSprite(String name){
-			return sprites.get(name);
-		}
+		}					
 		
 		public static Texture getTexture(String name){								
 			return manager.get(name + ".png", Texture.class);
@@ -71,11 +56,7 @@ public class Loader {
 		public static Texture getTextureJPG(String name){								
 			return manager.get(name + ".jpg", Texture.class);
 		}		
-		
-		public static TiledMap getTileMap(){
-			return manager.get("MapData/test_ortho2.tmx");
-		}	
-							
+									
 		public static Sound getSound(String name){
 			String fullName = "Sounds/"+name+".mp3";
 			if (manager.isLoaded(fullName)){
@@ -91,7 +72,7 @@ public class Loader {
 		public static ParticleEffect getParticle(String name){			
 			String fullName = "ParticleEffects/"+name+".p";
 			if (manager.isLoaded(fullName)){
-				ParticleEffect effectNew = new ParticleEffect(manager.get(fullName, ParticleEffect.class));				
+				ParticleEffect effectNew = manager.get(fullName, ParticleEffect.class);				
 				return effectNew;
 			}
 			return null;				
@@ -209,8 +190,7 @@ public class Loader {
 			getFont().getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			
 			backgroundSprite = new Sprite(getTextureJPG("strangeSpace"));
-			particlePoolExplosion = new ParticleEffectPool(getParticle("explosion"), 200 , 500);			
-			particlePoolExplosionMed = new ParticleEffectPool(getParticle("explosionMed"), 100 , 300);
+			EffectsManager.init();
 			recreateAfterResize(1280,720);	
 		}
 		

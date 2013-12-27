@@ -3,6 +3,7 @@ package com.screen;
 import com.badlogic.gdx.Gdx;
 //import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -32,11 +33,10 @@ public class GameScreenRenderer {
 	
 	public void render(float delta){
 		//Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f );
-		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
 		
 		renderBackground(delta);							
-		//AssetsLoader.animatedSprite.draw(game.batch);
-		game.batch.end();
+		//AssetsLoader.animatedSprite.draw(game.batch);		
 		
 		renderStage();
 		//stateTime+=delta;
@@ -58,20 +58,26 @@ public class GameScreenRenderer {
 		game.backGroundCamera.update();
 		
 				
-
+		
 		game.batch.setProjectionMatrix(game.backGroundCamera.combined);		
 		//float x,y,w,h;
 		//w = stars.getWidth();
 		//h = stars.getHeight();
 		//x = (-w/2); 
 		//y = (-h/2);
-		game.batch.begin();
+		game.batch.disableBlending();
+		game.batch.begin();		
 		AssetsLoader.backgroundSprite.draw(game.batch);		
 		game.batch.end();
 		
-		game.batch.setProjectionMatrix(game.camera.combined);		
+		game.batch.setProjectionMatrix(game.camera.combined);
+		game.batch.enableBlending();
+		//game.batch.setBlendFunction(GL11.GL_SRC0_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		game.batch.setBlendFunction(GL11.GL_SRC0_ALPHA, GL11.GL_ZERO);
 		game.batch.begin();
 		game.batch.draw(meteorite, 0, 0);		
+		game.batch.end();
+		
 	}
 	
 	public void renderStage(){		
