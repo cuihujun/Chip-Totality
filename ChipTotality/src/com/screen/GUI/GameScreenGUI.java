@@ -2,6 +2,9 @@ package com.screen.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
@@ -12,10 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.GameStateHolder.ChosenBuilding;
 import com.gameInfo.GameStateHolder.Mode;
@@ -24,6 +30,7 @@ import com.main.Settings;
 import com.res.Loader.AssetsLoader;
 import com.world.building.AcodinMine;
 import com.world.building.Base;
+import com.world.building.Building;
 import com.world.building.HolyMountains;
 import com.world.building.Rafinery;
 import com.world.building.Temple;
@@ -38,6 +45,8 @@ public class GameScreenGUI {
 	private Label fpsLabel;
 	private Label buildingInfoLabel;
 	
+	private static boolean BuildingPropertiesTabOpen = false;
+	
 	private float acc=0;
 	private final float ONE_SECOND = 1.0f;
 	
@@ -45,25 +54,81 @@ public class GameScreenGUI {
 	Table mainBuildingsTable;
 	Table towersTable;
 	Table confirmBuildTable;
+
+	private class BuildingPropertiesTab extends Table {
+		Building focusedBuilding;
+		
+		Label infoLabel;
+		TextButton deleteButton;
+		
+		BuildingPropertiesTab() {
+			Skin skn = AssetsLoader.getSkin();
+			LabelStyle style = new LabelStyle();
+			style.font = AssetsLoader.getFont();
+			
+			setFillParent(true);
+			setSkin(skn);
+			setSize(150, 250);
+			setVisible(false);
+			debug();
+			
+			infoLabel = new Label("", skn);
+			infoLabel.setSize(300, 100);
+			infoLabel.setWrap(true);
+			row();
+			
+			deleteButton = new TextButton("Delete", skn);
+			add(deleteButton);
+			deleteButton.addListener(new ChangeListener() {
+				public void changed(ChangeEvent event, Actor actor) {
+					game.gameScreen.gameController.removeBuilding(focusedBuilding);
+					BuildingPropertiesTabOpen = false;
+					switchTooBuildings();
+					setVisible(false);
+				}
+			});
+			
+			
+			add(infoLabel).fill();
+			
+			layout();
+			
+			pack();
+		}
+		
+		public void update(Building b, Coords c) {
+			setPosition(c.x - Settings.VIEW_WIDTH/2,  Settings.VIEW_HEIGHT/2 - c.y);
+			focusedBuilding = b;
+			
+			infoLabel.setText("Type: " + b.getClass().toString() + "\nHitpoints:" + b.getHP() + "\n");
+			
+			setVisible(true);
+		}
+	}
 	
-	
+	public BuildingPropertiesTab buildingPropertiesTab;
 
 	public GameScreenGUI(final ChipTotality game) {
 		this.game = game;
 		stage = new Stage(Settings.VIEW_WIDTH , Settings.VIEW_HEIGHT , true);
-				
+
 		//TODO background tabelek
 		//table.add(new Image(skin.newDrawable("white", Color.RED))).size(64);
 		createInfoTab();
 		createTowersTab();
 		createMainBuildingsTab();	
-						
+		buildingPropertiesTab = new BuildingPropertiesTab();
+
 		stage.addActor(infoTable);
 		stage.addActor(mainBuildingsTable);
+		stage.addActor(buildingPropertiesTab);
 		
 		update(ONE_SECOND);
 	}
 	
+	public boolean getBuildingPropertiesTabInfo() {
+		return BuildingPropertiesTabOpen;
+	}
 
 	private void createTowersTab(){
 		Skin skin = AssetsLoader.getSkin();
@@ -116,6 +181,8 @@ public class GameScreenGUI {
 		towersTable.pack();
 		
 	}
+	
+
 	
 	private void switchTooTowers(){		
 		stage.clear();
@@ -227,6 +294,26 @@ public class GameScreenGUI {
 		}
 		
 		mainBuildingsTable.pack();
+	}
+	
+	/**
+	 * opens properties tab for a building if no tab is currently opened
+	 * @param b is a building properties of which will be displayed
+	 * @param c are the view-relative coordinates of the cursor
+	 */
+	
+	public void openBuildingPropertiesTab(Building b, Coords c) {
+		if(GameScreenGUI.BuildingPropertiesTabOpen == false) {
+			GameScreenGUI.BuildingPropertiesTabOpen = true;
+			Gdx.app.log("BuildingPropertiesTab", "Properties opened");
+			buildingPropertiesTab.update(b, c);
+			stage.addActor(buildingPropertiesTab);
+		}
+	}
+	
+	public void closeBuildingPropertiesTab() {
+		buildingPropertiesTab.setVisible(false);
+		BuildingPropertiesTabOpen = false;
 	}
 	
 	void dispose(){

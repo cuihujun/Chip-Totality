@@ -3,6 +3,7 @@ package com.screen;
 
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Arrays;
 
 import com.action.MoveTowardsAction;
 import com.badlogic.gdx.math.Rectangle;
@@ -225,6 +226,7 @@ public class GameStage extends Stage{
 			return buildings.get(gen.nextInt(buildings.size));
 		return null;			
 	}
+	
 	public Array<Ship> getShips()
 	{
 		return ships;

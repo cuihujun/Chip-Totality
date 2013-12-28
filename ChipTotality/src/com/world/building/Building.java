@@ -15,11 +15,14 @@ public abstract class Building extends Actor{
 	protected int hitpoints;
 	public Boolean researchReady;
 	
-	
 	public abstract void pay();
 	public abstract void doTask();
 	public abstract void dispose();
 		
+	public int getHP() {
+		return hitpoints;
+	}
+	
 	public TextureRegion getTextureRegion() {
 		return AssetsLoader.getBuilding(this.getClass().getSimpleName());
 	}	

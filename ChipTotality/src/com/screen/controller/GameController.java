@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Rectangle;
 import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.GameStateHolder.ChosenBuilding;
@@ -12,6 +13,7 @@ import com.main.ChipTotality;
 import com.main.Settings;
 import com.screen.GameScreen;
 import com.screen.GameStage;
+import com.screen.GUI.GameScreenGUI;
 import com.world.Tile.TileType;
 import com.world.building.Building;
 
@@ -69,6 +71,20 @@ public class GameController extends InputAdapter {
 		return true;
 	}
 	
+	private void buildingPropertiesSwitch(Coords screenXY, Coords mapXY) {
+		if(game.gameScreen.gameScreenGUI.getBuildingPropertiesTabInfo() == true) {
+			Gdx.app.log("Properties tab", "Closed");
+			game.gameScreen.gameScreenGUI.closeBuildingPropertiesTab();
+		}
+		for ( Building b : GameStage.buildings ) {
+			if ( new Rectangle(40*b.coords.x, 40*b.coords.y, 40*b.size.x, 40*b.size.y).contains(mapXY.x, mapXY.y) == true
+					&& gameScreen.gameScreenGUI.getBuildingPropertiesTabInfo() == false) {
+				Gdx.app.log("Properties tab", "open");
+				gameScreen.gameScreenGUI.openBuildingPropertiesTab(b, screenXY);
+			}
+		}
+	}
+	
 	
 	public void addBuilding(Building building) {
 		
@@ -94,8 +110,9 @@ public class GameController extends InputAdapter {
 	}
 
 	
-	private void removeBuilding(Building building) {		
+	public void removeBuilding(Building building) {		
 		building.destroy();
+		GameStage.buildings.removeValue(building, true);
 		// remove references from tiles
 		for (int i =  building.coords.x; i < building.coords.x + building.size.x; i++) {
 			for (int j =  building.coords.y; j < building.coords.y + building.size.y; j++) {
@@ -166,20 +183,17 @@ public class GameController extends InputAdapter {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		Gdx.app.log("touchUp", screenX + " " + screenY);
 		Vector3 pos = new Vector3(screenX, screenY, 0);
 		game.gameScreen.camera.unproject(pos);
-		
-
-		
 		
 		Coords tileClicked=unprojectTile(pos.x, pos.y);
 		if (tileClicked!=null){
 			if((GameStateHolder.mode == Mode.BUILDING) && (GameStateHolder.chosenBuilding!= ChosenBuilding.none)){	
 				addBuilding(GameStateHolder.chosenBuilding.getChosenBuilding(tileClicked.x, tileClicked.y));			
 			}
-			
 			if((GameStateHolder.mode == Mode.NONE)){
-				
+				buildingPropertiesSwitch(new Coords(screenX, screenY), new Coords((int)pos.x, (int)pos.y));
 			}
 		}
 			

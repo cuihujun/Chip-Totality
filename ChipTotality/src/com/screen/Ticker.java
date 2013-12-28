@@ -48,7 +48,7 @@ public class Ticker extends Widget {
 		x -= Gdx.graphics.getDeltaTime() * speed;
 
 		// resets position
-		if ((x + font.getBounds(info).width) < -50)
+		if ((x + font.getBounds(info).width) < 0)
 			x = Settings.WIDTH;
 	}
 

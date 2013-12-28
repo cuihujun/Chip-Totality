@@ -81,7 +81,7 @@ public class GameScreenRenderer {
 		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		game.camera.unproject(pos);
 		Coords tile = gameScreen.gameController.unprojectTile(pos.x, pos.y);
-		
+	
 		if(tile!=null){
 			//building not possbile - tint red
 			if(!gameScreen.gameController.buildingPossibleHere(tile.x, tile.y, GameStateHolder.chosenBuilding.getBuildingWidth(), GameStateHolder.chosenBuilding.getBuildingHeight()))

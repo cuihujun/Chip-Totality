@@ -1,0 +1,5 @@
+* spacing:10 padding:0 align:center
+---
+[buildingName] width:120 height:30
+---
+[buildingHP] width:120 height:30
