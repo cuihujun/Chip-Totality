@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.particles.EffecteManagerHolder.EffectTypes;
-import com.particles.EffecteManagerHolder.EffectsManager;
+import com.particles.EffectsManagerHolder.EffectTypes;
+import com.particles.EffectsManagerHolder.EffectsManager;
 
 public class ParticleEffectActor extends Actor {
 	ParticleEffect effect;

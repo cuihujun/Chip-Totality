@@ -8,8 +8,8 @@ import com.gameInfo.GameStateHolder;
 import com.gameInfo.Stats;
 import com.main.Settings;
 import com.particles.ParticleEffectActor;
-import com.particles.EffecteManagerHolder.EffectTypes;
-import com.particles.EffecteManagerHolder.EffectsManager;
+import com.particles.EffectsManagerHolder.EffectTypes;
+import com.particles.EffectsManagerHolder.EffectsManager;
 import com.res.Loader.AssetsLoader;
 import com.screen.controller.GameController;
 

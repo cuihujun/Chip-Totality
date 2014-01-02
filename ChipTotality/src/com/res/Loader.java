@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.particles.EffecteManagerHolder.EffectsManager;
+import com.particles.EffectsManagerHolder.EffectsManager;
 
 public class Loader {
 			

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.res.Loader.AssetsLoader;
 
-public class EffecteManagerHolder {
+public class EffectsManagerHolder {
 	
 	public enum EffectTypes{
 		explosion(200,1000),
