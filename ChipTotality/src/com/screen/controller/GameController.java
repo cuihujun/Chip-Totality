@@ -3,7 +3,9 @@ package com.screen.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.GameStateHolder.ChosenBuilding;
@@ -12,6 +14,7 @@ import com.main.ChipTotality;
 import com.main.Settings;
 import com.screen.GameScreen;
 import com.screen.GameStage;
+import com.screen.GUI.GameScreenGUI;
 import com.world.Asteroid;
 import com.world.Tile.TileType;
 import com.world.building.Building;
@@ -133,8 +136,15 @@ public class GameController extends InputAdapter {
 				addBuilding(GameStateHolder.chosenBuilding.getChosenBuilding(tileClicked.x, tileClicked.y));			
 			}
 			
-			if((GameStateHolder.mode == Mode.NONE)){
-				
+			else if((GameStateHolder.mode == Mode.NONE)){
+				for(Actor b : GameStage.buildingsGroup.getChildren()) {
+					if(new Rectangle(b.getX(), b.getY(), b.getWidth(), b.getHeight()).contains(pos.x, pos.y)) {
+						gameScreen.gameScreenGUI.buildingGui.update((Building)b, (int)b.getX(), (int)b.getY());
+						Gdx.app.log("BuildingGUI", "Created; visibility:" + gameScreen.gameScreenGUI.buildingGui.isVisible());
+						return true;
+					}
+				}
+				gameScreen.gameScreenGUI.buildingGui.setVisible(false);
 			}
 		}
 			

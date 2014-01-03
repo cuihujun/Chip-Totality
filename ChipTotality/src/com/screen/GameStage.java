@@ -25,6 +25,7 @@ public class GameStage extends Stage{
 	public static Group buildingsGroup = new Group();
 	public static Group bulletsFromTowersGroup = new Group();
 	public static Group bulletsFromShipsGroup = new Group();
+	public static Group guiObjectsGroup = new Group();
 	
     public static final Pool<Bullet> bulletPool = new Pool<Bullet>() {
 	@Override
@@ -44,6 +45,7 @@ public class GameStage extends Stage{
 		addActor(shipsGroup);
 		addActor(bulletsFromShipsGroup);
 		addActor(bulletsFromTowersGroup);
+		addActor(guiObjectsGroup);
 		shipManager = new ShipManager();
 		shipManager.generateWave();
 

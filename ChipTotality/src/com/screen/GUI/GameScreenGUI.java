@@ -23,6 +23,8 @@ import com.main.ChipTotality;
 import com.main.Settings;
 import com.res.Loader.AssetsLoader;
 import com.screen.GameStage;
+import com.screen.controller.GameController;
+import com.world.building.Building;
 
 public class GameScreenGUI {
 	final ChipTotality game;	
@@ -46,7 +48,60 @@ public class GameScreenGUI {
 	Table towersTable;
 	Table confirmBuildTable;
 	
+	public class BuildingGUI extends Table {
+		
+		private Label titleLabel;
+		private Label dataLabel;
+		private TextButton deleteButton;
+		
+		private Building lastBuilding = null;
+		
+		public BuildingGUI() {
+			Skin skin = AssetsLoader.getSkin();
+			LabelStyle style = new LabelStyle();
+			style.font = AssetsLoader.getFont();
+			
+			setFillParent(true);
+			setSkin(skin);
+			setSize(100, 250);
+			
+			this.titleLabel = new Label("", style);
+			this.dataLabel = new Label("", style);
+			this.deleteButton = new TextButton("Delete", skin);
+			
+			this.titleLabel.setSize(100, 50);
+			this.dataLabel.setSize(100, 50);
+			this.deleteButton.setSize(100, 50);
+			
+			deleteButton.addListener(new ChangeListener() {
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					if(lastBuilding != null) {
+						GameController.removeBuilding(lastBuilding);
+						setVisible(false);
+					}
+				}
+			});
+			
+			add(this.titleLabel);
+			add(this.dataLabel);
+			add(this.deleteButton);
+			
+			this.pack();
+			this.setVisible(false);
+		}
+		
+		public void update(Building b, int cursorX, int cursorY) {
+			lastBuilding = b;
+			this.titleLabel.setText(b.getName());
+			this.dataLabel.setText("Hitpoints:" + b.hitpoints);
+			this.setPosition(cursorX, cursorY);
+			Gdx.app.log("BuildingGUIUpdate", this.getX() + " " + this.getY());
+			this.setVisible(true);
+		}
+	}
 	
+	public BuildingGUI buildingGui;
 
 	public GameScreenGUI(final ChipTotality game, final GameStage gameStage) {
 		this.game = game;
@@ -55,12 +110,14 @@ public class GameScreenGUI {
 				
 		//TODO background tabelek
 		//table.add(new Image(skin.newDrawable("white", Color.RED))).size(64);
+		this.buildingGui = new BuildingGUI();
 		createInfoTab();
 		createTowersTab();
 		createMainBuildingsTab();	
 						
 		stage.addActor(infoTable);
 		stage.addActor(mainBuildingsTable);
+		GameStage.guiObjectsGroup.addActor(buildingGui);
 		
 		update(ONE_SECOND);
 	}
@@ -247,6 +304,12 @@ public class GameScreenGUI {
 			dirtyAcodinLabel.setText("Dirty Acodin: " + GameStateHolder.dirtyAcodin + " ");
 			fpsLabel.setText("Fps : " + Gdx.graphics.getFramesPerSecond() + "         ");
 			shipsLabel.setText("Ships number: " + gameStage.shipsGroup.getChildren().size + "       ");
+			if(buildingGui.lastBuilding != null) {
+				buildingGui.dataLabel.setText("Hitpoints:" + buildingGui.lastBuilding.hitpoints);
+				if(buildingGui.lastBuilding.hitpoints == 0) {
+					buildingGui.setVisible(false);
+				}
+			}
 		}
 	}
 	
