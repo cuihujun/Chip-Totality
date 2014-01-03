@@ -3,6 +3,7 @@ package com.screen.GUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.gameInfo.GameStateHolder;
@@ -73,9 +75,9 @@ public class GameScreenGUI {
 			this.dataLabel.setSize(100, 50);
 			this.deleteButton.setSize(100, 50);
 			
-			deleteButton.addListener(new ChangeListener() {
+			deleteButton.addListener(new ClickListener() {
 				@Override
-				public void changed(ChangeEvent event, Actor actor) {
+				public void clicked(InputEvent inputEvent, float x, float y) {
 					if(lastBuilding != null) {
 						GameController.removeBuilding(lastBuilding);
 						setVisible(false);
