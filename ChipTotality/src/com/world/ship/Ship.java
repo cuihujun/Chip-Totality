@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Stats;
-import com.particles.ParticleEffectActor;
 import com.particles.EffectsManagerHolder.EffectTypes;
 import com.particles.EffectsManagerHolder.EffectsManager;
 import com.res.Loader.AssetsLoader;
@@ -25,9 +24,13 @@ public abstract class Ship extends Actor{
 	private final Sprite sprite;
 	protected Building currentTarget;
 	Stats.Bullets bulletType;
+	Stats.Ships shipType;
 	CurrentAction currentAction;
+	Vector2 direction = new Vector2(0,0);
+	Vector2 targetCoords = new Vector2(0,0);
 	
-	Ship(int x, int y){
+	Ship(int x, int y, Stats.Ships shipType){
+		this.shipType = shipType;
 		setBounds(x, y, getStats().width, getStats().height);
 		this.hitpoints=getStats().maxHitpoints;		
 		sprite = new Sprite(AssetsLoader.getTexture(this.getClass().getSimpleName()));	
@@ -91,11 +94,13 @@ public abstract class Ship extends Actor{
 			return;
 		}
 		
-		Vector2 direction = new Vector2(currentTarget.getX()-getX(), currentTarget.getY()-getY());
-		direction.nor();
-		Vector2 targetCoords = new Vector2(currentTarget.getX(), currentTarget.getY());
+		direction.x = currentTarget.getX()-getX();
+		direction.y =  currentTarget.getY()-getY();
+		direction.nor();		
+		targetCoords.x = currentTarget.getX();
+		targetCoords.y =  currentTarget.getY();
 		
-		if(targetCoords.dst(getX(), getY())<distance){
+		if(targetCoords.dst2(getX(), getY())<(distance*distance)){
 			setCurrentAction(Ship.CurrentAction.shoot);
 			return;
 		}
@@ -129,7 +134,9 @@ public abstract class Ship extends Actor{
 	}
 	
 	public Stats.Ships getStats(){
-		return Stats.Ships.valueOf(this.getClass().getSimpleName());
+		//TODO String alocation aaaaaa in every action! very slow;]
+		//return Stats.Ships.valueOf(this.getClass().getSimpleName());
+		return shipType;
 	}
 	
 	public void setCurrentAction(CurrentAction action){

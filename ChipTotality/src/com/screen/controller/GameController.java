@@ -39,7 +39,7 @@ public class GameController extends InputAdapter {
 	}
 
 	
-	public boolean buildingPossibleHere(Building building){
+	public static boolean buildingPossibleHere(Building building){
 		//check if building may be built on selected tiles
 		for (int i =  building.coords.x; i <  building.coords.x+ building.getStats().width; i++) {
 			for (int j =  building.coords.y; j < building.coords.y+ building.getStats().height; j++) {
@@ -74,7 +74,7 @@ public class GameController extends InputAdapter {
 	}
 	
 	
-	public void addBuilding(Building building) {
+	public static void addBuilding(Building building) {
 		
 		if(!buildingPossibleHere(building))
 			return;

@@ -22,13 +22,12 @@ public class SearchBuildingAction extends Action {
 		Vector2 shipsCoords = new Vector2(actionOwner.getX(), actionOwner.getY());
 		
 		for (Actor building : GameStage.buildingsGroup.getChildren()) {
-			if(shipsCoords.dst(building.getX(), building.getY())<shortestDistance)
+			if(shipsCoords.dst2(building.getX(), building.getY())<(shortestDistance*shortestDistance))
 				actionOwner.setCurrentTarget((Building)building);
 		}
 		actionOwner.setCurrentAction(Ship.CurrentAction.approach);
 		
 		return true;
 	}
-	
-	
+		
 }

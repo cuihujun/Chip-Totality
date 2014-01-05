@@ -11,9 +11,13 @@ public abstract class Tower extends Building {
 	protected Ship currentTarget;	
 	protected float lastShoot;
 	protected Stats.Bullets bulletType;
+	protected Stats.Towers towerType;
+	private Vector2 coords = new Vector2(0,0);
+	private Vector2 coordsFloat = new Vector2(0,0);
 	
-	public Tower(int x, int y) {
+	public Tower(int x, int y, Stats.Towers towerType) {
 		super(x, y);
+		this.towerType = towerType;
 		bulletType=Stats.Bullets.simpleBullet;
 	}	
 	
@@ -33,9 +37,10 @@ public abstract class Tower extends Building {
 	
 	
 	private void findTarget(){
+		coords.x = getX();
+		coords.y = getY();		
 		for (Actor ship : GameStage.shipsGroup.getChildren()) {
-			Vector2 coords = new Vector2(getX(), getY());	
-			if(coords.dst(ship.getX(), ship.getY()) <=getTowerStats().range){
+			if(coords.dst2(ship.getX(), ship.getY()) <=(getTowerStats().range*getTowerStats().range)){		
 				currentTarget=(Ship)ship;
 				return;
 			}
@@ -44,17 +49,16 @@ public abstract class Tower extends Building {
 	}
 		
 	private boolean targetInRange() {
-		Vector2 coordsFloat = new Vector2(getX(), getY());
+		coordsFloat.x = getX();
+		coordsFloat.y = getY();		
 		//target ship has no parent - he formally doesn't exist in the world
-		return (currentTarget!=null &&currentTarget.hasParent() && coordsFloat.dst(currentTarget.getX(), currentTarget.getY()) <=getTowerStats().range);
+		return (currentTarget!=null &&currentTarget.hasParent() && coordsFloat.dst2(currentTarget.getX(), currentTarget.getY()) <=(getTowerStats().range*getTowerStats().range));				
 	}
 	
 	private Stats.Towers getTowerStats(){
-		return Stats.Towers.valueOf(getClass().getSimpleName());
+		//TODO String alocation aaaaaa in every action! very slow;]
+		//return Stats.Towers.valueOf(getClass().getSimpleName());
+		return towerType;
 	}
 	
-	
-
-
-
 }

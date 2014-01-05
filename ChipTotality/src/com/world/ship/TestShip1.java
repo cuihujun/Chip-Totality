@@ -2,18 +2,17 @@ package com.world.ship;
 
 import com.action.MoveTowardsAction;
 import com.badlogic.gdx.math.Vector2;
+import com.gameInfo.Stats;
 import com.screen.GameStage;
 import com.world.tower.Bullet;
 
 
 
 public class TestShip1 extends Ship {
-	
-	
-	public TestShip1(int x, int y)  {
-		super(x, y);
+		
+	public TestShip1(int x, int y)  {		
+		super(x, y, Stats.Ships.TestShip1);		
 	}
-
 
 	@Override
 	public void shoot() {

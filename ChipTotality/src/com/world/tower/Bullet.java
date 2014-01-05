@@ -21,12 +21,15 @@ public class Bullet extends Actor implements Poolable{
 		this.texture=texture;
 	}
 	
-	public void explode(Ship target, GameStage stage){		
+	public boolean explode(Ship target, GameStage stage){
+		boolean result = false;
 		stage.addActor(EffectsManager.getActor(EffectTypes.explosion, getX(), getY()));
 		target.hitpoints-=firePower;
 		if(target.hitpoints<=0)
 			target.destroy();
+			result = true;
 		dispose();
+		return result;
 		
 	}
 	public void explode(Building target, GameStage stage){

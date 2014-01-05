@@ -1,4 +1,4 @@
-package com.screen;
+package com.space.partitioning;
 
 
 import java.util.ArrayList;
