@@ -50,11 +50,12 @@ public class GameScreenGUI {
 	Table towersTable;
 	Table confirmBuildTable;
 	
+	public BuildingGUI buildingGui;
 	public class BuildingGUI extends Table {
 		
-		private Label titleLabel;
-		private Label dataLabel;
-		private TextButton deleteButton;
+		private final Label titleLabel;
+		private final Label dataLabel;
+		private final TextButton deleteButton;
 		
 		private Building lastBuilding = null;
 		
@@ -103,7 +104,7 @@ public class GameScreenGUI {
 		}
 	}
 	
-	public BuildingGUI buildingGui;
+	
 
 	public GameScreenGUI(final ChipTotality game, final GameStage gameStage) {
 		this.game = game;

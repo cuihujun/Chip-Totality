@@ -40,12 +40,13 @@ public class GameStage extends Stage{
 	
 	public GameStage(ChipTotality game) {
 		super(Settings.WIDTH, Settings.HEIGHT, true, game.batch);
-		this.game=game;
+		this.game=game;	
 		addActor(buildingsGroup);
+		addActor(guiObjectsGroup);
 		addActor(shipsGroup);
 		addActor(bulletsFromShipsGroup);
 		addActor(bulletsFromTowersGroup);
-		addActor(guiObjectsGroup);
+		
 		shipManager = new ShipManager();
 		shipManager.generateWave();
 
