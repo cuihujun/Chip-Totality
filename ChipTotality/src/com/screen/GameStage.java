@@ -10,10 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool;
 import com.main.ChipTotality;
 import com.main.Settings;
+import com.screen.controller.GameController;
+import com.space.partitioning.SpatialIndex;
 import com.world.ShipManager;
 import com.world.building.Building;
 import com.world.ship.Ship;
 import com.world.tower.Bullet;
+import com.world.tower.VioletGun;
 
 
 public class GameStage extends Stage{
@@ -27,7 +30,15 @@ public class GameStage extends Stage{
 	public static Group bulletsFromShipsGroup = new Group();
 	public static Group guiObjectsGroup = new Group();
 	
-    public static final Pool<Bullet> bulletPool = new Pool<Bullet>() {
+	
+	SpatialIndex<Actor> towersBulletsIndex = new SpatialIndex<Actor>(160);
+	//SpatialIndex<Actor> shipsBulletsIndex = new SpatialIndex<Actor>(160);
+	//SpatialIndex<Actor> shipsIndex = new SpatialIndex<Actor>(160);
+	//SpatialIndex<Actor> buildingsIndex = new SpatialIndex<Actor>(160);
+
+
+	
+    public static final Pool<Bullet> bulletPool = new Pool<Bullet>(20000, 200000) {
 	@Override
 	protected Bullet newObject() {
 		return new Bullet();
@@ -52,11 +63,32 @@ public class GameStage extends Stage{
 
 		setCamera(game.camera);		
 		
+		//TODO for testing speed
+		for(int row = 9;row<17;row++){
+			for(int col = 6; col<31;col++){
+				GameController.addBuilding(new VioletGun(col,row));
+			}
+		}
+					
 	}
 	
 	@Override
 	public void act(float delta){
 		super.act(delta);
+		
+		
+		towersBulletsIndex.clear();
+		for (Actor bullet : bulletsFromTowersGroup.getChildren()) {
+			towersBulletsIndex.put(bullet, bullet.getX(), bullet.getY(), bullet.getWidth(), bullet.getHeight());
+		}
+
+
+		/*for(Item e : index.get(viewportLeft, viewportBottom, viewportWidth, viewportHeight))
+		{
+		        // render or something
+		}*/
+		
+		
 		checkBulletCollisionsWithBuildings();
 		checkBulletCollisionsWithShips();
 		shipManager.update(delta);
@@ -73,7 +105,7 @@ public class GameStage extends Stage{
 				buildingRec.setPosition(building.getX(), building.getY());
 				buildingRec.setSize(building.getWidth(), building.getHeight());
 				if (buildingRec.overlaps(bulletRec)){
-					((Bullet)bullet).explode((Building)building, this);	
+					((Bullet)bullet).explode((Building)building, this);
 					break;
 				}			
 			}
@@ -83,7 +115,26 @@ public class GameStage extends Stage{
 	
 	private void checkBulletCollisionsWithShips() {
 		
-		Rectangle shipRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
+		//SpatialIndex test (it is realy fast:)
+		Rectangle shipRec = new Rectangle();
+		//Rectangle bulletRec = new Rectangle();
+		for(Actor s : shipsGroup.getChildren()){
+			shipRec.setPosition(s.getX(), s.getY());
+			shipRec.setSize(s.getWidth(), s.getHeight());
+			
+			for(Actor b : towersBulletsIndex.get(shipRec.x, shipRec.y, shipRec.width, shipRec.height))
+			{		
+				//bulletRec.setPosition(b.getX(), b.getY());
+				//bulletRec.setSize(b.getWidth(), b.getHeight());
+				//if (shipRec.overlaps(bulletRec)){
+					if ( ((Bullet)b).explode((Ship)s, this) ) break;				
+				//}
+			}				
+		}
+
+		
+		
+		/*Rectangle shipRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
 		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 	
 		for (Actor b : bulletsFromTowersGroup.getChildren()) {
 			bulletRec.setPosition(b.getX(), b.getY());
@@ -96,7 +147,7 @@ public class GameStage extends Stage{
 					break;
 				}			
 			}
-		}
+		}*/
 		
 		
 		///OSTATNI DZIALAJACA WERSJA PONZEJ

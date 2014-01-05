@@ -7,7 +7,6 @@ import com.gameInfo.Coords;
 import com.gameInfo.GameStateHolder;
 import com.gameInfo.Stats;
 import com.main.Settings;
-import com.particles.ParticleEffectActor;
 import com.particles.EffectsManagerHolder.EffectTypes;
 import com.particles.EffectsManagerHolder.EffectsManager;
 import com.res.Loader.AssetsLoader;
@@ -16,6 +15,7 @@ import com.screen.controller.GameController;
 public abstract class Building extends Actor{
 	public final Coords coords;	
 	public int hitpoints;
+	private TextureRegion region;
 
 	
 	public abstract void doTask();
@@ -26,7 +26,7 @@ public abstract class Building extends Actor{
 	}
 	
 	public TextureRegion getTextureRegion() {
-		return AssetsLoader.getBuilding(this.getClass().getSimpleName());
+		return region;		
 	}	
 	
 	public Building(int x, int y) {
@@ -36,6 +36,7 @@ public abstract class Building extends Actor{
 		coords = new Coords(x, y);
 		//size = new Vector2(width, height);
 		hitpoints=getStats().maxHitpoints;
+		region = AssetsLoader.getBuilding(this.getClass().getSimpleName());
 	}
 
 	public Stats.Buildings getStats(){

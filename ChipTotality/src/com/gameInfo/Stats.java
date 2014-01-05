@@ -31,8 +31,8 @@ public class Stats {
 		
 	}
 	public static enum Towers{
-		VioletGun(300f, 1.5f),
-		YellowGun(500f, 3.0f);
+		VioletGun(550f, 0.7f),
+		YellowGun(500f, 2.0f);
 		
 		Towers(float range, float shootDelay){
 			this.range=range;
