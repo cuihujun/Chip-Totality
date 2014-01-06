@@ -29,7 +29,11 @@ public class Bullet extends Actor implements Poolable{
 		if(target.hitpoints<=0)
 			target.destroy();
 			result = true;
-		dispose();
+		
+		clear();
+		remove();
+		GameStage.bulletPool.free(this);
+		
 		return result;
 		
 	}
@@ -38,14 +42,13 @@ public class Bullet extends Actor implements Poolable{
 		target.hitpoints-=firePower;
 		if(target.hitpoints<=0)
 			target.destroy();
-		dispose();
-	}
-	
-	private void dispose(){
-		clearActions();
-		remove();
+		
+		clear();
+		remove();	
 		GameStage.bulletPool.free(this);
 	}
+	
+
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -58,6 +61,10 @@ public class Bullet extends Actor implements Poolable{
 
 	@Override
 	public void reset() {
+		setWidth(0);
+		setHeight(0);
+		setPosition(0, 0);
+		firePower=0;
 		this.setRotation(0);
 	}
 	

@@ -38,11 +38,11 @@ public class GameStage extends Stage{
 
 
 	
-    public static final Pool<Bullet> bulletPool = new Pool<Bullet>(20000, 200000) {
-	@Override
-	protected Bullet newObject() {
-		return new Bullet();
-	}
+    public static final Pool<Bullet> bulletPool = new Pool<Bullet>() {
+		@Override
+		protected Bullet newObject() {
+			return new Bullet();
+		}
     };
 	
 
