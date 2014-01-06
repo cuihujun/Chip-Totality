@@ -136,15 +136,26 @@ public class GameController extends InputAdapter {
 				addBuilding(GameStateHolder.chosenBuilding.getChosenBuilding(tileClicked.x, tileClicked.y));			
 			}
 			
-			else if((GameStateHolder.mode == Mode.NONE)){
-				for(Actor b : GameStage.buildingsGroup.getChildren()) {
+			else if((GameStateHolder.mode == Mode.NONE)){		
+				
+				//Actor b = GameStage.buildingsGroup.hit(pos.x, pos.y, false);//tylko budynki
+				Actor b = game.gameScreen.gameStage.hit(pos.x, pos.y, false);//cokolwiek na stagu
+				if ((b!=null) && (b instanceof Building)){
+					gameScreen.gameScreenGUI.buildingGui.update((Building)b, (int)b.getX(), (int)b.getY());
+					Gdx.app.log("BuildingGUI", "Created; visibility:" + gameScreen.gameScreenGUI.buildingGui.isVisible());
+					return true;					
+				}
+				else gameScreen.gameScreenGUI.buildingGui.setVisible(false);
+				/*for(Actor b : GameStage.buildingsGroup.getChildren()) {
+					
+					b.hit(x, y, touchable)
 					if(new Rectangle(b.getX(), b.getY(), b.getWidth(), b.getHeight()).contains(pos.x, pos.y)) {
 						gameScreen.gameScreenGUI.buildingGui.update((Building)b, (int)b.getX(), (int)b.getY());
 						Gdx.app.log("BuildingGUI", "Created; visibility:" + gameScreen.gameScreenGUI.buildingGui.isVisible());
 						return true;
 					}
 				}
-				gameScreen.gameScreenGUI.buildingGui.setVisible(false);
+				gameScreen.gameScreenGUI.buildingGui.setVisible(false);*/
 			}
 		}
 			
