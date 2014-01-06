@@ -5,8 +5,8 @@ import com.screen.GameStage;
 import com.world.ship.TestShip1;
 
 public class ShipManager {
-	private float waveNumber = 10;
-	private final float maxShips = 400;//TODO for testing;]
+	private float waveNumber = 1;
+	private final float maxShips = 1000;//TODO for testing;]
 	private float currentNumberOfships = 0;
 	private float lastWaveTime;
 	private final float waveInterval=5;

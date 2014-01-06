@@ -67,8 +67,7 @@ public class Stats {
 	
 	public static enum Bullets{	
 		//width, height, firepower, speed, action, texture
-		simpleBullet(10, 10, 5, 3, AssetsLoader.getTexture("TestBullet1"))
-				;
+		simpleBullet(10, 10, 5, 3, AssetsLoader.getTexture("TestBullet1"));
 		
 		public float speed;
 		public int width, height;

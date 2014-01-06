@@ -15,8 +15,8 @@ public class VioletGun extends Tower{
 	@Override
 	public void shoot() {
 		Bullet newBullet = bulletType.spawnBullet(getX(), getY());
-		newBullet.addAction(new MoveTowardsAction(new Vector2(currentTarget.getX()-getX(), currentTarget.getY()-getY()), 0.02f, 3, true));	
-		GameStage.bulletsFromTowersGroup.addActor(newBullet);		
+		newBullet.addAction(new MoveTowardsAction(new Vector2(currentTarget.getX()-getX(), currentTarget.getY()-getY()), 0.001f, 30, true));	
+		GameStage.bulletsFromTowersGroup.addActor(newBullet);
 	}	
 			
 	@Override
