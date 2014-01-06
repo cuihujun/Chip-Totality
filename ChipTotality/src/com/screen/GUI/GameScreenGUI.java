@@ -121,6 +121,7 @@ public class GameScreenGUI {
 		stage.addActor(infoTable);
 		stage.addActor(mainBuildingsTable);
 		GameStage.guiObjectsGroup.addActor(buildingGui);
+		//stage.addActor(buildingGui);
 		
 		update(ONE_SECOND);
 	}

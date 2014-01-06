@@ -80,14 +80,7 @@ public class GameStage extends Stage{
 		towersBulletsIndex.clear();
 		for (Actor bullet : bulletsFromTowersGroup.getChildren()) {
 			towersBulletsIndex.put(bullet, bullet.getX(), bullet.getY(), bullet.getWidth(), bullet.getHeight());
-		}
-
-
-		/*for(Item e : index.get(viewportLeft, viewportBottom, viewportWidth, viewportHeight))
-		{
-		        // render or something
-		}*/
-		
+		}		
 		
 		checkBulletCollisionsWithBuildings();
 		checkBulletCollisionsWithShips();
@@ -115,20 +108,20 @@ public class GameStage extends Stage{
 	
 	private void checkBulletCollisionsWithShips() {
 		
-		//SpatialIndex test (it is realy fast:)
+		//SpatialIndex test (it is really fast:)
 		Rectangle shipRec = new Rectangle();
-		//Rectangle bulletRec = new Rectangle();
+		Rectangle bulletRec = new Rectangle();
 		for(Actor s : shipsGroup.getChildren()){
 			shipRec.setPosition(s.getX(), s.getY());
 			shipRec.setSize(s.getWidth(), s.getHeight());
 			
 			for(Actor b : towersBulletsIndex.get(shipRec.x, shipRec.y, shipRec.width, shipRec.height))
 			{		
-				//bulletRec.setPosition(b.getX(), b.getY());
-				//bulletRec.setSize(b.getWidth(), b.getHeight());
-				//if (shipRec.overlaps(bulletRec)){
+				bulletRec.setPosition(b.getX(), b.getY());
+				bulletRec.setSize(b.getWidth(), b.getHeight());
+				if (shipRec.overlaps(bulletRec)){
 					if ( ((Bullet)b).explode((Ship)s, this) ) break;				
-				//}
+				}
 			}				
 		}
 

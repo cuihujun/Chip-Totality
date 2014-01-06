@@ -2,6 +2,7 @@ package com.world.tower;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.particles.EffectsManagerHolder.EffectTypes;
@@ -48,12 +49,16 @@ public class Bullet extends Actor implements Poolable{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(texture, getX(), getY());	
+		//TODO on sprites...
+		Sprite sprite = new Sprite(texture);
+		sprite.setPosition(this.getX(), this.getY());
+		sprite.rotate(this.getRotation());
+		sprite.draw(batch);	
 	}
 
 	@Override
 	public void reset() {
-		
+		this.setRotation(0);
 	}
 	
 

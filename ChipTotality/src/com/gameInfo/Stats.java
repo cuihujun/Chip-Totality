@@ -45,7 +45,7 @@ public class Stats {
 	
 	public static enum Ships{
 		//maxHP, speed, width, height, range, shootDelay
-		TestShip1(14, 2, 20, 20, 300, 1.8f);
+		TestShip1(14, 2, 64, 64, 300, 1.8f);
 		
 		Ships(int maxHitpoints, float speed, int width, int height, float range, float shootDelay){
 			this.maxHitpoints=maxHitpoints;
@@ -67,8 +67,7 @@ public class Stats {
 	
 	public static enum Bullets{	
 		//width, height, firepower, speed, action, texture
-		simpleBullet(10, 10, 5, 3, AssetsLoader.getTexture("TestBullet1"))
-				;
+		simpleBullet(10, 10, 5, 3, AssetsLoader.getTexture("TestBullet1"));
 		
 		public float speed;
 		public int width, height;

@@ -66,7 +66,7 @@ public class Loader {
 		}
 			
 		public static Skin getSkin(){
-			return manager.get("uiSkin/uiskin.json", Skin.class);		
+			return manager.get("uiSkin/DarkSkin/Holo-dark-mdpi.json", Skin.class);		
 		}	
 		
 		public static ParticleEffect getParticle(String name){			
@@ -131,6 +131,7 @@ public class Loader {
 			
 			//skin do menu
 			manager.load("uiSkin/uiskin.json",Skin.class);
+			manager.load("uiSkin/DarkSkin/Holo-dark-mdpi.json",Skin.class);
 													
 			loadSounds();
 			loadMusics();
@@ -229,8 +230,10 @@ public class Loader {
 			//textureParameter.minFilter = Texture.TextureFilter.MipMapNearestNearest;
 			Texture.setAssetManager(manager);
 			textureParameter.genMipMaps = true;
-			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;
-			textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;			
+			textureParameter.minFilter = Texture.TextureFilter.Nearest;
+			textureParameter.magFilter = Texture.TextureFilter.Nearest;
+			//textureParameter.minFilter = Texture.TextureFilter.MipMapNearestNearest;
+			//textureParameter.magFilter = Texture.TextureFilter.MipMapNearestNearest;			
 		}
 
 	}
