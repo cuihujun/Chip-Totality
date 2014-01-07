@@ -3,6 +3,7 @@ package com.world.ship;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Stats;
@@ -29,9 +30,11 @@ public abstract class Ship extends Actor{
 	Vector2 direction = new Vector2(0,0);
 	Vector2 targetCoords = new Vector2(0,0);
 	
+	
 	Ship(int x, int y, Stats.Ships shipType){
 		this.shipType = shipType;
 		setBounds(x, y, getStats().width, getStats().height);
+		setOrigin(getWidth()/2, getHeight()/2);
 		this.hitpoints=getStats().maxHitpoints;		
 		sprite = new Sprite(AssetsLoader.getTexture(this.getClass().getSimpleName()));	
 		bulletType=Stats.Bullets.simpleBullet;
@@ -53,7 +56,7 @@ public abstract class Ship extends Actor{
 			}
 		}
 		else if(currentAction==CurrentAction.approach){
-			approach(getStats().range);
+			approach(getStats().range, delta);
 		}
 		else if(currentAction==CurrentAction.search)
 			searchClosestTarget();
@@ -76,7 +79,7 @@ public abstract class Ship extends Actor{
 			}
 			//target in range - there's no need to look for another one
 			if(shortestDistance<getStats().range){
-				currentAction=CurrentAction.shoot;
+				currentAction=CurrentAction.approach;	//just approach to correct angle
 				return;
 			}
 			
@@ -87,15 +90,24 @@ public abstract class Ship extends Actor{
 	
 	
 	//approach building which was previously searched
-	public void approach(float distance){
+	public void approach(float distance, float delta){	//ships stops when the distance is equal or shorter to passed argument
 		//required when there is no buildings in the game
 		if(currentTarget==null){
 			currentAction=CurrentAction.search;
 			return;
 		}
+		//angle beetween ship and target
+		float angle = MathUtils.atan2(direction.y = (currentTarget.getY()-getY()), direction.x=(currentTarget.getX()-getX()))*MathUtils.radiansToDegrees;
+		float deltaAngle = Math.abs(angle-getRotation());
+		//angle too big to rotate instantly - rotate a part of the angle, and wait.
+		if(deltaAngle>getStats().rotationSpeed/2){	//TODO nie wiem czy polowa obrotu na sekudne to dobra liczba
+			if(angle>getRotation())
+				rotate(getStats().rotationSpeed*delta);
+			else rotate(-getStats().rotationSpeed*delta);
+			return;
+		}
 		
-		direction.x = currentTarget.getX()-getX();
-		direction.y =  currentTarget.getY()-getY();
+		setRotation(angle); 
 		direction.nor();		
 		targetCoords.x = currentTarget.getX();
 		targetCoords.y =  currentTarget.getY();
@@ -111,9 +123,10 @@ public abstract class Ship extends Actor{
 			return;
 		}
 					
-		setX(getX()+direction.x*getStats().speed);
-		setY(getY()+direction.y*getStats().speed);	
+		setX(getX()+direction.x*getStats().speed*delta);
+		setY(getY()+direction.y*getStats().speed*delta);	
 	}
+
 	
 	private boolean targetInRange() {
 		Vector2 coordsFloat = new Vector2(getX(), getY());
@@ -134,8 +147,6 @@ public abstract class Ship extends Actor{
 	}
 	
 	public Stats.Ships getStats(){
-		//TODO String alocation aaaaaa in every action! very slow;]
-		//return Stats.Ships.valueOf(this.getClass().getSimpleName());
 		return shipType;
 	}
 	

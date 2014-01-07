@@ -44,16 +44,17 @@ public class Stats {
 	}
 	
 	public static enum Ships{
-		//maxHP, speed, width, height, range, shootDelay
-		TestShip1(14, 2, 64, 64, 300, 1.8f);
+		//maxHP, speed, width, height, range, shootDelay, rotationSpeed
+		TestShip1(14, 200, 64, 64, 300, 1.8f, 40f);
 		
-		Ships(int maxHitpoints, float speed, int width, int height, float range, float shootDelay){
+		Ships(int maxHitpoints, float speed, int width, int height, float range, float shootDelay, float rotationSpeed){
 			this.maxHitpoints=maxHitpoints;
 			this.speed=speed;
 			this.width=width;
 			this.height=height;
 			this.range=range;
 			this.shootDelay=shootDelay;
+			this.rotationSpeed=rotationSpeed;
 		}
 		
 		
@@ -63,6 +64,7 @@ public class Stats {
 		public final int height;
 		public float range;
 		public float shootDelay;
+		public float rotationSpeed;
 	}
 	
 	public static enum Bullets{	
