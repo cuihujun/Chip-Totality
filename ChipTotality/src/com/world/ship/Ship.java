@@ -17,22 +17,28 @@ public abstract class Ship extends Actor{
 	public enum CurrentAction{
 		search,
 		approach,
-		shoot;
+		shoot,
+		escape
 	}
 	
+	private int shots;
 	protected float lastShoot;
 	public int hitpoints;
 	private final Sprite sprite;
 	protected Building currentTarget;
 	Stats.Bullets bulletType;
 	CurrentAction currentAction;
-	
+	float getMidY() {
+		return getY()+sprite.getHeight()/2;
+	}
 	Ship(int x, int y){
 		setBounds(x, y, getStats().width, getStats().height);
 		this.hitpoints=getStats().maxHitpoints;		
 		sprite = new Sprite(AssetsLoader.getTexture(this.getClass().getSimpleName()));	
 		bulletType=Stats.Bullets.simpleBullet;
 		currentAction = CurrentAction.search;
+	
+		shots = new Integer(5);
 	}
 	
 	@Override
@@ -40,9 +46,20 @@ public abstract class Ship extends Actor{
 		super.act(delta);
 		
 		lastShoot+=delta;
-		if(currentAction==CurrentAction.shoot && lastShoot>getStats().shootDelay){
+		if(getX()<-1000 || getY()<-1000 || getX() > 2000 || getY() > 2000)
+			destroy();
+		if(shots <= 0)
+		{
+			currentAction=CurrentAction.escape;
+		}
+		if(currentAction == CurrentAction.escape)
+		{
+			escape();
+		}
+		else if(currentAction==CurrentAction.shoot && lastShoot>getStats().shootDelay){
 			if(targetInRange()){
 				shoot();
+				--shots;
 				lastShoot=0;
 			}
 			else{
@@ -57,9 +74,17 @@ public abstract class Ship extends Actor{
 		
 	}
 	
+	public void escape() {
+		Vector2 direction = new Vector2(800-getX(), 500-getY());
+		direction.nor();
+		super.setRotation(direction.angle()+90);		
+		setX(getX()+direction.x*(-getStats().speed));
+		setY(getY()+direction.y*(-getStats().speed));	
+	}
 		
 	public abstract void shoot();
-
+	// escaping when he has no bullets
+	
 	//looks for building to attack
 	public void searchClosestTarget(){
 		float shortestDistance=Float.POSITIVE_INFINITY;
@@ -105,7 +130,7 @@ public abstract class Ship extends Actor{
 			setCurrentAction(Ship.CurrentAction.search);
 			return;
 		}
-					
+		super.setRotation(direction.angle()-90);		
 		setX(getX()+direction.x*getStats().speed);
 		setY(getY()+direction.y*getStats().speed);	
 	}
@@ -124,7 +149,7 @@ public abstract class Ship extends Actor{
 	}
 	
 	public void destroy(){
-		this.getStage().addActor(EffectsManager.getActor(EffectTypes.explosionMed, getX(), getY()));//TODO zaleznie od typu inny wybuch?;p wysordkowanie wynuchu?
+		this.getStage().addActor(EffectsManager.getActor(EffectTypes.explosionMed, getX(), getMidY()));//TODO zaleznie od typu inny wybuch?;p wysordkowanie wynuchu?
 		remove();
 	}
 	

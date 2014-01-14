@@ -61,7 +61,7 @@ public class GameStage extends Stage{
 	
 	
 	private void checkBulletCollisionsWithBuildings(){
-		Rectangle buildingRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
+		Rectangle buildingRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...// Is it wasting much time ? 
 		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 	
 		for (Actor bullet : bulletsFromShipsGroup.getChildren()) {
 			bulletRec.setPosition(bullet.getX(), bullet.getY());
