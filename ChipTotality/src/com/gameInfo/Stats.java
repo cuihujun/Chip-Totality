@@ -45,7 +45,7 @@ public class Stats {
 	
 	public static enum Ships{
 		//maxHP, speed, width, height, range, shootDelay, rotationSpeed
-		TestShip1(14, 200, 64, 64, 300, 1.8f, 40f);
+		TestShip1(140, 200, 64, 64, 300, 1.8f, 40f);
 		
 		Ships(int maxHitpoints, float speed, int width, int height, float range, float shootDelay, float rotationSpeed){
 			this.maxHitpoints=maxHitpoints;

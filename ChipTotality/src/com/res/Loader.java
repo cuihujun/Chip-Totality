@@ -1,6 +1,7 @@
 package com.res;
 
 import java.io.IOException;
+
 //import net.dermetfan.utils.libgdx.graphics.AnimatedSprite;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -31,7 +32,6 @@ public class Loader {
 		public static AssetManager manager=new AssetManager();
 		public static TextureParameter textureParameter= new TextureParameter();
 		private static ArrayMap<String, Animation> objectsAnimations = new ArrayMap<String, Animation>();
-		//public static AnimatedSprite animatedSprite;
 		public static Sprite backgroundSprite;
 		
 
@@ -101,15 +101,9 @@ public class Loader {
 					
 		public static void loadAssets() {
 			
-			//manager.load("background.png", Texture.class, textureParameter);
-			//manager.load("starsSeamless.png", Texture.class, textureParameter);
-							  
-			//manager.load("starSpaceTile.png", Texture.class, textureParameter);
-			//manager.load("blackDreams.png", Texture.class, textureParameter);
+			//backgrounds
 			manager.load("dipl_menu.png", Texture.class, textureParameter);
 			manager.load("strangeSpace.jpg", Texture.class, textureParameter);		
-			
-			
 			manager.load("Meteorite.png", Texture.class, textureParameter);
 
 			//bullets
@@ -126,10 +120,11 @@ public class Loader {
 			//towers
 			manager.load("TestTower1.png", Texture.class, textureParameter);
 			
-			//icons
+			//icons and GUI
 			manager.load("IconsPack/iconsPack.atlas", TextureAtlas.class);		
+			manager.load("healthbar.png", Texture.class, textureParameter);	
 			
-			//skin do menu
+			//skins
 			manager.load("uiSkin/uiskin.json",Skin.class);
 			manager.load("uiSkin/DarkSkin/Holo-dark-mdpi.json",Skin.class);
 													

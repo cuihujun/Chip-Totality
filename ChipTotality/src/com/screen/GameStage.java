@@ -48,7 +48,6 @@ public class GameStage extends Stage{
 
 
 	
-	
 	public GameStage(ChipTotality game) {
 		super(Settings.WIDTH, Settings.HEIGHT, true, game.batch);
 		this.game=game;	
@@ -89,7 +88,7 @@ public class GameStage extends Stage{
 	
 	
 	private void checkBulletCollisionsWithBuildings(){
-		Rectangle buildingRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
+		Rectangle buildingRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...// Is it wasting much time ? 
 		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 	
 		for (Actor bullet : bulletsFromShipsGroup.getChildren()) {
 			bulletRec.setPosition(bullet.getX(), bullet.getY());
@@ -111,6 +110,7 @@ public class GameStage extends Stage{
 		//SpatialIndex test (it is really fast:)
 		Rectangle shipRec = new Rectangle();
 		Rectangle bulletRec = new Rectangle();
+		
 		for(Actor s : shipsGroup.getChildren()){
 			shipRec.setPosition(s.getX(), s.getY());
 			shipRec.setSize(s.getWidth(), s.getHeight());
@@ -125,60 +125,6 @@ public class GameStage extends Stage{
 			}				
 		}
 
-		
-		
-		/*Rectangle shipRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
-		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 	
-		for (Actor b : bulletsFromTowersGroup.getChildren()) {
-			bulletRec.setPosition(b.getX(), b.getY());
-			bulletRec.setSize(b.getWidth(), b.getHeight());
-			for(Actor s : shipsGroup.getChildren()){
-				shipRec.setPosition(s.getX(), s.getY());
-				shipRec.setSize(s.getWidth(), s.getHeight());
-				if (shipRec.overlaps(bulletRec)){
-					((Bullet)b).explode((Ship)s, this);
-					break;
-				}			
-			}
-		}*/
-		
-		
-		///OSTATNI DZIALAJACA WERSJA PONZEJ
-		/*//TODO that is even faster than last one
-		Rectangle shipRec = new Rectangle();//TODO rectangles in class instance so we dont have to create and update them here each iteration...
-		Rectangle bulletRec = new Rectangle();//TODO or dont use rectangles... and check manualy? 			
-		Iterator<Bullet> i = bulletsFromTowers.iterator();
-				
-		while (i.hasNext()) {
-			Bullet b = i.next();
-			bulletRec.setPosition(b.getX(), b.getY());
-			bulletRec.setSize(b.getWidth(), b.getHeight());
-			for (Ship s : ships) {
-				shipRec.setPosition(s.getX(), s.getY());
-				shipRec.setSize(s.getWidth(), s.getHeight());
-				if (shipRec.overlaps(bulletRec)){
-					b.remove();
-					i.remove();
-					break;
-				}			
-			}			
-		}
-		*/
-		
-
-		
-		//TODO shuld be faster but to many methods caled;] get get get so slow;] 
-		/*Iterator<Bullet> i = bulletsFromTowers.iterator();		
-		while (i.hasNext()) {
-			Bullet b = i.next();			
-			for (Ship s : ships) {
-				if(b.getX() < s.getX() + s.getWidth() && b.getX() + b.getWidth() > s.getX() && b.getY() < s.getY() + s.getHeight() && b.getY() + b.getHeight() > s.getY()){
-					b.remove();
-					i.remove();
-					break;
-				}
-			}			
-		}*/
 		
 	}
 

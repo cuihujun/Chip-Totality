@@ -99,6 +99,9 @@ public class GameScreenRenderer {
 			game.batch.setColor(Color.WHITE);
 		}			
 	}
+	public void renderHealthbars(){
+
+	}
 	
 	public void renderDebug(float delta) {
 		game.shapeRenderer.setProjectionMatrix(game.camera.combined);
