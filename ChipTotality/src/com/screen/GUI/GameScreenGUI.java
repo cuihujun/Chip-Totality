@@ -307,7 +307,7 @@ public class GameScreenGUI {
 			beingsLabel.setText("Beings: " + GameStateHolder.beings + " ");
 			dirtyAcodinLabel.setText("Dirty Acodin: " + GameStateHolder.dirtyAcodin + " ");
 			fpsLabel.setText("Fps : " + Gdx.graphics.getFramesPerSecond() + "         ");
-			shipsLabel.setText("Ships number: " + gameStage.shipsGroup.getChildren().size + "       ");
+			shipsLabel.setText("Ships number: " + GameStage.shipsGroup.getChildren().size + "       ");
 			if(buildingGui.lastBuilding != null) {
 				buildingGui.dataLabel.setText("Hitpoints:" + buildingGui.lastBuilding.hitpoints);
 				if(buildingGui.lastBuilding.hitpoints == 0) {

@@ -3,7 +3,6 @@ package com.world.ship;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Stats;
@@ -96,8 +95,12 @@ public abstract class Ship extends Actor{
 			currentAction=CurrentAction.search;
 			return;
 		}
+		direction.y = (currentTarget.getY()-getY());
+		direction.x=(currentTarget.getX()-getX());
+		
+		
 		//angle beetween ship and target
-		float angle = MathUtils.atan2(direction.y = (currentTarget.getY()-getY()), direction.x=(currentTarget.getX()-getX()))*MathUtils.radiansToDegrees;
+		float angle=direction.angle();
 		float deltaAngle = Math.abs(angle-getRotation());
 		//angle too big to rotate instantly - rotate a part of the angle, and wait.
 		if(deltaAngle>getStats().rotationSpeed/2){	//TODO nie wiem czy polowa obrotu na sekudne to dobra liczba
@@ -107,6 +110,7 @@ public abstract class Ship extends Actor{
 			return;
 		}
 		
+
 		setRotation(angle); 
 		direction.nor();		
 		targetCoords.x = currentTarget.getX();

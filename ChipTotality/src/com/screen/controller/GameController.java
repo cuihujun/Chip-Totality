@@ -3,7 +3,6 @@ package com.screen.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gameInfo.Coords;
@@ -14,7 +13,6 @@ import com.main.ChipTotality;
 import com.main.Settings;
 import com.screen.GameScreen;
 import com.screen.GameStage;
-import com.screen.GUI.GameScreenGUI;
 import com.world.Asteroid;
 import com.world.Tile.TileType;
 import com.world.building.Building;
@@ -81,7 +79,7 @@ public class GameController extends InputAdapter {
 		GameStage.buildingsGroup.addActor(building);
 		building.pay();
 		building.doTask();
-		
+
 		// add reference to building for all tiles occupied by it
 		for (int i =  building.coords.x; i < building.coords.x
 				+ building.getStats().width; i++) {
@@ -103,12 +101,14 @@ public class GameController extends InputAdapter {
 	
 	public static void removeBuilding(Building building) {		
 		building.remove();
+		building.clear();
 		// remove references from tiles
 		for (int i =  building.coords.x; i < building.coords.x + building.getStats().width; i++) {
 			for (int j =  building.coords.y; j < building.coords.y + building.getStats().height; j++) {
 				Asteroid.worldGrid[i][j].building = null;
 			}
 		}
+		
 	}
 	
 	@Override
@@ -146,16 +146,6 @@ public class GameController extends InputAdapter {
 					return true;					
 				}
 				else gameScreen.gameScreenGUI.buildingGui.setVisible(false);
-				/*for(Actor b : GameStage.buildingsGroup.getChildren()) {
-					
-					b.hit(x, y, touchable)
-					if(new Rectangle(b.getX(), b.getY(), b.getWidth(), b.getHeight()).contains(pos.x, pos.y)) {
-						gameScreen.gameScreenGUI.buildingGui.update((Building)b, (int)b.getX(), (int)b.getY());
-						Gdx.app.log("BuildingGUI", "Created; visibility:" + gameScreen.gameScreenGUI.buildingGui.isVisible());
-						return true;
-					}
-				}
-				gameScreen.gameScreenGUI.buildingGui.setVisible(false);*/
 			}
 		}
 			
